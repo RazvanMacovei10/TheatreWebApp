@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheatreAPI", "TheatreAPI\Th
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{99D9F1F9-2B27-4943-BF17-D8DADFAD59FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C0511BF0-D03B-45BC-A7AF-C36E8123B0CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Core\BusinessLogic.csproj", "{C0511BF0-D03B-45BC-A7AF-C36E8123B0CA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{99D9F1F9-2B27-4943-BF17-D8DADFAD59FF} = {99D9F1F9-2B27-4943-BF17-D8DADFAD59FF}
 	EndProjectSection
