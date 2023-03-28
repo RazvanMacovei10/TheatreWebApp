@@ -1,9 +1,14 @@
+using BusinessLogic.Abstract;
+using BusinessLogic.BL;
 using Core.AbstractServices;
 using Core.Services;
 using DataLayer;
 using DataLayer.AbstractRepositories;
 using DataLayer.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +42,20 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserBL, UserBL>();
+builder.Services.AddScoped<ITokenBL, TokenBL>();
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme).
+    AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 
 builder.Services.AddSignalR();
 
@@ -57,6 +76,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

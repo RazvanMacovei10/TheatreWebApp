@@ -1,4 +1,5 @@
-﻿using Core.AbstractServices;
+﻿using BusinessLogic.Abstract;
+using Core.AbstractServices;
 using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,14 @@ namespace TheatreAPI.Controllers
     public class AccountController:ControllerBase
     {
         private readonly IUserBL _userBL;
-        public AccountController(IUserBL userBL)
+        private readonly ITokenBL _tokenBL;
+        public AccountController(IUserBL userBL,ITokenBL tokenBL)
         {
              _userBL=userBL;
+            _tokenBL=tokenBL;
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>>Register(RegisterDTO registerDTO)
+        public async Task<ActionResult<UserDTO>>Register(RegisterDTO registerDTO)
         {
 
             if(await _userBL.UserExists(registerDTO.Username))
@@ -34,11 +37,15 @@ namespace TheatreAPI.Controllers
                 PasswordSalt = hmac.Key
             };
             _userBL.Add(user);
-            return user;
+            return new UserDTO
+            {
+                Username = user.UserName,
+                Token = _tokenBL.CreateToken(user)
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(LoginDTO loginDTO)
+        public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
         {
             var user = _userBL.GetByUsername(loginDTO.Username);
 
@@ -52,7 +59,11 @@ namespace TheatreAPI.Controllers
             {
                 if (computedhash[i] != user.Result.PasswordHash[i]) return Unauthorized("invalid password");
             }
-            return user.Result;
+            return new UserDTO
+            {
+                Username = user.Result.UserName,
+                Token = _tokenBL.CreateToken(user.Result)
+            };
         }
         
     }
