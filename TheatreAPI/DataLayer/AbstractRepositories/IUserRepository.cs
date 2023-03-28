@@ -11,5 +11,11 @@ namespace DataLayer.AbstractRepositories
     {
         public Task<List<User>> GetAll();
         public Task<User> GetById(int userId);
+
+        public void Add(User user);
+
+        public Task<bool> UserExists(string username);
+
+        public Task<User> GetByUsername(string username);
     }
 }

@@ -20,14 +20,27 @@ namespace Core.Services
 
         public async Task<List<User>> GetAll()
         {
-            var results= await _userRepository.GetAll();
+            var results = await _userRepository.GetAll();
             return results;
         }
 
         public async Task<User> GetById(int id)
         {
-            var result= await _userRepository.GetById(id);
+            var result = await _userRepository.GetById(id);
             return result;
         }
+        public void Add(User user)
+        {
+            _userRepository.Add(user);
+        }
+        public async Task<bool> UserExists(string username)
+        {
+            return await _userRepository.UserExists(username);
+        }
+        public async Task<User> GetByUsername(string username)
+        {
+            return await _userRepository.GetByUsername(username);
+        }
+
     }
 }

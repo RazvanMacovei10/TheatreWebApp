@@ -28,5 +28,23 @@ namespace DataLayer.Repositories
 
             return result;
         }
+        
+        public void Add(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChangesAsync();
+        }
+        public async Task<bool> UserExists(string username)
+        {
+            return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
+        }
+
+        public async Task<User> GetByUsername(string username)
+        {
+            var result = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+
+            return result;
+        }
+
     }
 }
