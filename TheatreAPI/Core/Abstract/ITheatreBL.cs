@@ -1,0 +1,16 @@
+﻿using DataLayer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessLogic.Abstract
+{
+    public interface ITheatreBL
+    {
+        public Task<List<Theatre>> GetAll();
+        public Task<Theatre> GetById(int id);
+        public void Add(Theatre theatre);
+    }
+}

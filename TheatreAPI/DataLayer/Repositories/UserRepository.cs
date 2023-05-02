@@ -38,10 +38,14 @@ namespace DataLayer.Repositories
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+        public async Task<bool> UserByEmailExists(string email)
+        {
+            return await _context.Users.AnyAsync(x => x.Email == email.ToLower());
+        }
 
         public async Task<User> GetByUsername(string username)
         {
-            var result = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            var result = await _context.Users.Include(x=>x.Role).SingleOrDefaultAsync(x => x.UserName == username);
 
             return result;
         }

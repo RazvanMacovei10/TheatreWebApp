@@ -41,6 +41,10 @@ namespace Core.Services
         {
             return await _userRepository.GetByUsername(username);
         }
+        public async Task<bool> UserExistsByEmail(string email)
+        {
+            return await _userRepository.UserByEmailExists(email);
+        }
 
     }
 }

@@ -15,6 +15,7 @@ namespace DataLayer.AbstractRepositories
         public void Add(User user);
 
         public Task<bool> UserExists(string username);
+        public Task<bool> UserByEmailExists(string username);
 
         public Task<User> GetByUsername(string username);
     }

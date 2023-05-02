@@ -1,0 +1,146 @@
+<div class="container full-height">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
+        <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+          <h2 class="text-center text-primary">Sign up</h2>
+          <hr />
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              [(ngModel)]="model.username"
+              placeholder="Username"
+              required
+              #username="ngModel"
+            />
+            <div *ngIf="username.invalid && username.touched" class="text-danger">
+              Username is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="model.email"
+              placeholder="Email"
+              required
+              #email="ngModel"
+            />
+            <div *ngIf="email.invalid && email.touched" class="text-danger">
+              Email is required and must be valid
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="model.password"
+              placeholder="Password"
+              required
+              minlength="8"
+              #password="ngModel"
+            />
+            <div *ngIf="password.invalid && password.touched" class="text-danger">
+              Password is required and must be at least 8 characters
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="Text"
+              class="form-control"
+              name="city"
+              [(ngModel)]="model.address.city"
+              placeholder="City"
+              required
+              #city="ngModel"
+            />
+            <div *ngIf="city.invalid && city.touched" class="text-danger">
+              City is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="Text"
+              class="form-control"
+              name="street"
+              [(ngModel)]="model.address.street"
+              placeholder="Street"
+              required
+              #street="ngModel"
+            />
+            <div *ngIf="street.invalid && street.touched" class="text-danger">
+              Street is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="Number"
+              class="form-control"
+              name="Number"
+              [(ngModel)]="model.address.number"
+              placeholder="Number"
+              required
+              #number="ngModel"
+            />
+            <div *ngIf="number.invalid && number.touched" class="text-danger">
+              Number is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="Number"
+              class="form-control"
+              name="totalSeats"
+              [(ngModel)]="model.totalSeats"
+              placeholder="Total seats"
+              min="0"
+              required
+              #totalSeats="ngModel"
+            />
+            <div
+              *ngIf="totalSeats.invalid && totalSeats.touched"
+              class="text-danger"
+            >
+              Total seats is required and must be greater than or equal to 0
+            </div>
+          </div>
+          <label for="image">Select image to upload:</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            (change)="onFileSelected($event)"
+          />
+          <div class="text-center mt-2">
+            <button
+              class="btn btn-success me-2"
+              type="submit"
+              [disabled]="registerForm.invalid"
+            >
+              Register
+            </button>
+            <button class="btn btn-danger" type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+        <div
+          class="display: flex; justify-content: flex-end float-right"
+        ></div>
+        <div
+          class="display: flex; justify-content: flex-end float-right"
+        >
+          <button class="btn btn-primary me-2" routerLink="/auth/register">
+            Register as user
+          </button>
+          <button class="btn btn-primary me-2" routerLink="/auth/login">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

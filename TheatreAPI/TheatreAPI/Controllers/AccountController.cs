@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Abstract;
+using BusinessLogic.BL;
 using Core.AbstractServices;
 using DataLayer.DTOs;
 using DataLayer.Entities;
@@ -14,10 +15,14 @@ namespace TheatreAPI.Controllers
     {
         private readonly IUserBL _userBL;
         private readonly ITokenBL _tokenBL;
-        public AccountController(IUserBL userBL,ITokenBL tokenBL)
+        private readonly IUserRoleBL _userRoleBL;
+        private readonly IRegisterFormBL _registerFormBL;
+        public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, IRegisterFormBL registerFormBL)
         {
-             _userBL=userBL;
-            _tokenBL=tokenBL;
+            _userBL = userBL;
+            _tokenBL = tokenBL;
+            _userRoleBL = userRoleBL;
+            _registerFormBL = registerFormBL;
         }
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>>Register(RegisterDTO registerDTO)
@@ -27,6 +32,10 @@ namespace TheatreAPI.Controllers
             {
                 return BadRequest("Username is taken");
             }
+            if (await _userBL.UserExistsByEmail(registerDTO.Email))
+            {
+                return BadRequest("Email is taken");
+            }
 
             using var hmac = new HMACSHA512();
 
@@ -34,13 +43,17 @@ namespace TheatreAPI.Controllers
             {
                 UserName = registerDTO.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                Email=registerDTO.Email.ToLower(),
+                RoleId=1,
+                Role=await _userRoleBL.GetById(1)
             };
             _userBL.Add(user);
             return new UserDTO
             {
                 Username = user.UserName,
-                Token = _tokenBL.CreateToken(user)
+                Token = _tokenBL.CreateToken(user),
+                Role = user.Role.Name
             };
         }
 
@@ -62,9 +75,37 @@ namespace TheatreAPI.Controllers
             return new UserDTO
             {
                 Username = user.Result.UserName,
-                Token = _tokenBL.CreateToken(user.Result)
+                Token = _tokenBL.CreateToken(user.Result),
+                Role = user.Result.Role.Name
             };
         }
-        
+        [HttpPost("register-theatre")]
+        public async Task<IActionResult> RegisterTheatre(RegisterFormDTO registerFormDTO)
+        {
+
+            if (await _userBL.UserExists(registerFormDTO.Username))
+            {
+                return BadRequest("Username is taken");
+            }
+            if (await _userBL.UserExistsByEmail(registerFormDTO.Email))
+            {
+                return BadRequest("Email is taken");
+            }
+            using var hmac = new HMACSHA512();
+
+            var registerForm = new RegisterForm()
+            {
+                Username = registerFormDTO.Username.ToLower(),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerFormDTO.Password)),
+                PasswordSalt = hmac.Key,
+                Email = registerFormDTO.Email.ToLower(),
+                Address = registerFormDTO.Address,
+                Image = Convert.FromBase64String(registerFormDTO.Image),
+                TotalSeats = registerFormDTO.TotalSeats
+            };
+            await _registerFormBL.Add(registerForm);
+            return Ok(registerForm);
+        }
+
     }
 }

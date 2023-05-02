@@ -1,0 +1,17 @@
+﻿using DataLayer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataLayer.AbstractRepositories
+{
+    public interface ITheatreRepository
+    {
+        public Task<List<Theatre>> GetAll();
+        public Task<Theatre> GetById(int theatreId);
+
+        public void Add(Theatre theatre);
+    }
+}

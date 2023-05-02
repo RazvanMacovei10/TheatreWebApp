@@ -19,5 +19,6 @@ namespace DataLayer
         public DbSet<Theatre> Theatres { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<RegisterForm> RegisterForms { get; set; }
     }
 }

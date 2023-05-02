@@ -1,3 +1,4 @@
+using AutoMapper;
 using BusinessLogic.Abstract;
 using BusinessLogic.BL;
 using Core.AbstractServices;
@@ -9,9 +10,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TheatreAPI;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
 // Add services to the container.
 
 builder.Services.AddCors(options =>
@@ -37,12 +42,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IUserRoleRepository,UserRoleRepository>();
+builder.Services.AddScoped<ITheatreRepository,TheatreRepository>();
+builder.Services.AddScoped<IRegisterFormRepository, RegisterFormRepository>();
+
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<ITokenBL, TokenBL>();
+builder.Services.AddScoped<IUserRoleBL, UserRoleBL>();
+builder.Services.AddScoped<ITheatreBL, TheatreBL>();
+builder.Services.AddScoped<IRegisterFormBL, RegisterFormBL>();
+
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme).
     AddJwtBearer(options =>

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_models/user';
+import { Router } from '@angular/router';
+import { RegisterForm } from '../_models/register-form';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,11 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$=this.currentUserSource.asObservable();
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
+
+  public get userValue(){
+    return this.currentUserSource.value;
+  }
 
   login(model:any){
     return this.http.post<User>(this.baseUrl+'account/login',model).pipe(
@@ -45,5 +51,9 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.router.navigate(['/auth']);
+  }
+  registerTheatre(model:any){
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/register-theatre',model);
   }
 }

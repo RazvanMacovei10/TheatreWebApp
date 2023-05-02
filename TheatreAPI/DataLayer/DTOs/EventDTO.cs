@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DTOs
 {
-    public class UserDTO
+    public class EventDTO
     {
-
-        public string Username { get; set; }
-        public string Token { get; set; }
-        public string Role { get; set; }
     }
 }
