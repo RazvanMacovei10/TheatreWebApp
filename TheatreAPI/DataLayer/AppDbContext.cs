@@ -11,7 +11,6 @@ namespace DataLayer
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Actor> Actors { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Play> Plays { get; set; }

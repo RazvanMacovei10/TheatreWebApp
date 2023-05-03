@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DTOs
 {
-    public class EventDTO
+    public class EventSentDTO
     {
         public int Id { get; set; }
-        public DateTime Datetime { get; set; }
-        public int AvailableSeats { get; set; }
         public string TheatreName { get; set; }
-        public PlayDTO play { get; set; }
+        public int PlayId { get; set; }
+        public DateTime datetime { get; set; }
     }
 }

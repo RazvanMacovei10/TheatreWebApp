@@ -1,0 +1,85 @@
+<div class="container full-height">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
+        <form
+          [formGroup]="registerForm"
+          (ngSubmit)="addPlay()"
+          autocomplete="off"
+        >
+          <h2 class="text-center text-primary">Add play</h2>
+          <hr />
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Name"
+            />
+            <div
+              *ngIf="
+                registerForm.controls['name'].invalid &&
+                registerForm.controls['name'].touched
+              "
+              class="text-danger"
+            >
+              Name is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="description"
+              placeholder="Description"
+            />
+            <div
+              *ngIf="
+                registerForm.controls['description'].invalid &&
+                registerForm.controls['description'].touched
+              "
+              class="text-danger"
+            >
+              Description is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="Text"
+              class="form-control"
+              formControlName="type"
+              placeholder="Type"
+            />
+            <div
+              *ngIf="
+                registerForm.controls['type'].invalid &&
+                registerForm.controls['type'].touched
+              "
+              class="text-danger"
+            >
+              Type is required
+            </div>
+          </div>
+          <label for="image">Select image to upload:</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            (change)="onFileSelected($event)"
+          />
+          <div class="text-center mt-2">
+            <button
+              class="btn btn-success me-2"
+              type="submit"
+              [disabled]="registerForm.invalid"
+            >
+              Add
+            </button>
+            <button class="btn btn-danger" type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

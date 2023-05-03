@@ -18,13 +18,14 @@ namespace DataLayer.Repositories
         }
         public async Task<List<Theatre>> GetAll()
         {
-            var results = await _context.Theatres.ToListAsync();
+            var results = await _context.Theatres.Include(x => x.User)
+                .Include(x => x.Address).Include(x => x.Events).ToListAsync();
 
             return results;
         }
         public async Task<Theatre> GetById(int theatreId)
         {
-            var result = await _context.Theatres.Where(e => e.Id == theatreId).FirstOrDefaultAsync();
+            var result = await _context.Theatres.Include(x => x.User).Include(x => x.Address).Include(x => x.Events).Where(e => e.Id == theatreId).FirstOrDefaultAsync();
 
             return result;
         }
@@ -34,6 +35,13 @@ namespace DataLayer.Repositories
             await _context.Theatres.AddAsync(theatre);
             await _context.SaveChangesAsync();
             return theatre;
+        }
+        public async Task<Theatre> GetByUsername(string username)
+        {
+            var result = await _context.Theatres.Include(x => x.User).Include(x=>x.Address).Include(x=>x.Events)
+                .SingleOrDefaultAsync(x => x.User.UserName == username);
+
+            return result;
         }
     }
 }

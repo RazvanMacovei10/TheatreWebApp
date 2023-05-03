@@ -33,5 +33,11 @@ namespace BusinessLogic.BL
         {
             return await _theatreRepository.Add(theatre);
         }
+        public async Task<Theatre> GetByUsername(string username)
+        {
+            var result = await _theatreRepository.GetByUsername(username);
+
+            return result;
+        }
     }
 }
