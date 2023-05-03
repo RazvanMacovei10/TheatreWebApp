@@ -29,10 +29,11 @@ namespace DataLayer.Repositories
             return result;
         }
 
-        public void Add(Theatre theatre)
+        public async Task<Theatre> Add(Theatre theatre)
         {
-            _context.Theatres.Add(theatre);
-            _context.SaveChangesAsync();
+            await _context.Theatres.AddAsync(theatre);
+            await _context.SaveChangesAsync();
+            return theatre;
         }
     }
 }

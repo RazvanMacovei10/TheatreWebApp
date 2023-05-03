@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Abstract;
 using DataLayer.AbstractRepositories;
 using DataLayer.Entities;
+using DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace BusinessLogic.BL
             var result = await _theatreRepository.GetById(id);
             return result;
         }
-        public void Add(Theatre theatre)
+        public async Task<Theatre> Add(Theatre theatre)
         {
-            _theatreRepository.Add(theatre);
+            return await _theatreRepository.Add(theatre);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace DataLayer.AbstractRepositories
         public Task<List<User>> GetAll();
         public Task<User> GetById(int userId);
 
-        public void Add(User user);
+        public Task<User> Add(User user);
 
         public Task<bool> UserExists(string username);
         public Task<bool> UserByEmailExists(string username);

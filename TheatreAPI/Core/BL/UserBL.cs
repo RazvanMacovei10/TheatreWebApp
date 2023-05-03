@@ -29,9 +29,9 @@ namespace Core.Services
             var result = await _userRepository.GetById(id);
             return result;
         }
-        public void Add(User user)
+        public async Task<User> Add(User user)
         {
-            _userRepository.Add(user);
+            return await _userRepository.Add(user);
         }
         public async Task<bool> UserExists(string username)
         {

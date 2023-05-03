@@ -50,7 +50,7 @@ namespace TheatreAPI.Controllers
                 RoleId = 3
             };
 
-            _userBL.Add(user);
+            await _userBL.Add(user);
             Theatre theatre = new Theatre()
             {
                 Address = registerForm.Address,
@@ -59,7 +59,7 @@ namespace TheatreAPI.Controllers
                 User = user
             };
             
-            _theatreBL.Add(theatre);
+            await _theatreBL.Add(theatre);
             return Ok();
         }
         [HttpDelete("{id}")]

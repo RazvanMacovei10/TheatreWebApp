@@ -29,10 +29,11 @@ namespace DataLayer.Repositories
             return result;
         }
         
-        public void Add(User user)
+        public async Task<User>Add (User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChangesAsync();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
         public async Task<bool> UserExists(string username)
         {

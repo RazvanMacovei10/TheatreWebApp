@@ -12,7 +12,7 @@ namespace Core.AbstractServices
     {
         public Task<List<User>> GetAll();
         public Task<User> GetById(int id);
-        public void Add(User user);
+        public Task<User> Add(User user);
 
         public Task<bool> UserExists(string username);
 

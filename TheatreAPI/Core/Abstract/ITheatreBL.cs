@@ -11,6 +11,6 @@ namespace BusinessLogic.Abstract
     {
         public Task<List<Theatre>> GetAll();
         public Task<Theatre> GetById(int id);
-        public void Add(Theatre theatre);
+        public Task<Theatre> Add(Theatre theatre);
     }
 }

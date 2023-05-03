@@ -24,7 +24,7 @@ namespace DataLayer.Repositories
         }
         public async Task<RegisterForm> GetById(int registerFormId)
         {
-            var result = await _context.RegisterForms.Where(e => e.Id == registerFormId).FirstOrDefaultAsync();
+            var result = await _context.RegisterForms.Include(x=>x.Address).Where(e => e.Id == registerFormId).FirstOrDefaultAsync();
 
             return result;
         }
