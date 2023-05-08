@@ -9,41 +9,44 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class PlayRepository:IPlayRepository
+    public class EventRepository:IEventRepository
     {
         private readonly AppDbContext _context;
-        public PlayRepository(AppDbContext context)
+        public EventRepository(AppDbContext context)
         {
             _context = context;
         }
-        public async Task<List<Play>> GetAll()
+        public async Task<List<Event>> GetAll()
         {
-            var results = await _context.Plays.Include(x=>x.Theatre).Include(x=>x.Theatre.User).Include(x=>x.Type).ToListAsync();
+            var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
+                ToListAsync();
 
             return results;
         }
-        public async Task<Play> GetById(int playId)
+        public async Task<Event> GetById(int eventId)
         {
-            var result = await _context.Plays.Where(e => e.Id == playId).Include(x => x.Theatre.User).Include(x=>x.Type).FirstOrDefaultAsync();
+            var result = await _context.Events.Where(e => e.Id == eventId).
+                Include(x => x.Theatre).Include(x => x.Play).
+                Include(x=>x.Theatre.User).FirstOrDefaultAsync();
 
             return result;
         }
 
-        public async Task<Play> Add(Play play)
+        public async Task<Event> Add(Event eventAdded)
         {
-            await _context.Plays.AddAsync(play);
+            await _context.Events.AddAsync(eventAdded);
             await _context.SaveChangesAsync();
-            return play;
+            return eventAdded;
         }
         public async Task<bool> DeleteAsync(int id)
         {
-            var entity = await _context.Plays.FindAsync(id);
+            var entity = await _context.Events.FindAsync(id);
             if (entity == null)
             {
                 throw new Exception($"{nameof(entity)} could not be found");
             }
 
-            _context.Plays.Remove(entity);
+            _context.Events.Remove(entity);
             await _context.SaveChangesAsync();
             return true;
         }

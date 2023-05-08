@@ -43,12 +43,10 @@
             </div>
           </div>
           <div class="mb-3">
-            <input
-              type="Text"
-              class="form-control"
-              formControlName="type"
-              placeholder="Type"
-            />
+            <select formControlName="type" name="playType">
+                <option value="">Select a play type</option>
+                <option *ngFor="let playType of playTypes$ | async" [ngValue]="playType">{{ playType.name }}</option>
+              </select>
             <div
               *ngIf="
                 registerForm.controls['type'].invalid &&
@@ -70,7 +68,7 @@
             <button
               class="btn btn-success me-2"
               type="submit"
-              [disabled]="registerForm.invalid"
+              
             >
               Add
             </button>

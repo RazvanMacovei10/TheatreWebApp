@@ -1,1 +1,39 @@
-<p>schedule works!</p>
+<app-theatre-navbar></app-theatre-navbar>
+<div class="d-flex justify-content-center align-items-center">
+  <a class="btn btn-primary" href="/theatre/schedule/add">Add Event</a>
+</div>
+
+<div *ngIf="events.length === 0" class="alert alert-info mt-3" role="alert">
+  There are no events to display.
+</div>
+
+<div *ngIf="events.length > 0">
+  <table class="table table-hover mt-3">
+    <colgroup>
+      <col class="col-md-4" />
+      <col class="col-md-3" />
+      <col class="col-md-3" />
+      <col class="col-md-1" />
+    </colgroup>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Play Name</th>
+        <th scope="col">Available Seats</th>
+        <th scope="col">Datetime</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.play.name }}</td>
+        <td>{{ event.availableSeats }}</td>
+        <td>{{ event.datetime | date : "medium" }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteEvent(event.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

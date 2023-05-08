@@ -1,0 +1,31 @@
+<app-client-navbar></app-client-navbar>
+
+<div class="container main-container d-flex justify-content-center">
+  <div class="row">
+    <div class="col-sm-4 margin-bot" *ngFor="let item of events">
+      <div class="card main-card">
+        <img
+          [src]="getImageUrl(item.play)"
+          class="card-img card-img-top image-scale"
+          alt="..."
+        />
+        <div class="card-body">
+          <h2 class="card-title">{{ item.play.name }}</h2>
+          <p class="card-text">
+            theatre: <strong>{{ item.theatreName }}</strong>
+          </p>
+          <p class="card-text">
+            Available Seats: <strong>{{ item.availableSeats }}</strong>
+          </p>
+          <p class="card-text">
+            Date: <strong>{{ item.datetime }}</strong>
+          </p>
+          <p class="card-text">
+            Description: <strong>{{ item.play.description }}</strong>
+          </p>
+          <button class="btn btn-primary">Buy ticket</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

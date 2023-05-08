@@ -20,13 +20,15 @@ export class AddPlayComponent implements OnInit {
     id:0,
     name:''
   }
-  model: Play = {
+  playTypes$:Observable<PlayType[]>|null=null;
+    model: Play = {
     id:0,
     name:'',
     description:'',
     image:'',
     type:this.playtype,
   };
+  selectedPlayTypeId:number=0;
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -35,13 +37,16 @@ export class AddPlayComponent implements OnInit {
       type: ['', Validators.required],
       image: [null]
     });
+    this.playTypes$=this.theatreService.getPlayTypes();
   }
 
   addPlay() {
     this.model.name=this.registerForm.controls['name'].getRawValue();
     this.model.description=this.registerForm.controls['description'].getRawValue();
+    this.model.type=this.registerForm.controls['type'].getRawValue();
+    //console.log(this.type);
    // this.model.type=this.registerForm.controls['type'].getRawValue();
-    this.model.type=this.playtype;
+    //this.model.type=this.playtype;
     this.theatreService.addPlay(this.model).subscribe({
       next: () => {
         this.cancel();

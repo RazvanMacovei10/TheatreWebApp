@@ -18,14 +18,21 @@ namespace DataLayer.Repositories
         }
         public async Task<List<Theatre>> GetAll()
         {
-            var results = await _context.Theatres.Include(x => x.User)
-                .Include(x => x.Address).Include(x => x.Events).ToListAsync();
+            var results = await _context.Theatres.
+                Include(x => x.User).
+                Include(x => x.User.Role)
+                .Include(x => x.Address).
+                Include(x => x.Events)
+                .ThenInclude(y => y.Play).
+            ToListAsync();
 
             return results;
         }
         public async Task<Theatre> GetById(int theatreId)
         {
-            var result = await _context.Theatres.Include(x => x.User).Include(x => x.Address).Include(x => x.Events).Where(e => e.Id == theatreId).FirstOrDefaultAsync();
+            var result = await _context.Theatres.Include(x => x.User).Include(x=>x.User.Role)
+                .Include(x => x.Address).Include(x => x.Events).Include(x=>x.Events.Select(y=>y.Play))
+                .Where(e => e.Id == theatreId).FirstOrDefaultAsync();
 
             return result;
         }
@@ -38,7 +45,8 @@ namespace DataLayer.Repositories
         }
         public async Task<Theatre> GetByUsername(string username)
         {
-            var result = await _context.Theatres.Include(x => x.User).Include(x=>x.Address).Include(x=>x.Events)
+            var result = await _context.Theatres.Include(x => x.User).Include(x=>x.Address)
+                .Include(x=>x.User.Role).Include(x=>x.Events)
                 .SingleOrDefaultAsync(x => x.User.UserName == username);
 
             return result;

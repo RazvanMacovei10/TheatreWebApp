@@ -1,0 +1,60 @@
+<app-client-navbar></app-client-navbar>
+<div class="container main-container d-flex justify-content-center">
+  <div class="row" *ngIf="theatreClicked == false">
+    <div class="col-sm-5 margin-bot" *ngFor="let item of theatres">
+      <div class="card main-card" (click)="onCardClick(item)">
+        <img
+          [src]="getImageUrl(item.image)"
+          class="card-img card-img-top image-scale"
+          alt="..."
+        />
+        <div class="card-body">
+          <h2 class="card-title">{{ item.user.username }}</h2>
+          <p class="card-text">
+            Address:
+            <strong
+              >{{ item.address.city }} {{ item.address.street }}
+              {{ item.address.number }}</strong
+            >
+          </p>
+          <p class="card-text">
+            Total seats: <strong>{{ item.totalSeats }}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="theatreClicked == true">
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="onButtonClick()">
+        See all theatres
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 margin-bot" *ngFor="let item of currentEvents">
+        <div class="card main-card">
+          <img
+            [src]="getImageUrl(item.play.image)"
+            class="card-img card-img-top image-scale"
+            alt="..."
+          />
+          <div class="card-body">
+            <h2 class="card-title">{{ item.play.name }}</h2>
+            <p class="card-text">
+              theatre: <strong>{{ item.theatreName }}</strong>
+            </p>
+            <p class="card-text">
+              Seats: <strong>{{ item.availableSeats }}</strong>
+            </p>
+            <p class="card-text">
+              Date: <strong>{{ item.datetime }}</strong>
+            </p>
+            <p class="card-text">
+              Description: <strong>{{ item.play.description }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

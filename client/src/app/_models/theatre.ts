@@ -1,5 +1,5 @@
 import { Address } from "./address";
-import { Event } from "./event";
+import { EventModel } from "./event";
 import { User } from "./user";
 
 export interface Theatre{
@@ -7,5 +7,5 @@ export interface Theatre{
     user:User;
     totalSeats:number;
     image:string;
-    events:Event[];
+    events:EventModel[];
 }

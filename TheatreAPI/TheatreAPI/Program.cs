@@ -48,14 +48,18 @@ builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserRoleRepository,UserRoleRepository>();
+builder.Services.AddScoped<IPlayTypeRepository, PlayTypeRepository>();
 builder.Services.AddScoped<ITheatreRepository,TheatreRepository>();
+builder.Services.AddScoped<IEventRepository,EventRepository>();
 builder.Services.AddScoped<IPlayRepository,PlayRepository>();
 builder.Services.AddScoped<IRegisterFormRepository, RegisterFormRepository>();
 
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<ITokenBL, TokenBL>();
+builder.Services.AddScoped<IEventBL, EventBL>();
 builder.Services.AddScoped<IUserRoleBL, UserRoleBL>();
 builder.Services.AddScoped<IPlayBL, PlayBL>();
+builder.Services.AddScoped<IPlayTypeBL, PlayTypeBL>();
 builder.Services.AddScoped<ITheatreBL, TheatreBL>();
 builder.Services.AddScoped<IRegisterFormBL, RegisterFormBL>();
 

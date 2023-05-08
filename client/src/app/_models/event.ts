@@ -1,6 +1,6 @@
 import { Play } from "./play";
 
-export interface Event{
+export interface EventModel{
     id:number,
     datetime:Date,
     availableSeats:number,

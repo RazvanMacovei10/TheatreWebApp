@@ -5,6 +5,8 @@ import { AccountService } from './account.service';
 import { Play } from '../_models/play';
 import { Observable } from 'rxjs';
 import { EventSent } from '../_models/event-sent';
+import { PlayType } from '../_models/play-type';
+import { EventModel } from '../_models/event';
 
 @Injectable({
   providedIn: 'root'
@@ -38,16 +40,16 @@ export class TheatreService {
     return this.http.post<EventSent>(this.baseUrl + 'Event', model);
   }
 
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event');
+  getEvents(): Observable<EventModel[]> {
+    return this.http.get<EventModel[]>(this.baseUrl + 'Event');
   }
 
-  getEventsByCurrentUser(): Observable<Event[]> {
+  getEventsByCurrentUser(): Observable<EventModel[]> {
     if (this.accountService.userValue != null)
-      return this.http.get<Event[]>(
+      return this.http.get<EventModel[]>(
         this.baseUrl + 'Event/' + this.accountService.userValue.username
       );
-    return this.http.get<Event[]>(this.baseUrl + 'Event');
+    return this.http.get<EventModel[]>(this.baseUrl + 'Event');
   }
 
   getPlaysByCurrentUser(): Observable<Play[]> {
@@ -56,6 +58,10 @@ export class TheatreService {
         this.baseUrl + 'Play/' + this.accountService.userValue.username
       );
     return this.http.get<Play[]>(this.baseUrl + 'Play');
+  }
+
+  getPlayTypes():Observable<PlayType[]>{
+    return this.http.get<PlayType[]>(this.baseUrl + 'Playtype');
   }
 
   deleteEvent(id: string) {

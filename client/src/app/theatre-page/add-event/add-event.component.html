@@ -1,1 +1,55 @@
-<p>add-event works!</p>
+<div class="container full-height" >
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6">
+        <form [formGroup]="datetimeForm" (ngSubmit)="onSubmit()" novalidate>
+          <h2 class="text-center text-primary">Add event</h2>
+          <hr />
+          <div class="mb-3">
+            <label for="datetime-input" class="form-label">Date & Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="datetime-input"
+              formControlName="datetime"
+              [min]="minDateTime"
+              (change)="onTimeChange($event)"
+             
+            />
+            <div
+              *ngIf="
+                datetimeForm.controls['datetime'].invalid &&
+                (datetimeForm.controls['datetime'].dirty ||
+                  datetimeForm.controls['datetime'].touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="datetimeForm.controls['datetime'].errors?.['required']">
+                Date & Time is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dropdown" class="form-label">Play</label>
+            <select class="form-select" id="dropdown" formControlName="play">
+              <option *ngFor="let option of plays" [value]="option.id">
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-success me-2"
+              [disabled]="datetimeForm.invalid"
+            >
+              Submit
+            </button>
+            <button type="button" class="btn btn-danger" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -16,14 +16,18 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login-page/login-page.module').then((m) => m.LoginPageModule),
   },
-
-  // {
-  //   path: 'home',
-  //   loadChildren: () =>
-  //     import('./client-page/client-page.module').then((m) => m.ClientPageModule),
-  //     canActivate: [AuthGuard],
-  //     data:{roles:[Role.User]}
-  // },
+  {
+    path: 'unauthenticated',
+    loadChildren: () =>
+      import('./unauthenticated-page/unauthenticated-page.module').then((m) => m.UnauthenticatedPageModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./client-page/client-page.module').then((m) => m.ClientPageModule),
+      canActivate: [AuthGuard],
+      data:{roles:[Role.User]}
+  },
    {
     path: 'theatre',
     loadChildren: () =>
