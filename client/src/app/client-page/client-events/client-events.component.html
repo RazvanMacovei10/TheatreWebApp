@@ -1,46 +1,47 @@
 
 <app-client-navbar></app-client-navbar>
 <div class="text-center mt-3">
-  <h2>Your result - {{events.length}}</h2>
+  <h2>{{events.length}} Results found</h2>
 </div>
 
-<div class="col-md-6">
-  <form
-    [formGroup]="filterForm"
-    (ngSubmit)="getFilteredEvents()"
-    autocomplete="off"
-  >
-    <div class="mb-3">
-      <select formControlName="city" name="city">
-          <option value="">City</option>
-          <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city}}</option>
-        </select>
-    </div>
-    <div class="mb-3">
-      <input
-        type="text"
-        class="form-control"
-        formControlName="name"
-        placeholder="name"
-      />
-    </div>
-    <div class="text-center mt-2">
-      <button
-        class="btn btn-success me-2"
-        type="submit"
-        
-      >
-        Search
-      </button>
-      <a class="btn btn-danger" href="home/events" type="button">
-        Reset filters
-      </a>
+<div class="row justify-content-center" >
+  <div class="col-md-5 border rounded border-dark p-4">
+  <form class="form-inline" [formGroup]="filterForm" (ngSubmit)="getFilteredEvents()" autocomplete="off">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="mb-3">
+          <select formControlName="city" name="city" class="form-control">
+            <option value="">City</option>
+            <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="mb-3">
+          <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="mb-3">
+          <input type="number" class="form-control" formControlName="priceFrom" placeholder="0" />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="mb-3">
+          <input type="number" class="form-control" formControlName="priceTo" placeholder="999" />
+        </div>
+      </div>
+      <div class="col-md-12 text-center">
+        <button class="btn btn-secondary me-2" type="submit">Search</button>
+        <a class="btn btn-secondary" href="home/events" type="button">Reset filters</a>
+      </div>
     </div>
   </form>
-</div>
+  </div>
+  </div>
 
 
-<a class="btn btn-success" (click)="getFilteredEvents()">Logout</a>
+
 <div class="container main-container">
   <div class="row">
     <div class="col-sm-4 mb-5" *ngFor="let item of events 
@@ -64,7 +65,10 @@
           <p class="card-text">
             Date: <strong>{{ item.datetime }}</strong>
           </p>
-          <button class="btn btn-primary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
+          <p class="card-text">
+            Price: <strong>{{ item.price }}</strong>
+          </p>
+          <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
           <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for buying tickets
           </button>
         </div>
