@@ -16,6 +16,10 @@ export class ClientEventsComponent implements OnInit {
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   constructor(private accountService: AccountService, private router: Router,private clientService:ClientService,private sanitizer:DomSanitizer) { }
   events:any;
+  page:number=1;
+  count:number=0;
+  tableSize:number=9;
+  tableSizes:any=[3,6,9,12];
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.accountService.currentUser$.pipe(
@@ -41,4 +45,14 @@ export class ClientEventsComponent implements OnInit {
 
     return this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + base64ImageData);
   }
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getEvents();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getEvents();
+  }
+   
 }
