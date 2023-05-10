@@ -1,3 +1,4 @@
+<app-login-navbar></app-login-navbar>
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="shadow p-3 mb-5 bg-body rounded">
       <form *ngIf="!(isLoggedIn$|async)" #loginForm="ngForm" class="d-flex flex-column" (ngSubmit)="login()" autocomplete="off"> 

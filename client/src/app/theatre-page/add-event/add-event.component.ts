@@ -18,6 +18,7 @@ export class AddEventComponent implements OnInit {
     theatreName: '',
     playId: 0,
     datetime: new Date(),
+    price:0
   };
   currentDate = new Date();
   tomorrow = new Date(
@@ -40,6 +41,7 @@ export class AddEventComponent implements OnInit {
     this.datetimeForm = this.formBuilder.group({
       datetime: ['', Validators.required],
       play: ['', Validators.required],
+      price:['',Validators.required]
     });
   }
 
@@ -50,6 +52,7 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit() {
+    this.event.price=this.datetimeForm.controls['price'].getRawValue();
     this.event.datetime=this.datetimeForm.controls['datetime'].getRawValue();
     this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
     this.theatreService.addEvent(this.event).subscribe({

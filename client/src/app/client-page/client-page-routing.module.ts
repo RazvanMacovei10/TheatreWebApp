@@ -6,7 +6,7 @@ import { ClientEventsComponent } from './client-events/client-events.component';
 
 const routes: Routes = [{path:"events",component:ClientEventsComponent},
 {path:"theatres",component:ClientTheatresComponent},
-{path:"",component:HomeComponent},];
+{path:"",component:ClientEventsComponent},];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -11,6 +11,7 @@ namespace DataLayer.Entities
         public int Id { get; set; }
         public DateTime DateTime { get; set; }
 
+        public float Price { get; set; }
         public int AvailableSeats { get; set; }
         public int PlayId { get; set; }
         public Play Play { get; set; }

@@ -11,6 +11,7 @@ namespace DataLayer.DTOs
         public int Id { get; set; }
         public string TheatreName { get; set; }
         public int PlayId { get; set; }
+        public float Price { get; set; }
         public DateTime datetime { get; set; }
     }
 }

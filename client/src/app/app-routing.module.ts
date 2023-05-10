@@ -17,16 +17,11 @@ const routes: Routes = [
       import('./login-page/login-page.module').then((m) => m.LoginPageModule),
   },
   {
-    path: 'unauthenticated',
-    loadChildren: () =>
-      import('./unauthenticated-page/unauthenticated-page.module').then((m) => m.UnauthenticatedPageModule),
-  },
-  {
     path: 'home',
     loadChildren: () =>
       import('./client-page/client-page.module').then((m) => m.ClientPageModule),
       canActivate: [AuthGuard],
-      data:{roles:[Role.User]}
+      data:{roles:[Role.User],allowAnonymous:true}
   },
    {
     path: 'theatre',

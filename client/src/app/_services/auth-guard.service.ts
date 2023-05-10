@@ -20,10 +20,16 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/']);
                 return false;
             }
+            
 
             // authorized so return true
             return true;
         }
+        const allowAnonymous = route.data['allowAnonymous'];
+  if (allowAnonymous) {
+    return true;
+  }
+        
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/auth'], { queryParams: { returnUrl: state.url } });

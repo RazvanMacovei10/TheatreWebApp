@@ -6,13 +6,15 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterTheatreComponent } from './register-theatre/register-theatre.component';
+import { LoginNavbarComponent } from './login-navbar/login-navbar.component';
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-    RegisterTheatreComponent
+    RegisterTheatreComponent,
+    LoginNavbarComponent
   ],
   imports: [
     CommonModule,

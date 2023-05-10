@@ -2,29 +2,16 @@
 <div class="d-flex justify-content-center align-items-center">
   <a class="btn btn-primary" href="/theatre/play/add">Add play</a>
 </div>
-<div class="container main-container d-flex justify-content-center">
+<div class="container main-container">
   <div class="row">
-    <div class="col-sm-4 margin-bot" *ngFor="let item of plays">
-      <div class="card main-card">
-        <img
-          [src]="getImageUrl(item)"
-          class="card-img card-img-top image-scale"
-          alt="..."
-        />
+    <div class="col-sm-4 mb-3" *ngFor="let item of plays">
+      <div class="card h-100">
+        <img [src]="getImageUrl(item)" class="card-img-top h-50" alt="...">
         <div class="card-body">
           <h2 class="card-title">{{ item.name }}</h2>
-          <p class="card-text">
-            Description: <strong>{{ item.description }}</strong>
-          </p>
-          <p class="card-text">
-            Type: <strong>{{ item.type.name }}</strong>
-          </p>
-          <button
-            class="btn btn-danger float-right"
-            (click)="deletePlay(item.id)"
-          >
-            Delete
-          </button>
+          <p class="card-text">Description: <strong>{{ item.description }}</strong></p>
+          <p class="card-text">Type: <strong>{{ item.type.name }}</strong></p>
+          <button class="btn btn-danger float-right" (click)="deletePlay(item.id)">Delete</button>
         </div>
       </div>
     </div>

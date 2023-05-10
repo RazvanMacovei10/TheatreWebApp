@@ -1,14 +1,12 @@
-<app-client-navbar></app-client-navbar>
 
-<div class="container main-container d-flex justify-content-center">
+<app-client-navbar></app-client-navbar>
+<div class="container main-container">
   <div class="row">
-    <div class="col-sm-4 margin-bot" *ngFor="let item of events">
-      <div class="card main-card">
-        <img
-          [src]="getImageUrl(item.play)"
-          class="card-img card-img-top image-scale"
-          alt="..."
-        />
+    <div class="col-sm-4 mb-5" *ngFor="let item of events">
+      <div class="card h-100">
+        <div class="card-img-wrapper d-flex justify-content-center align-items-center">
+          <img [src]="getImageUrl(item.play)" class="card-img card-img-top image-scale img-card" alt="...">
+        </div>
         <div class="card-body">
           <h2 class="card-title">{{ item.play.name }}</h2>
           <p class="card-text">
@@ -21,9 +19,11 @@
             Date: <strong>{{ item.datetime }}</strong>
           </p>
           <p class="card-text">
-            Description: <strong>{{ item.play.description }}</strong>
+            Price: <strong>{{ item.price }} $</strong>
           </p>
-          <button class="btn btn-primary">Buy ticket</button>
+          <button class="btn btn-primary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
+          <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for buying tickets
+          </button>
         </div>
       </div>
     </div>

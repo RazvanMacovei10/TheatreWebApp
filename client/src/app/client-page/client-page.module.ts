@@ -7,7 +7,6 @@ import { ClientNavbarComponent } from './client-navbar/client-navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ClientTheatresComponent } from './client-theatres/client-theatres.component';
 
-
 @NgModule({
   declarations: [
     ClientEventsComponent,
