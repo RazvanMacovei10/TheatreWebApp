@@ -53,6 +53,7 @@ builder.Services.AddScoped<ITheatreRepository,TheatreRepository>();
 builder.Services.AddScoped<IEventRepository,EventRepository>();
 builder.Services.AddScoped<IPlayRepository,PlayRepository>();
 builder.Services.AddScoped<IRegisterFormRepository, RegisterFormRepository>();
+builder.Services.AddScoped<IAddressRepository,AddressRepository>();
 
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<ITokenBL, TokenBL>();
@@ -62,6 +63,7 @@ builder.Services.AddScoped<IPlayBL, PlayBL>();
 builder.Services.AddScoped<IPlayTypeBL, PlayTypeBL>();
 builder.Services.AddScoped<ITheatreBL, TheatreBL>();
 builder.Services.AddScoped<IRegisterFormBL, RegisterFormBL>();
+builder.Services.AddScoped<IAddressBL, AddressBL>();
 
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme).

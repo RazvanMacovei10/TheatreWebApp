@@ -15,8 +15,14 @@ export class ClientService {
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl + 'Event');
   }
+  getFilteredEvents(city:string,name:string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEvents/'+city+'/'+name);
+  }
 
   getTheatres(): Observable<Theatre[]>{
     return this.http.get<Theatre[]>(this.baseUrl + 'Theathre')
+  }
+  getCities():Observable<string[]>{
+    return this.http.get<string[]>(this.baseUrl + 'Address');
   }
 }

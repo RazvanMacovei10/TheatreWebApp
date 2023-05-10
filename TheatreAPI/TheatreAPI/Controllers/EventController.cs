@@ -40,6 +40,13 @@ namespace TheatreAPI.Controllers
             List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
             return Ok(eventsDTO);
         }
+        [HttpGet("FilteredEvents/{city}/{name?}")]
+        public async Task<IActionResult> GetFilteredEvents(string city,string? name=null)
+        {
+            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(city,name);
+            List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
+            return Ok(eventsDTO);
+        }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetEventsByTheatreId(string name)

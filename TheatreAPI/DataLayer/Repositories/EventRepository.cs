@@ -23,6 +23,25 @@ namespace DataLayer.Repositories
 
             return results;
         }
+        public async Task<List<Event>> GetAllFiltered(string city, string name)
+        {
+            if(name!=null)
+            {
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                .Where(x => x.Theatre.Address.City.Contains(city)).Where(x => x.Play.Name.Contains(name))
+                .ToListAsync();
+                return results;
+
+            }
+            else
+            {
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                .Where(x => x.Theatre.Address.City.Contains(city))
+                .ToListAsync();
+                return results;
+            }
+
+        }
         public async Task<Event> GetById(int eventId)
         {
             var result = await _context.Events.Where(e => e.Id == eventId).

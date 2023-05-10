@@ -9,6 +9,7 @@ import { ClientTheatresComponent } from './client-theatres/client-theatres.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule,
     ClientPageRoutingModule,
     NgxPaginationModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ClientPageModule { }
