@@ -7,6 +7,8 @@ import { FilterParams } from 'src/app/_models/filter-params';
 import { Play } from 'src/app/_models/play';
 import { AccountService } from 'src/app/_services/account.service';
 import { ClientService } from 'src/app/_services/client.service';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-client-events',
@@ -24,6 +26,7 @@ export class ClientEventsComponent implements OnInit {
   tableSizes:any=[3,6,9,12];
   filterParams:any;
   filterForm !: FormGroup;
+  faCalendar=faCalendarDay;
 
   city:string="";
 
@@ -98,5 +101,17 @@ export class ClientEventsComponent implements OnInit {
     this.page = 1;
     this.getEvents();
   }
-   
+  
+  getDate(dateString: Date): string {
+    const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthName = monthNames[date.getMonth()];
+  return `${day} ${monthName}`;
+  }
+  
+  getTime(dateString: Date): string {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute:'2-digit'});
+  }
 }

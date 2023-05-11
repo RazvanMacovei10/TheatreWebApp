@@ -1,7 +1,7 @@
 
 <app-client-navbar></app-client-navbar>
 <div class="text-center mt-3">
-  <h2>{{events.length}} Results found</h2>
+  <h3>We found {{events?.length}} results based on your search</h3>
 </div>
 
 <div class="row justify-content-center" >
@@ -50,23 +50,26 @@
       currentPage:page,
       totalItems:count
     }; let i = index">
-      <div class="card h-100">
+      <div class="card h-100" style="background-color: bisque;">
+        <h2 class="card-title text-center">{{ item.play.name }}</h2>
         <div class="card-img-wrapper d-flex justify-content-center align-items-center">
           <img [src]="getImageUrl(item.play)" class="card-img card-img-top image-scale img-card" alt="...">
         </div>
         <div class="card-body">
-          <h2 class="card-title">{{ item.play.name }}</h2>
+          
           <p class="card-text">
-            theatre: <strong>{{ item.theatreName }}</strong>
+            <fa-icon [icon]="faCalendar" style="margin-right:0.5em;"></fa-icon><strong>{{ getDate(item.datetime) }} 
+              <strong>{{ getTime(item.datetime) }}</strong></strong>
+          </p>
+          <p class="card-text">
+            <strong>{{ item.theatreName }}</strong>
           </p>
           <p class="card-text">
             Available Seats: <strong>{{ item.availableSeats }}</strong>
           </p>
+          
           <p class="card-text">
-            Date: <strong>{{ item.date }}</strong>
-          </p>
-          <p class="card-text">
-            Price: <strong>{{ item.price }}</strong>
+            Price: <strong>{{ item.price }}</strong> $
           </p>
           <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
           <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for buying tickets
