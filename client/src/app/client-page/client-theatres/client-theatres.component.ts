@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { Observable, map } from 'rxjs';
 import { EventModel } from 'src/app/_models/event';
 import { Theatre } from 'src/app/_models/theatre';
@@ -18,6 +19,13 @@ export class ClientTheatresComponent implements OnInit {
   theatreClicked: boolean = false;
   currentEvents:EventModel[]=[]
   theatres: Theatre[] = [];
+  page:number=1;
+  count:number=0;
+  tableSize:number=9;
+  tableSizes:any=[3,6,9,12];
+  filterParams:any;
+  faCalendar=faCalendarDay;
+
   constructor(
     private accountService: AccountService,
     private router: Router,
@@ -64,5 +72,28 @@ export class ClientTheatresComponent implements OnInit {
   onButtonClick() {
     this.theatreClicked = false;
     this.currentEvents=[];
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getEvents();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getEvents();
+  }
+
+  getDate(dateString: Date): string {
+    const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthName = monthNames[date.getMonth()];
+  return `${day} ${monthName}`;
+  }
+  
+  getTime(dateString: Date): string {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute:'2-digit'});
   }
 }
