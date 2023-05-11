@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 })
 export class ClientEventsComponent implements OnInit {
 
+  @ViewChild('topOfPage') topOfPage!:ElementRef;
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   constructor(private accountService: AccountService, private router: Router,private clientService:ClientService,private sanitizer:DomSanitizer,private fb:FormBuilder) { }
   events:any;
@@ -95,6 +96,7 @@ export class ClientEventsComponent implements OnInit {
   onTableDataChange(event: any) {
     this.page = event;
     this.getEvents();
+    this.topOfPage.nativeElement.scrollIntoView();
   }
   onTableSizeChange(event: any): void {
     this.tableSize = event.target.value;
