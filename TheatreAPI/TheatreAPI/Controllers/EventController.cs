@@ -40,10 +40,31 @@ namespace TheatreAPI.Controllers
             List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
             return Ok(eventsDTO);
         }
-        [HttpGet("FilteredEvents/{city}/{name?}")]
-        public async Task<IActionResult> GetFilteredEvents(string city,string? name=null)
+        [HttpGet("FilteredEvents/{priceFrom}/{priceTo}/{city}/{name}")]
+        public async Task<IActionResult> GetFilteredEvents(int priceFrom, int priceTo, string city, string name)
         {
-            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(city,name);
+            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(priceFrom, priceTo,city, name);
+            List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
+            return Ok(eventsDTO);
+        }
+        [HttpGet("FilteredEventsByName/{priceFrom}/{priceTo}/{name}")]
+        public async Task<IActionResult> GetFilteredEventsByName(int priceFrom, int priceTo, string name)
+        {
+            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(priceFrom, priceTo,null, name);
+            List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
+            return Ok(eventsDTO);
+        }
+        [HttpGet("FilteredEventsByCity/{priceFrom}/{priceTo}/{city}")]
+        public async Task<IActionResult> GetFilteredEventsByCity(int priceFrom, int priceTo, string city)
+        {
+            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(priceFrom, priceTo, city, null);
+            List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
+            return Ok(eventsDTO);
+        }
+        [HttpGet("FilteredEventsByPrice/{priceFrom}/{priceTo}")]
+        public async Task<IActionResult> GetFilteredEventsByPrice(int priceFrom, int priceTo)
+        {
+            List<Event> events = (List<Event>)await _eventBL.GetAllFiltered(priceFrom, priceTo, null, null);
             List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
             return Ok(eventsDTO);
         }

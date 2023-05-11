@@ -15,8 +15,17 @@ export class ClientService {
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl + 'Event');
   }
-  getFilteredEvents(city:string,name:string): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEvents/'+city+'/'+name);
+  getFilteredEvents(priceFrom:number,priceTo:number,city:string,name:string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEvents/'+priceFrom+'/'+priceTo+'/'+city+'/'+name);
+  }
+  getFilteredEventsByName(priceFrom:number,priceTo:number,name:string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByName/'+priceFrom+'/'+priceTo+'/'+name);
+  }
+  getFilteredEventsByCity(priceFrom:number,priceTo:number,city:string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByCity/'+priceFrom+'/'+priceTo+'/'+city);
+  }
+  getFilteredEventsByPrice(priceFrom:number,priceTo:number): Observable<Event[]> {
+    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByPrice/'+priceFrom+'/'+priceTo);
   }
 
   getTheatres(): Observable<Theatre[]>{

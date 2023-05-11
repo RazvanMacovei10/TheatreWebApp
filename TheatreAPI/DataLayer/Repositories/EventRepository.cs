@@ -23,24 +23,43 @@ namespace DataLayer.Repositories
 
             return results;
         }
-        public async Task<List<Event>> GetAllFiltered(string city, string name)
+        public async Task<List<Event>> GetAllFiltered(int priceFrom,int priceTo, string city, string name)
         {
-            if(name!=null)
+            if(city==null && name==null)
             {
                 var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
-                .Where(x => x.Theatre.Address.City.Contains(city)).Where(x => x.Play.Name.Contains(name))
+                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
                 .ToListAsync();
                 return results;
-
             }
             else
+            if(city==null)
+            {
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                .Where(x => x.Play.Name.Contains(name))
+                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .ToListAsync();
+                return results;
+            }
+            else
+            if(name==null)
             {
                 var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Theatre.Address.City.Contains(city))
+                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .ToListAsync();
+                return results;
+
+            }
+            else 
+            {                
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                .Where(x => x.Theatre.Address.City.Contains(city))
+                .Where(x => x.Play.Name.Contains(name))
+                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
                 .ToListAsync();
                 return results;
             }
-
         }
         public async Task<Event> GetById(int eventId)
         {

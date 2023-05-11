@@ -22,9 +22,9 @@ namespace BusinessLogic.BL
             var results = await _eventRepository.GetAll();
             return results;
         }
-        public async Task<List<Event>> GetAllFiltered(string city,string name)
+        public async Task<List<Event>> GetAllFiltered(int priceFrom,int priceTo, string city, string name)
         {
-            var results = await _eventRepository.GetAllFiltered(city,name);
+            var results = await _eventRepository.GetAllFiltered(priceFrom,priceTo,city,name);
             return results;
         }
 

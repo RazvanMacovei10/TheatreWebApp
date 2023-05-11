@@ -38,7 +38,9 @@ export class ClientEventsComponent implements OnInit {
     this.cities$=this.clientService.getCities();
     this.filterForm = this.fb.group({
       city: [''],
-      name:['']
+      name:[''],
+      priceFrom:0,
+      priceTo:9999
     });
   }
   logout() {
@@ -51,10 +53,29 @@ export class ClientEventsComponent implements OnInit {
 
   
   getFilteredEvents(){
-    console.log(this.city);
-    console.log(this.filterForm);
-    this.clientService.getFilteredEvents(this.filterForm.get('city')?.value,this.filterForm.get('name')?.value).subscribe((data)=>{this.events=data});
-    console.log(this.filterForm.get('name')?.value);
+
+    if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value=="")
+    {
+      this.clientService.getFilteredEventsByPrice(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value)
+    .subscribe((data)=>{this.events=data});
+    }
+    else
+    if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value!="")
+    {
+    this.clientService.getFilteredEventsByName(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('name')?.value)
+    .subscribe((data)=>{this.events=data});
+    }
+    else
+    if(this.filterForm.get('name')?.value=="" && this.filterForm.get('city')?.value!="")
+    {
+    this.clientService.getFilteredEventsByCity(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value)
+    .subscribe((data)=>{this.events=data});
+    }
+    else
+    {
+    this.clientService.getFilteredEvents(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value,this.filterForm.get('name')?.value)
+    .subscribe((data)=>{this.events=data});
+    }
 
   }
   
