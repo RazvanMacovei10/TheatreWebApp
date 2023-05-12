@@ -1,3 +1,4 @@
+<app-theatre-navbar></app-theatre-navbar>
 <div class="container full-height">
     <div class="row justify-content-center align-items-center">
       <div class="col-md-6">
@@ -26,12 +27,14 @@
             </div>
           </div>
           <div class="mb-3">
-            <input
+            <textarea
               type="text"
               class="form-control"
               formControlName="description"
               placeholder="Description"
-            />
+              [ngStyle]="{'height': (registerForm.controls['description'].value.length * 0.6) + 'px'}"
+              style="max-height:300px"
+            ></textarea>
             <div
               *ngIf="
                 registerForm.controls['description'].invalid &&
@@ -43,7 +46,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <select formControlName="type" name="playType">
+            <select class="form-select" formControlName="type" name="playType">
                 <option value="">Select a play type</option>
                 <option *ngFor="let playType of playTypes$ | async" [ngValue]="playType">{{ playType.name }}</option>
               </select>
@@ -62,13 +65,19 @@
             type="file"
             name="image"
             id="image"
+            formControlName="image"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && registerForm.controls['image'].errors }" 
             (change)="onFileSelected($event)"
           />
+          <div *ngIf="submitted && registerForm.controls['image'].errors" class="invalid-feedback">
+            <div *ngIf="registerForm.controls['image'].errors">JPG Image is required</div>
+            </div> 
           <div class="text-center mt-2">
             <button
-              class="btn btn-success me-2"
               type="submit"
-              
+              class="btn btn-success me-2"
+              [disabled]="registerForm.invalid"
             >
               Add
             </button>

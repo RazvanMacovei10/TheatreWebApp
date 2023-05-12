@@ -20,6 +20,8 @@ export class AddPlayComponent implements OnInit {
     id:0,
     name:''
   }
+  submitted=false;
+  get f() { return this.registerForm.controls; }
   playTypes$:Observable<PlayType[]>|null=null;
     model: Play = {
     id:0,
@@ -35,7 +37,7 @@ export class AddPlayComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       type: ['', Validators.required],
-      image: [null]
+      image: ['',Validators.required],
     });
     this.playTypes$=this.theatreService.getPlayTypes();
   }
@@ -63,6 +65,9 @@ export class AddPlayComponent implements OnInit {
       this.model.image =window.btoa(String.fromCharCode(...byteArray));
     });
     console.log(this.model);
+    this.registerForm.controls["image"].setValidators([Validators.required]);
+            this.registerForm.get('image')?.updateValueAndValidity();
+    
   }
   public fileToByteArray(file: File): Observable<Uint8Array> {
     return new Observable((observer) => {
