@@ -1,7 +1,7 @@
 <app-theatre-navbar></app-theatre-navbar>
 <div class="container full-height">
     <div class="row justify-content-center align-items-center">
-      <div class="col-md-6">
+      <div class="col-md-6 border mb-3 mt-5">
         <form
           [formGroup]="registerForm"
           (ngSubmit)="addPlay()"
@@ -70,6 +70,9 @@
             [ngClass]="{ 'is-invalid': submitted && registerForm.controls['image'].errors }" 
             (change)="onFileSelected($event)"
           />
+          <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+            <img [src]="imageURL">
+          </div>
           <div *ngIf="submitted && registerForm.controls['image'].errors" class="invalid-feedback">
             <div *ngIf="registerForm.controls['image'].errors">JPG Image is required</div>
             </div> 
@@ -89,4 +92,16 @@
       </div>
     </div>
   </div>
+  <script>
+    
+    var loadFile = function(event) {
+      console.log("dadada");
+      var reader = new FileReader();
+      reader.onload = function(){
+        var output = document.getElementById('output');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    };
+  </script>
   

@@ -21,6 +21,7 @@ export class AddPlayComponent implements OnInit {
     name:''
   }
   submitted=false;
+  imageURL:string='';
   get f() { return this.registerForm.controls; }
   playTypes$:Observable<PlayType[]>|null=null;
     model: Play = {
@@ -67,7 +68,11 @@ export class AddPlayComponent implements OnInit {
     console.log(this.model);
     this.registerForm.controls["image"].setValidators([Validators.required]);
             this.registerForm.get('image')?.updateValueAndValidity();
-    
+            const reader = new FileReader();
+            reader.onload = () => {
+              this.imageURL = reader.result as string;
+            }
+            reader.readAsDataURL(file);
   }
   public fileToByteArray(file: File): Observable<Uint8Array> {
     return new Observable((observer) => {
