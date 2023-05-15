@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Play } from 'src/app/_models/play';
 import { AccountService } from 'src/app/_services/account.service';
 import { TheatreService } from 'src/app/_services/theatre.service';
+import { AddEditEventComponent } from '../add-edit-event/add-edit-event.component';
 
 @Component({
   selector: 'app-plays',
@@ -20,7 +22,9 @@ export class PlaysComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private theatreService: TheatreService,
-    private accountService:AccountService
+    private accountService:AccountService,
+    private dialog:MatDialog
+
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +67,27 @@ export class PlaysComponent implements OnInit {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getPlays();
+  }
+  openAddEditPlayForm(){
+    const dialogRef=this.dialog.open(AddEditEventComponent);
+    dialogRef.afterClosed().subscribe({
+      next:()=>{
+        this.getPlays();
+      }
+    })
+
+  }
+  openEditForm(data:any){
+    console.log(data);
+    const dialogRef=this.dialog.open(AddEditEventComponent,{
+      data,
+    })
+    dialogRef.afterClosed().subscribe({
+      next:()=>{
+        this.getPlays();
+      }
+    })
+    
   }
 
 }

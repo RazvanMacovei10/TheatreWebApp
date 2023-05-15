@@ -10,6 +10,11 @@ import { AddEventComponent } from './add-event/add-event.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
+import {MatDialogModule} from '@angular/material/dialog'
+import {MatButtonModule} from '@angular/material/button'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
 
 
 @NgModule({
@@ -19,14 +24,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PlaysComponent,
     TheatreNavbarComponent,    
     AddEventComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    AddEditEventComponent
   ],
   imports: [
     CommonModule,
     TheatrePageRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule
-  ]
+    NgxPaginationModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
 })
 export class TheatrePageModule { }

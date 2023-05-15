@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Abstract;
+using BusinessLogic.BL;
 using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,17 @@ namespace TheatreAPI.Controllers
         {
             var plays = await _playTypeBL.GetAll();
             return plays;
+        }
+        [HttpPost("edit/{name}")]
+        public async Task<IActionResult> Edit(string name,[FromBody] PlayDTO playDTO)
+        {
+            PlayType playType = await _playTypeBL.GetById(playDTO.Type.Id);
+            Play play = _mapper.Map<Play>(playDTO);
+            play.Theatre = await _theatreBL.GetByUsername(name);
+            play.Type = playType;
+            int id = playDTO.Id;
+            await _playBL.UpdatePlayAsync(id, play);
+            return Ok();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace BusinessLogic.Abstract
     {
         public Task<List<Play>> GetAll();
         public Task<Play> GetById(int id);
+        public Task<Play> UpdatePlayAsync(int playId, Play play);
         public Task<Play> Add(Play play);
         public Task<bool> DeleteAsync(int id);
     }

@@ -11,7 +11,7 @@ namespace DataLayer.AbstractRepositories
     {
         public Task<List<Play>> GetAll();
         public Task<Play> GetById(int playId);
-
+        public Task<Play> UpdatePlayAsync(int playId, Play play);
         public Task<Play> Add(Play play);
         Task<bool> DeleteAsync(int id);
     }

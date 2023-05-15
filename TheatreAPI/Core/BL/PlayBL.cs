@@ -37,5 +37,9 @@ namespace BusinessLogic.BL
         {
             return await _playRepository.DeleteAsync(id);
         }
+        public async Task<Play> UpdatePlayAsync(int playId, Play play)
+        {
+            return await _playRepository.UpdatePlayAsync(playId, play);
+        }
     }
 }

@@ -47,5 +47,16 @@ namespace DataLayer.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<Play> UpdatePlayAsync(int playId,Play play)
+        {
+            Play playToModify=await GetById(playId);
+            playToModify.Description = play.Description;
+            playToModify.Theatre = play.Theatre;
+            playToModify.Name = play.Name;
+            playToModify.Image = play.Image;
+            playToModify.Type = play.Type;
+            await _context.SaveChangesAsync();
+            return playToModify;
+        }
     }
 }

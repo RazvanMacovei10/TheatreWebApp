@@ -2,6 +2,7 @@
 <app-theatre-navbar></app-theatre-navbar>
 <div class="d-flex justify-content-center align-items-center">
   <a class="btn btn-primary" href="/theatre/play/add">Add play</a>
+  <button mat raised-button (click)="openAddEditPlayForm()">Add play</button>
 </div>
 <div class="container main-container">
   <div class="row">
@@ -19,6 +20,7 @@
           <h2 class="card-title">{{ item.name }}</h2>
           <p class="card-text">Type: <strong>{{ item.type.name }}</strong></p>
           <button class="btn btn-danger float-right" (click)="deletePlay(item.id)">Delete</button>
+          <button class="btn btn-primary float-right" (click)="openEditForm(item)">Edit</button>
         </div>
       </div>
     </div>

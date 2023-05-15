@@ -1,0 +1,99 @@
+
+<div class="container full-height">
+<div class="row justify-content-center align-items-center">
+    <div>
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="addPlay()"
+        autocomplete="off"
+      >
+        <h2 class="text-center text-primary">Add play</h2>
+        <hr />
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Name"
+          />
+          <div
+            *ngIf="
+              registerForm.controls['name'].invalid &&
+              registerForm.controls['name'].touched
+            "
+            class="text-danger"
+          >
+            Name is required
+          </div>
+        </div>
+        <div class="mb-3">
+          <textarea
+            type="text"
+            class="form-control"
+            formControlName="description"
+            placeholder="Description"
+            [ngStyle]="{'height': (registerForm.controls['description'].value.length * 0.6) + 'px'}"
+            style="max-height:300px"
+          ></textarea>
+          <div
+            *ngIf="
+              registerForm.controls['description'].invalid &&
+              registerForm.controls['description'].touched
+            "
+            class="text-danger"
+          >
+            Description is required
+          </div>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" formControlName="type" name="playType">
+              <option value="">Select a play type</option>
+              <option *ngFor="let playType of playTypes$ | async" [ngValue]="playType">{{ playType.name }}</option>
+            </select>
+          <div
+            *ngIf="
+              registerForm.controls['type'].invalid &&
+              registerForm.controls['type'].touched
+            "
+            class="text-danger"
+          >
+            Type is required
+          </div>
+        </div>
+        <div class="imagePreview" *ngIf="data">
+            <img [src]="getImageUrl(data)">
+          </div>
+        <label for="image">Select image to upload:</label>
+        <input *ngIf="!data"
+          type="file"
+          name="image"
+          id="image"
+          formControlName="image"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && registerForm.controls['image'].errors }" 
+          (change)="onFileSelected($event)"
+          #imageInput
+        />
+        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+          <img [src]="imageURL">
+        </div>
+        
+        <div *ngIf="submitted && registerForm.controls['image'].errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls['image'].errors">JPG Image is required</div>
+          </div> 
+        <div class="text-center mt-2">
+          <button
+            type="submit"
+            class="btn btn-success me-2"
+            [disabled]="registerForm.invalid"
+          >
+            {{data? 'Update':'Save'}}
+          </button>
+          <button class="btn btn-danger" type="button" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

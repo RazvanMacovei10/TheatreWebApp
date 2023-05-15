@@ -25,6 +25,13 @@ export class TheatreService {
     }
     return this.http.post<Play>(this.baseUrl + 'Play/'+name, model);
   }
+  updatePlay(model:any){
+    let name="";
+    if (this.accountService.userValue != null) {
+      name = this.accountService.userValue.username;
+    }
+    return this.http.post<Play>(this.baseUrl + 'Play/edit/'+name, model);
+  }
   getPlays(): Observable<Play[]> {
     return this.http.get<Play[]>(this.baseUrl + 'Play');
   }
