@@ -24,7 +24,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item" *ngIf="isLoggedIn$ | async">
+          <li class="nav-item" *ngIf="isLoggedIn$ | async" style="cursor:pointer">
             <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <li class="nav-item" *ngIf="!(isLoggedIn$ | async)">

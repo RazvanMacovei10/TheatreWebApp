@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { AddEventComponent } from './add-event/add-event.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     TheatrePageRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class TheatrePageModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { EventModel } from 'src/app/_models/event';
@@ -11,6 +11,12 @@ import { TheatreService } from 'src/app/_services/theatre.service';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
+
+  @ViewChild('topOfPage') topOfPage!:ElementRef;
+  page:number=1;
+  count:number=0;
+  tableSize:number=9;
+  tableSizes:any=[3,6,9,12];
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   events: EventModel[] = [];
   constructor(
@@ -42,5 +48,16 @@ export class ScheduleComponent implements OnInit {
   deleteEvent(id: number) {
     console.log(id);
     this.theatreService.deleteEvent(id.toString()).subscribe(()=>this.loadEvents())
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.loadEvents();
+    this.topOfPage.nativeElement.scrollIntoView();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.loadEvents();
   }
 }

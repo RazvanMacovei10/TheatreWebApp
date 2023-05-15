@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Play } from 'src/app/_models/play';
 import { AccountService } from 'src/app/_services/account.service';
@@ -11,7 +11,12 @@ import { TheatreService } from 'src/app/_services/theatre.service';
 })
 export class PlaysComponent implements OnInit {
 
+  @ViewChild('topOfPage') topOfPage!:ElementRef;
   plays: Play[] = [];
+  page:number=1;
+  count:number=0;
+  tableSize:number=9;
+  tableSizes:any=[3,6,9,12];
   constructor(
     private sanitizer: DomSanitizer,
     private theatreService: TheatreService,
@@ -47,6 +52,17 @@ export class PlaysComponent implements OnInit {
     this.theatreService.deletePlay(id).subscribe(() => {
       this.getPlays();
     });
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getPlays();
+    this.topOfPage.nativeElement.scrollIntoView();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getPlays();
   }
 
 }
