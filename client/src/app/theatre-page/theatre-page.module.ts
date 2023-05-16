@@ -10,11 +10,16 @@ import { AddEventComponent } from './add-event/add-event.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { AddEditEventComponent } from './add-edit-event/add-edit-event.component';
+import { AddEditPlayComponent } from './add-edit-play/add-edit-play.component';
 import {MatDialogModule} from '@angular/material/dialog'
 import {MatButtonModule} from '@angular/material/button'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table'
+import {MatIconModule} from '@angular/material/icon'
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -25,7 +30,7 @@ import {MatInputModule} from '@angular/material/input'
     TheatreNavbarComponent,    
     AddEventComponent,
     ScheduleComponent,
-    AddEditEventComponent
+    AddEditPlayComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +42,11 @@ import {MatInputModule} from '@angular/material/input'
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatIconModule,
+    MatSnackBarModule,
   ],
 })
 export class TheatrePageModule { }

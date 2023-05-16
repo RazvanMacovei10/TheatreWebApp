@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { EventSent } from 'src/app/_models/event-sent';
 import { Play } from 'src/app/_models/play';
 import { TheatreService } from 'src/app/_services/theatre.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CoreService } from 'src/app/_services/core.service';
+
+
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
@@ -32,8 +36,10 @@ export class AddEventComponent implements OnInit {
   constructor(
     private theatreService: TheatreService,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private dialogRef:MatDialogRef<AddEventComponent>,
+    private coreService:CoreService,
+    @Inject(MAT_DIALOG_DATA) public data:any) {}
 
   ngOnInit(): void {
     this.getPlays();
@@ -43,6 +49,7 @@ export class AddEventComponent implements OnInit {
       play: ['', Validators.required],
       price:['',Validators.required]
     });
+    this.datetimeForm.patchValue(this.data);
   }
 
   getPlays() {
@@ -52,16 +59,43 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.data){
+
+    this.event.price=this.datetimeForm.controls['price'].getRawValue();
+    this.event.datetime=this.datetimeForm.controls['datetime'].getRawValue();
+    if(parseInt(this.datetimeForm.controls['play'].getRawValue()))
+    {
+      this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
+    }
+    else{
+      this.event.playId=this.data.play.id;
+    }
+    
+    this.event.id=this.data.id;
+    this.theatreService.updateEvent(this.event).subscribe({
+      next: () => {
+        this.cancel();
+        this.coreService.openSnackBar("Event modified",'done');
+      },
+      error: (error) => console.log(error),
+    })
+  }
+  else
+  {
     this.event.price=this.datetimeForm.controls['price'].getRawValue();
     this.event.datetime=this.datetimeForm.controls['datetime'].getRawValue();
     this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
     this.theatreService.addEvent(this.event).subscribe({
       next: () => {
         this.cancel();
+        this.coreService.openSnackBar("Event added successfully",'done');
       },
       error: (error) => console.log(error),
     })
   }
+
+
+}
 
   formatDateTime(date: Date): string {
     return (
@@ -88,7 +122,6 @@ export class AddEventComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/theatre/schedule');
+    this.dialogRef.close();
   }
-
 }

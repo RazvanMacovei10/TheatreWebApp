@@ -1,3 +1,5 @@
+import { Play } from "./play";
+
 export interface EventSent{
     id:number,
     theatreName:string,

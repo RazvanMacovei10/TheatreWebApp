@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Play } from 'src/app/_models/play';
 import { PlayType } from 'src/app/_models/play-type';
+import { CoreService } from 'src/app/_services/core.service';
 import { TheatreService } from 'src/app/_services/theatre.service';
 
 @Component({
-  selector: 'app-add-edit-event',
-  templateUrl: './add-edit-event.component.html',
-  styleUrls: ['./add-edit-event.component.scss']
+  selector: 'app-add-edit-play',
+  templateUrl: './add-edit-play.component.html',
+  styleUrls: ['./add-edit-play.component.scss']
 })
-export class AddEditEventComponent implements OnInit {
+export class AddEditPlayComponent implements OnInit {
   @ViewChild('imageInput') imageInput!:ElementRef;
 
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
@@ -23,7 +24,8 @@ export class AddEditEventComponent implements OnInit {
     private theatreService: TheatreService, 
     private router: Router, 
     private fb:FormBuilder,
-    private dialogRef:MatDialogRef<AddEditEventComponent>,
+    private dialogRef:MatDialogRef<AddEditPlayComponent>,
+    private coreService:CoreService,
     @Inject(MAT_DIALOG_DATA) public data:any) { }
   playtype:PlayType={
     id:0,
@@ -66,7 +68,7 @@ export class AddEditEventComponent implements OnInit {
       this.theatreService.updatePlay(this.model).subscribe({
         next: () => {
           this.cancel();
-          alert('Play modified successfully');
+          this.coreService.openSnackBar("Play modified successfully",'done');
         },
         error: (error) => console.log(error),
       });
@@ -81,7 +83,7 @@ export class AddEditEventComponent implements OnInit {
       this.theatreService.addPlay(this.model).subscribe({
         next: () => {
           this.cancel();
-          alert('Play added successfully');
+          this.coreService.openSnackBar("Play added successfully",'done');
         },
         error: (error) => console.log(error),
       });

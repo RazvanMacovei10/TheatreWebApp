@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditEventComponent } from './add-edit-event.component';
+import { AddEditPlayComponent } from './add-edit-play.component';
 
-describe('AddEditEventComponent', () => {
-  let component: AddEditEventComponent;
-  let fixture: ComponentFixture<AddEditEventComponent>;
+describe('AddEditPlayComponent', () => {
+  let component: AddEditPlayComponent;
+  let fixture: ComponentFixture<AddEditPlayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddEditEventComponent ]
+      declarations: [ AddEditPlayComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddEditEventComponent);
+    fixture = TestBed.createComponent(AddEditPlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

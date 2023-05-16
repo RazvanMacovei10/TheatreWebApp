@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Abstract;
+using BusinessLogic.BL;
 using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace TheatreAPI.Controllers
         private readonly IEventBL _eventBL;
         private readonly ITheatreBL _theathreBL;
         private readonly IMapper _mapper;
-        public EventController(IEventBL eventBL, IMapper mapper, ITheatreBL theathreBL)
+        private readonly IPlayBL _playBL;
+        public EventController(IEventBL eventBL, IMapper mapper, ITheatreBL theathreBL, IPlayBL playBL)
         {
             _eventBL = eventBL;
             _mapper = mapper;
             _theathreBL = theathreBL;
+            _playBL = playBL;
         }
 
         [HttpPost]
@@ -30,6 +33,21 @@ namespace TheatreAPI.Controllers
             newEvent.AvailableSeats = theatre.TotalSeats;
 
             await _eventBL.Add(newEvent);
+            return Ok();
+        }
+
+        [HttpPost("edit/")]
+        public async Task<IActionResult> Edit([FromBody] EventSentDTO eventDTO)
+        {
+            Theatre theatre = await _theathreBL.GetByUsername(eventDTO.TheatreName);
+            Play play = await _playBL.GetById(eventDTO.PlayId);
+            Event newEvent = _mapper.Map<Event>(eventDTO);
+            newEvent.Theatre = theatre;
+            newEvent.TheatreId = theatre.Id;
+            newEvent.AvailableSeats = theatre.TotalSeats;
+            newEvent.Play = play;
+            int id = eventDTO.Id;
+            await _eventBL.UpdateEventAsync(id,newEvent);
             return Ok();
         }
 

@@ -88,5 +88,17 @@ namespace DataLayer.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<Event> UpdateEventAsync(int eventId, Event eventSent)
+        {
+            Event eventToModify = await GetById(eventId);
+            eventToModify.DateTime = eventSent.DateTime;
+            eventToModify.Price = eventSent.Price;
+            eventToModify.AvailableSeats = eventSent.AvailableSeats;
+            eventToModify.Play = eventSent.Play;
+            eventToModify.Theatre = eventSent.Theatre;
+  
+            await _context.SaveChangesAsync();
+            return eventToModify;
+        }
     }
 }

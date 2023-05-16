@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Abstract;
 using DataLayer.AbstractRepositories;
 using DataLayer.Entities;
+using DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,10 @@ namespace BusinessLogic.BL
         public async Task<bool> DeleteAsync(int id)
         {
             return await _eventRepository.DeleteAsync(id);
+        }
+        public async Task<Event> UpdateEventAsync(int eventId, Event eventSent)
+        {
+            return await _eventRepository.UpdateEventAsync(eventId, eventSent);
         }
     }
 }

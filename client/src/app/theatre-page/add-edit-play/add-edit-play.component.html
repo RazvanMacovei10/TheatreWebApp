@@ -1,5 +1,5 @@
 
-<div class="container full-height">
+<div class="container full-height main-div">
 <div class="row justify-content-center align-items-center">
     <div>
       <form
@@ -47,7 +47,7 @@
         </div>
         <div class="mb-3">
           <select class="form-select" formControlName="type" name="playType">
-              <option value="">Select a play type</option>
+            <option value="" disabled selected hidden >Select a type </option>
               <option *ngFor="let playType of playTypes$ | async" [ngValue]="playType">{{ playType.name }}</option>
             </select>
           <div
@@ -61,10 +61,11 @@
           </div>
         </div>
         <div class="imagePreview" *ngIf="data">
-            <img [src]="getImageUrl(data)">
+            <img class="image-added" [src]="getImageUrl(data)">
           </div>
+          <div *ngIf="!data">
         <label for="image">Select image to upload:</label>
-        <input *ngIf="!data"
+        <input 
           type="file"
           name="image"
           id="image"
@@ -75,9 +76,9 @@
           #imageInput
         />
         <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-          <img [src]="imageURL">
+          <img class="image-added" [src]="imageURL">
         </div>
-        
+      </div>
         <div *ngIf="submitted && registerForm.controls['image'].errors" class="invalid-feedback">
           <div *ngIf="registerForm.controls['image'].errors">JPG Image is required</div>
           </div> 

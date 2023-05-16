@@ -46,6 +46,12 @@ export class TheatreService {
     console.log(model);
     return this.http.post<EventSent>(this.baseUrl + 'Event', model);
   }
+  updateEvent(model: EventSent) {
+    if (this.accountService.userValue != null) {
+      model.theatreName = this.accountService.userValue.username;
+    }
+    return this.http.post<EventSent>(this.baseUrl + 'Event/edit/', model);
+  }
 
   getEvents(): Observable<EventModel[]> {
     return this.http.get<EventModel[]>(this.baseUrl + 'Event');

@@ -4,7 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Play } from 'src/app/_models/play';
 import { AccountService } from 'src/app/_services/account.service';
 import { TheatreService } from 'src/app/_services/theatre.service';
-import { AddEditEventComponent } from '../add-edit-event/add-edit-event.component';
+import { AddEditPlayComponent } from '../add-edit-play/add-edit-play.component';
 
 @Component({
   selector: 'app-plays',
@@ -69,7 +69,7 @@ export class PlaysComponent implements OnInit {
     this.getPlays();
   }
   openAddEditPlayForm(){
-    const dialogRef=this.dialog.open(AddEditEventComponent);
+    const dialogRef=this.dialog.open(AddEditPlayComponent);
     dialogRef.afterClosed().subscribe({
       next:()=>{
         this.getPlays();
@@ -79,7 +79,7 @@ export class PlaysComponent implements OnInit {
   }
   openEditForm(data:any){
     console.log(data);
-    const dialogRef=this.dialog.open(AddEditEventComponent,{
+    const dialogRef=this.dialog.open(AddEditPlayComponent,{
       data,
     })
     dialogRef.afterClosed().subscribe({
