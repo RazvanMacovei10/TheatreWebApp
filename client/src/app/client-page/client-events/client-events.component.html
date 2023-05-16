@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md-3">
         <div class="mb-3">
-          <select formControlName="city" name="city" class="form-control">
+          <select formControlName="city" name="city" (change)="getFilteredEvents()" class="form-control">
             <option value="">City</option>
             <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city }}</option>
           </select>
@@ -18,17 +18,17 @@
       </div>
       <div class="col-md-3">
         <div class="mb-3">
-          <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+          <input type="text" class="form-control" formControlName="name" placeholder="Name" (input)="getFilteredEvents()"/>
         </div>
       </div>
       <div class="col-md-3">
         <div class="mb-3">
-          <input type="number" class="form-control" formControlName="priceFrom" placeholder="0" />
+          <input type="number" class="form-control" formControlName="priceFrom" placeholder="0" (input)="getFilteredEvents()"/>
         </div>
       </div>
       <div class="col-md-3">
         <div class="mb-3">
-          <input type="number" class="form-control" formControlName="priceTo" placeholder="999" />
+          <input type="number" class="form-control" formControlName="priceTo" placeholder="999" (input)="getFilteredEvents()"/>
         </div>
       </div>
       <div class="col-md-12 text-center">
@@ -40,6 +40,7 @@
   </div>
   </div>
 
+  
 
 
 <div class="container main-container">
@@ -50,7 +51,7 @@
       currentPage:page,
       totalItems:count
     }; let i = index">
-      <div class="card h-100" style="background-color: bisque;">
+      <div class="card h-100" style="background-color: bisque;" (click)="onCardClick(item)">
         <h2 class="card-title text-center">{{ item.play.name }}</h2>
         <div class="card-img-wrapper d-flex justify-content-center align-items-center">
           <img [src]="getImageUrl(item.play)" class="card-img card-img-top image-scale img-card" alt="...">

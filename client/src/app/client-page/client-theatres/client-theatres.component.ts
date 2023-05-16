@@ -65,7 +65,6 @@ export class ClientTheatresComponent implements OnInit {
 
   onCardClick(item: Theatre) {
     this.theatreClicked = true;
-    console.log(item);
     this.currentEvents = item.events;
   }
 

@@ -11,6 +11,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ClientEventComponent } from './client-event/client-event.component';
+import {MatDialogModule} from '@angular/material/dialog'
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ClientEventsComponent,
     ClientNavbarComponent,
     HomeComponent,
-    ClientTheatresComponent
+    ClientTheatresComponent,
+    ClientEventComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule
   ]
 })
 export class ClientPageModule { }

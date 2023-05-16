@@ -1,0 +1,35 @@
+<mat-dialog-content >
+<div class="card h-100 container event-container">
+    
+    <h1 class="card-title text-center">{{ currentEvent.play.name }}</h1>
+    <div class="card-img-wrapper d-flex justify-content-center align-items-center">
+      <img [src]="getImageUrl(currentEvent.play)" class="card-img card-img-top image-scale img-card" alt="...">
+    </div>
+    <div class="card-body">
+      
+      <p class="card-text">
+        <fa-icon [icon]="faCalendar" style="margin-right:0.5em;"></fa-icon><strong>{{ getDate(currentEvent.datetime) }} 
+          <strong>{{ getTime(currentEvent.datetime) }}</strong></strong>
+      </p>
+      <p class="card-text">
+        <strong>{{ currentEvent.theatreName }}</strong>
+      </p>
+      <p class="card-text">
+        Available Seats: <strong>{{ currentEvent.availableSeats }}</strong>
+      </p>     
+      
+      <p class="card-text">
+        Price: <strong>{{ currentEvent.price }}</strong> $
+      </p>
+      <p class="card-text">
+        <strong> Description:</strong> {{ currentEvent.play.description }}
+      </p>
+      <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
+      <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for buying tickets
+      </button>
+    </div>
+  </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">Cancel</button>
+  </mat-dialog-actions>
