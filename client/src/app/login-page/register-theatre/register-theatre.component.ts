@@ -19,6 +19,7 @@ export class RegisterTheatreComponent implements OnInit {
     email: '',
     image: '',
   };
+  registerError:string="";
 
   constructor(private accountService: AccountService, private router:Router) {}
 
@@ -30,7 +31,12 @@ export class RegisterTheatreComponent implements OnInit {
       next: () => {
         this.cancel();
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        if (error.status === 400) {
+          this.registerError=error.error;
+        } else {
+        }
+      },
     });
   }
   cancel() {

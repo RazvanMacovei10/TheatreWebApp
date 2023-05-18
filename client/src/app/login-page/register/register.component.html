@@ -1,7 +1,12 @@
 <app-login-navbar></app-login-navbar>
-<div class="container full-height">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-6">
+
+
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div>
+      <div *ngIf="registerError" class="shadow p-2 mb-3 rounded bg-danger bg-gradient">{{ registerError }}</div>
+
+      <div class="shadow p-3 mb-5 bg-body rounded main-container">
+        
         <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
           <h2 class="text-center text-primary">Sign up</h2>
           <hr />
@@ -60,21 +65,24 @@
               Cancel
             </button>
           </div>
-        </form>
-        <div
-          class="display: flex; justify-content: flex-end float-right"
-        >
-          <button
-            class="btn btn-primary me-2"
-            routerLink="/auth/register-theatre"
-          >
-            Register as theatre
-          </button>
-          <button class="btn btn-primary me-2" routerLink="/auth/login">
-            Login
-          </button>
-        </div>
+        </form>    
+
+       
+      
       </div>
+      <div
+      class="display: flex; justify-content: flex-end float-right"
+    >
+      <button
+        class="btn btn-primary me-2"
+        routerLink="/auth/register-theatre"
+      >
+        Register as theatre
+      </button>
+      <button class="btn btn-primary me-2" routerLink="/auth/login">
+        Login
+      </button>
     </div>
-  </div>
-  
+      </div>  
+    </div>  
+    

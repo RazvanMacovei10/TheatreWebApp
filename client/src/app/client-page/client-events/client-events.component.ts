@@ -75,7 +75,8 @@ export class ClientEventsComponent implements OnInit {
 
   
   getFilteredEvents(){
-
+    this.page=1;
+    
     if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value=="")
     {
       this.clientService.getFilteredEventsByPrice(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value)
@@ -93,10 +94,13 @@ export class ClientEventsComponent implements OnInit {
     this.clientService.getFilteredEventsByCity(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value)
     .subscribe((data)=>{this.events=data});
     }
+    
     else
     {
-    this.clientService.getFilteredEvents(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value,this.filterForm.get('name')?.value)
-    .subscribe((data)=>{this.events=data});
+      
+        this.clientService.getFilteredEvents(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value,this.filterForm.get('name')?.value)
+      .subscribe((data)=>{this.events=data});
+      
     }
 
   }

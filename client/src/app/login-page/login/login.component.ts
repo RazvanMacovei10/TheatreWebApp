@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/_services/account.service';
 export class LoginComponent implements OnInit {
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   model: any = {};
+  loginError:string="";
   constructor(private accountService: AccountService, private router: Router) {
     let role = this.accountService.userValue?.role;
     console.log(role);
@@ -58,7 +59,14 @@ export class LoginComponent implements OnInit {
             break;
         }
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.loginError = 'Invalid username or password.'; // Set login error message
+        } else {
+          this.loginError = 'An error occurred. Please try again later.'; // Set generic error message
+        }
+      },
     });
   }
   logout() {

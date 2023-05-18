@@ -1,6 +1,10 @@
 <app-login-navbar></app-login-navbar>
+
 <div class="container d-flex justify-content-center align-items-center vh-100">
+  <div>
+    <div *ngIf="loginError" class="shadow p-2 mb-3 rounded bg-danger bg-gradient">{{ loginError }}</div>
     <div class="shadow p-3 mb-5 bg-body rounded">
+      
       <form *ngIf="!(isLoggedIn$|async)" #loginForm="ngForm" class="d-flex flex-column" (ngSubmit)="login()" autocomplete="off"> 
         
         <div class="form-floating mb-3">
@@ -40,5 +44,6 @@
       <a href="/auth/register" style="flex:right">Register</a>
     </div>
     </div>  
+  </div>  
   </div>
   

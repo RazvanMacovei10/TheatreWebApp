@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterTheatreComponent } from './register-theatre/register-theatre.component';
 import { LoginNavbarComponent } from './login-navbar/login-navbar.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { LoginNavbarComponent } from './login-navbar/login-navbar.component';
   imports: [
     CommonModule,
     LoginPageRoutingModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule
   ]
 })
 export class LoginPageModule { }

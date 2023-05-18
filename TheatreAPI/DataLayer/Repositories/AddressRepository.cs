@@ -18,7 +18,7 @@ namespace DataLayer.Repositories
         }
         public async Task<List<string>> GetAllCities()
         {
-            var results = await _context.Addresses.Select(a=>a.City).ToListAsync();
+            var results = await _context.Addresses.Select(a=>a.City).Distinct().ToListAsync();
 
             return results;
         }

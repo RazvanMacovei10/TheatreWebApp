@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
   model:any={};
 
   constructor(private accountService:AccountService, private router:Router) { }
-
+  registerError:string="";
   ngOnInit(): void {
   }
 
@@ -23,7 +23,12 @@ export class RegisterComponent implements OnInit {
       next:()=>{
         this.cancel();
       },
-      error:error=>console.log(error)
+      error: (error) => {
+        if (error.status === 400) {
+          this.registerError=error.error;
+        } else {
+        }
+      },
     })
   }
   cancel(){
