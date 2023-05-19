@@ -33,7 +33,8 @@ export class ClientEventComponent implements OnInit {
     id:0,
     numberOfTickets:0,
     user:{}as User,
-    event:{}as EventModel
+    event:{}as EventModel,
+    
     
   };
 

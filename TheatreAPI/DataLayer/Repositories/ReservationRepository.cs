@@ -19,13 +19,22 @@ namespace DataLayer.Repositories
 
         public async Task<List<Reservation>> GetAll()
         {
-            var results = await _context.Reservations.Include(x => x.Event).Include(x => x.User).ToListAsync();
+            var results = await _context.Reservations.
+                Include(x => x.Event).
+                Include(x => x.Event.Play).
+                Include(x => x.User).
+                Include(x => x.User.Role).
+                Include(x=>x.Event.Theatre).
+                ToListAsync();
 
             return results;
         }
         public async Task<Reservation> GetById(int reservationId)
         {
-            var result = await _context.Reservations.Where(e => e.Id == reservationId).Include(x => x.Event).Include(x => x.User).FirstOrDefaultAsync();
+            var result = await _context.Reservations.Where(e => e.Id == reservationId).
+                Include(x => x.Event).Include(x => x.Event.Play).
+                Include(x=>x.Event.Theatre).
+                Include(x => x.User).Include(x => x.User.Role).FirstOrDefaultAsync();
 
             return result;
         }

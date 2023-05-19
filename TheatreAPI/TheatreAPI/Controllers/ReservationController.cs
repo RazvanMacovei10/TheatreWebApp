@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Abstract;
+using BusinessLogic.BL;
 using Core.AbstractServices;
 using Core.Services;
 using DataLayer.DTOs;
@@ -45,6 +46,27 @@ namespace TheatreAPI.Controllers
             
             await _reservationBL.Add(reservation);
             return Ok();
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetReservationsByUser(string name)
+        {
+            List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
+            
+            reservations = reservations.Where(e => e.User.UserName == name).ToList();
+            List<NewReservation> reservations1 = new List<NewReservation>();
+            foreach (var reservation in reservations)
+            {
+                NewReservation newReservation = new NewReservation();
+                newReservation.Id = reservation.Id;
+                newReservation.NumberOfTickets = reservation.NumberOfTickets;
+                newReservation.User = reservation.User;
+                newReservation.DateTime = reservation.DateTime;
+                newReservation.EventName = reservation.Event.Play.Name;
+                newReservation.EventDateTime = reservation.Event.DateTime;
+                reservations1.Add(newReservation);
+            }
+            return Ok(reservations1);
         }
     }
 }

@@ -13,8 +13,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClientEventComponent } from './client-event/client-event.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
-
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ClientReservationsComponent } from './client-reservations/client-reservations.component'
+import {MatInputModule} from '@angular/material/input'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table'
+import {MatIconModule} from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -23,7 +28,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     HomeComponent,
     ClientTheatresComponent,
     ClientEventComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ClientReservationsComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +39,13 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatIconModule
+
   ]
 })
 export class ClientPageModule { }

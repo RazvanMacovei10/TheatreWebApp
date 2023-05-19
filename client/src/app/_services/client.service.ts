@@ -45,4 +45,11 @@ export class ClientService {
     console.log(name);
     return this.http.post<Reservation>(this.baseUrl + 'Reservation/'+name+'/'+model.event.id,model);
   }
+  getReservationsByCurrentUser(): Observable<Reservation[]> {
+    if (this.accountService.userValue != null)
+      return this.http.get<Reservation[]>(        
+        this.baseUrl + 'Reservation/' + this.accountService.userValue.username
+      );
+    return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
+  }
 }

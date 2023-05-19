@@ -25,14 +25,16 @@ export class ScheduleComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!:MatSort;
-
   @ViewChild('topOfPage') topOfPage!:ElementRef;
+
   page:number=1;
   count:number=0;
   tableSize:number=9;
   tableSizes:any=[3,6,9,12];
+
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   events: EventModel[] = [];
+  
   constructor(
     private accountService: AccountService,
     private router: Router,
