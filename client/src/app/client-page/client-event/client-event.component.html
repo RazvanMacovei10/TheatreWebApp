@@ -24,12 +24,46 @@
       <p class="card-text">
         <strong> Description:</strong> {{ currentEvent.play.description }}
       </p>
-      <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async">Buy ticket</button>
-      <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for buying tickets
-      </button>
+    
+
+        
+
+      
+
+
+
+    
     </div>
+    <form class="row d-flex justify-content-center mt-3 mb-3"
+        [formGroup]="buyForm"
+        (ngSubmit)="onReservationClick(currentEvent)"
+        autocomplete="off">
+      
+      <div class="number-input col-md-4" *ngIf="isLoggedIn$ | async" >
+        <button type="button" (click)="decrementQuantity()"></button>
+        <input class="quantity" min="1" name="quantity" value="1" max="10" type="number" [defaultValue]="1" formControlName="quantity"/>
+        <button type="button" (click)="incrementQuantity()" class="plus"></button>
+      </div>
+
+        
+        
+        
+        
+        <div class="col-md-4">
+          <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async" 
+            type="submit"
+            class="btn btn-success me-2"
+          >
+            Reserve ticket(s)
+          </button>
+          <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for making reservation</button>
+          
+        </div>
+      </form>
   </div>
+  
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close class="btn btn-danger">Cancel</button>
   </mat-dialog-actions>
+

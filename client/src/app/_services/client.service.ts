@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Theatre } from '../_models/theatre';
+import { AccountService } from './account.service';
+import { Reservation } from '../_models/reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { Theatre } from '../_models/theatre';
 export class ClientService {
 
   baseUrl = 'https://localhost:7270/api/';
-  constructor(private http:HttpClient,private router:Router) { }
+  constructor(private http:HttpClient,private router:Router,private accountService:AccountService) { }
   
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl + 'Event');
@@ -33,5 +35,14 @@ export class ClientService {
   }
   getCities():Observable<string[]>{
     return this.http.get<string[]>(this.baseUrl + 'Address');
+  }
+  addReservation(model: any) {
+    let name="";
+    console.log(model);
+    if (this.accountService.userValue != null) {
+      name = this.accountService.userValue.username;
+    }
+    console.log(name);
+    return this.http.post<Reservation>(this.baseUrl + 'Reservation/'+name+'/'+model.event.id,model);
   }
 }

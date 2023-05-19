@@ -23,6 +23,8 @@ namespace TheatreAPI
             CreateMap<Event, EventDTO>()
                 .ForMember(dest => dest.TheatreName, opt => opt.MapFrom(src => src.Theatre.User.UserName));
             CreateMap<EventDTO, Event>();
+            CreateMap<ReservationDTO, Reservation>();
+            CreateMap<Reservation, ReservationDTO>();
             CreateMap<TheatreDTO, Theatre>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => Convert.FromBase64String(src.Image)))
                 .ForMember(dest => dest.Events, opt => opt.MapFrom(src => src.Events));
