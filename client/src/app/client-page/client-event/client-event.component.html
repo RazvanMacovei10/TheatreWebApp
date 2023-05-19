@@ -36,7 +36,7 @@
     </div>
     <form class="row d-flex justify-content-center mt-3 mb-3"
         [formGroup]="buyForm"
-        (ngSubmit)="onReservationClick(currentEvent)"
+        (ngSubmit)="openConfirmation(currentEvent)"
         autocomplete="off">
       
       <div class="number-input col-md-4" *ngIf="isLoggedIn$ | async" >
@@ -50,13 +50,14 @@
         
         
         <div class="col-md-4">
-          <button class="btn btn-secondary" *ngIf="isLoggedIn$ | async" 
+          <button class="btn btn-secondary" *ngIf="(isLoggedIn$ | async) && currentEvent.availableSeats>0"  
             type="submit"
             class="btn btn-success me-2"
           >
             Reserve ticket(s)
           </button>
           <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for making reservation</button>
+          <button class="btn btn-danger" *ngIf="(isLoggedIn$ | async) && currentEvent.availableSeats<=0"  disabled >No tickets available</button>
           
         </div>
       </form>

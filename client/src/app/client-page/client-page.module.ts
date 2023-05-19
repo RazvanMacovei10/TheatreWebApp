@@ -12,7 +12,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClientEventComponent } from './client-event/client-event.component';
-import {MatDialogModule} from '@angular/material/dialog'
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {MatDialogModule} from '@angular/material/dialog'
     ClientNavbarComponent,
     HomeComponent,
     ClientTheatresComponent,
-    ClientEventComponent
+    ClientEventComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,

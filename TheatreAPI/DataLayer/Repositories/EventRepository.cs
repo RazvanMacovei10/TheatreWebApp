@@ -19,6 +19,7 @@ namespace DataLayer.Repositories
         public async Task<List<Event>> GetAll()
         {
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
+                Include(x=>x.Play.Type).
                 ToListAsync();
 
             return results;
@@ -27,7 +28,8 @@ namespace DataLayer.Repositories
         {
             if(city==null && name==null)
             {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
+                    Include(x => x.Theatre.User).Include(x => x.Play.Type)
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
                 .ToListAsync();
                 return results;
@@ -35,7 +37,8 @@ namespace DataLayer.Repositories
             else
             if(city==null)
             {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+                    Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Play.Name.Contains(name))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
                 .ToListAsync();
@@ -44,7 +47,8 @@ namespace DataLayer.Repositories
             else
             if(name==null)
             {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+                    Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Theatre.Address.City.Contains(city))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
                 .ToListAsync();
@@ -53,7 +57,8 @@ namespace DataLayer.Repositories
             }
             else 
             {                
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User)
+                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+                    Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Theatre.Address.City.Contains(city))
                 .Where(x => x.Play.Name.Contains(name))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
@@ -64,7 +69,7 @@ namespace DataLayer.Repositories
         public async Task<Event> GetById(int eventId)
         {
             var result = await _context.Events.Where(e => e.Id == eventId).
-                Include(x => x.Theatre).Include(x => x.Play).
+                Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Play.Type).
                 Include(x=>x.Theatre.User).FirstOrDefaultAsync();
 
             return result;

@@ -28,10 +28,21 @@ namespace TheatreAPI.Controllers
         public async Task<IActionResult> Create([FromBody] ReservationDTO reservationDTO, string name,int id)
         {
             Reservation reservation = new Reservation();
+            Event eventModel = await _eventBL.GetById(id);
+            if (reservation.NumberOfTickets <= eventModel.AvailableSeats)
+            {
+                eventModel.AvailableSeats=eventModel.AvailableSeats - reservationDTO.NumberOfTickets;
+                await _eventBL.UpdateEventAsync(eventModel.Id, eventModel);
+            }
+            else
+            {
+                return null;
+            }
             reservation.User = await _userBL.GetByUsername(name);
             reservation.NumberOfTickets = reservationDTO.NumberOfTickets;
-            reservation.Event = await _eventBL.GetById(id);
+            reservation.Event = eventModel;           
             reservation.DateTime=DateTime.Now;
+            
             await _reservationBL.Add(reservation);
             return Ok();
         }
