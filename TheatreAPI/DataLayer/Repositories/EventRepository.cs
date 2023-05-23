@@ -19,7 +19,15 @@ namespace DataLayer.Repositories
         public async Task<List<Event>> GetAll()
         {
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
-                Include(x=>x.Play.Type).
+                Include(x=>x.Play.Type).OrderBy(x=>x.DateTime).
+                ToListAsync();
+
+            return results;
+        }
+        public async Task<List<Event>> GetAllAvailable()
+        {
+            var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
+                Include(x => x.Play.Type).Where(x => x.DateTime > DateTime.Now).OrderBy(x => x.DateTime).
                 ToListAsync();
 
             return results;
@@ -31,6 +39,8 @@ namespace DataLayer.Repositories
                 var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
                     Include(x => x.Theatre.User).Include(x => x.Play.Type)
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .Where(x => x.DateTime > DateTime.Now)
+                .OrderBy(x => x.DateTime)
                 .ToListAsync();
                 return results;
             }
@@ -41,6 +51,8 @@ namespace DataLayer.Repositories
                     Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Play.Name.Contains(name))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .Where(x => x.DateTime > DateTime.Now)
+                .OrderBy(x => x.DateTime)
                 .ToListAsync();
                 return results;
             }
@@ -51,6 +63,8 @@ namespace DataLayer.Repositories
                     Include(x => x.Play).Include(x => x.Theatre.User)
                 .Where(x => x.Theatre.Address.City.Contains(city))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .Where(x => x.DateTime > DateTime.Now)
+                .OrderBy(x => x.DateTime)
                 .ToListAsync();
                 return results;
 
@@ -62,6 +76,8 @@ namespace DataLayer.Repositories
                 .Where(x => x.Theatre.Address.City.Contains(city))
                 .Where(x => x.Play.Name.Contains(name))
                 .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+                .Where(x => x.DateTime > DateTime.Now)
+                .OrderBy(x=>x.DateTime)
                 .ToListAsync();
                 return results;
             }

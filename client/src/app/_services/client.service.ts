@@ -15,7 +15,7 @@ export class ClientService {
   constructor(private http:HttpClient,private router:Router,private accountService:AccountService) { }
   
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event');
+    return this.http.get<Event[]>(this.baseUrl + 'Event/available');
   }
   getFilteredEvents(priceFrom:number,priceTo:number,city:string,name:string): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEvents/'+priceFrom+'/'+priceTo+'/'+city+'/'+name);
@@ -51,5 +51,8 @@ export class ClientService {
         this.baseUrl + 'Reservation/' + this.accountService.userValue.username
       );
     return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
+  }
+  deleteReservation(id:number): Observable<Reservation[]> {
+    return this.http.delete<Reservation[]>(this.baseUrl + 'Reservation/'+id);
   }
 }

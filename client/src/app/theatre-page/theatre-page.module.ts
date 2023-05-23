@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table'
 import {MatIconModule} from '@angular/material/icon'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReservationsComponent } from './reservations/reservations.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     TheatreNavbarComponent,    
     AddEventComponent,
     ScheduleComponent,
-    AddEditPlayComponent
+    AddEditPlayComponent,
+    ReservationsComponent
   ],
   imports: [
     CommonModule,

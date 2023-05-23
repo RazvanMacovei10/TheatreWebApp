@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { EventSent } from '../_models/event-sent';
 import { PlayType } from '../_models/play-type';
 import { EventModel } from '../_models/event';
+import { Reservation } from '../_models/reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,8 @@ export class TheatreService {
 
   deleteEvent(id: string) {
     return this.http.delete(this.baseUrl + 'Event/' + id);
+  }
+  getAllReservations():Observable<Reservation[]>{
+    return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
   }
 }

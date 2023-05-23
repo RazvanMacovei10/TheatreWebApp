@@ -7,19 +7,20 @@ import { Observable, map } from 'rxjs';
 import { ReservationDisplayed } from 'src/app/_models/reservation-displayed';
 import { AccountService } from 'src/app/_services/account.service';
 import { ClientService } from 'src/app/_services/client.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { CoreService } from 'src/app/_services/core.service';
+import { TheatreService } from 'src/app/_services/theatre.service';
+import { ConfirmationDialogComponent } from 'src/app/client-page/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-client-reservations',
-  templateUrl: './client-reservations.component.html',
-  styleUrls: ['./client-reservations.component.scss']
+  selector: 'app-reservations',
+  templateUrl: './reservations.component.html',
+  styleUrls: ['./reservations.component.scss']
 })
-export class ClientReservationsComponent implements OnInit {
+export class ReservationsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!:MatSort;
-  displayedColumns:string[]=['eventName','numberOfTickets','eventDate','datetime','action'];
+  displayedColumns:string[]=['userEmail','eventName','numberOfTickets','eventDate','datetime','action'];
   dataSource!:MatTableDataSource<any>;
   reservations: ReservationDisplayed[] = [];
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
@@ -27,7 +28,8 @@ export class ClientReservationsComponent implements OnInit {
   constructor(private accountService:AccountService,
     private clientService:ClientService,
     private dialog:MatDialog,
-    private coreService:CoreService) { }
+    private coreService:CoreService,
+    private theatreService:TheatreService) { }
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.accountService.currentUser$.pipe(
@@ -37,7 +39,7 @@ export class ClientReservationsComponent implements OnInit {
   }
 
   loadReservations(){
-    this.clientService.getReservationsByCurrentUser().subscribe((data) => {
+    this.theatreService.getAllReservations().subscribe((data) => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort=this.sort;

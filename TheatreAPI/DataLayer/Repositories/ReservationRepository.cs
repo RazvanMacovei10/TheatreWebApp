@@ -24,7 +24,7 @@ namespace DataLayer.Repositories
                 Include(x => x.Event.Play).
                 Include(x => x.User).
                 Include(x => x.User.Role).
-                Include(x=>x.Event.Theatre).
+                Include(x=>x.Event.Theatre).OrderBy(x=>x.DateTime).
                 ToListAsync();
 
             return results;
