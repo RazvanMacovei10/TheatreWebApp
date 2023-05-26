@@ -17,7 +17,9 @@ namespace Core.AbstractServices
         public Task<bool> UserExists(string username);
 
         public Task<User> GetByUsername(string username);
-        public Task<bool> UserExistsByEmail(string email); 
+        public Task<bool> UserExistsByEmail(string email);
+
+        public Task<User> UpdateUserAsync(int userId, User userSent);
 
     }
 }

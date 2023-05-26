@@ -1,6 +1,8 @@
+<div class="main-div">
 <app-login-navbar></app-login-navbar>
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
+  
   <div>
     <div *ngIf="loginError" class="shadow p-2 mb-3 rounded bg-danger bg-gradient">{{ loginError }}</div>
     <div class="shadow p-3 mb-5 bg-body rounded">
@@ -24,7 +26,7 @@
             placeholder="Password">
           <label for="password">Password</label>
         </div> 
-        <button class="btn btn-outline-success align-self-center" type="submit">Login</button> 
+        <button class="btn btn-outline-primary align-self-center" type="submit">Login</button> 
       </form> 
       <div *ngIf="isLoggedIn$|async">
         <a (click)="logout()">Logout</a>
@@ -46,4 +48,4 @@
     </div>  
   </div>  
   </div>
-  
+</div>

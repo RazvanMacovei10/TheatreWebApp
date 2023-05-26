@@ -56,4 +56,9 @@ export class AccountService {
   registerTheatre(model:any){
     return this.http.post<RegisterForm>(this.baseUrl+'Account/register-theatre',model);
   }
+  changePassword(model:any){
+    if (this.userValue != null)
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/change-password/'+this.userValue.username,model);
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/change-password/',model);
+  }
 }

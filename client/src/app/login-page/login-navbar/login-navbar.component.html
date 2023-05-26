@@ -1,35 +1,29 @@
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/home">Client page</a>
+  <div class="container-fluid justify-content-space-between">
+    <a class="navbar-brand" href="/home">Gathered<span class="nav-brand-title">Events</span></a>
+   
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="home/events">Events</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="home/theatres">Theatres</a>
+      </li>
+     </ul>
+  
+
+    <div>
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="home/events">Events</a>
+        <li class="nav-item" *ngIf="isLoggedIn$ | async" style="cursor:pointer">
+          <a class="nav-link" (click)="logout()">Logout</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="home/theatres">Theatres</a>
+        <li class="nav-item" *ngIf="!(isLoggedIn$ | async)">
+          <a class="nav-link" href="auth/Login">Login</a>
         </li>
-       </ul>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-      
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li *ngIf="isLoggedIn$ | async">
-            <a class="nav-link" (click)="logout()">Logout</a>
-          </li>
-          <li *ngIf="!(isLoggedIn$ | async)">
-            <a class="nav-link" href="auth/Login">Login</a>
-          </li>
-        </ul>
-      </div>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+

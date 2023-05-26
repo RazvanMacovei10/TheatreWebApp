@@ -19,7 +19,12 @@ import {MatInputModule} from '@angular/material/input'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table'
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import { ClientAccountDetailsComponent } from './client-account-details/client-account-details.component';
+import { ChangePasswordComponent } from './change-password/change-password.component'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,9 @@ import {MatIconModule} from '@angular/material/icon'
     ClientTheatresComponent,
     ClientEventComponent,
     ConfirmationDialogComponent,
-    ClientReservationsComponent
+    ClientReservationsComponent,
+    ClientAccountDetailsComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -40,11 +47,14 @@ import {MatIconModule} from '@angular/material/icon'
     ReactiveFormsModule,
     FontAwesomeModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
     MatIconModule,
+    MatMenuModule,
+    MatButtonModule
 
   ]
 })

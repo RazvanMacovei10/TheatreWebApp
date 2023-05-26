@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Theatre } from '../_models/theatre';
 import { AccountService } from './account.service';
 import { Reservation } from '../_models/reservation';
+import { User } from '../_models/user';
+import { UserDetails } from '../_models/user-datails';
 
 @Injectable({
   providedIn: 'root'
@@ -55,4 +57,8 @@ export class ClientService {
   deleteReservation(id:number): Observable<Reservation[]> {
     return this.http.delete<Reservation[]>(this.baseUrl + 'Reservation/'+id);
   }
+  getUserByUsername(username:string|undefined): Observable<UserDetails> {
+    return this.http.get<UserDetails>(this.baseUrl + 'Users/User/'+username);
+  }
+
 }

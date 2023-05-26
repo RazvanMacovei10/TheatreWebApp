@@ -13,6 +13,7 @@ namespace DataLayer.AbstractRepositories
         public Task<User> GetById(int userId);
 
         public Task<User> Add(User user);
+        public Task<User> UpdateEventAsync(int userId, User userSent);
 
         public Task<bool> UserExists(string username);
         public Task<bool> UserByEmailExists(string username);

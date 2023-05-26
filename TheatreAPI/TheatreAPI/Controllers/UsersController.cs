@@ -1,4 +1,6 @@
-﻿using Core.AbstractServices;
+﻿using BusinessLogic.Abstract;
+using Core.AbstractServices;
+using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,11 @@ namespace TheatreAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserBL _userBL;
-        public UsersController(IUserBL userBL)
+        private readonly IReservationBL _reservationBL;
+        public UsersController(IUserBL userBL,IReservationBL reservationBL)
         {
             _userBL = userBL;
+            _reservationBL = reservationBL;
         }
 
         [AllowAnonymous]
@@ -31,5 +35,20 @@ namespace TheatreAPI.Controllers
             var user =await _userBL.GetById(id);
             return user;
         }
+        [AllowAnonymous]
+        [HttpGet("User/{username}")]
+        public async Task<IActionResult> GetUserByUsername(string username)
+        {
+            var user = await _userBL.GetByUsername(username);
+            ClientUserDTO clientUserDTO = new ClientUserDTO();
+            List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
+
+            reservations = reservations.Where(e => e.User.UserName == username).ToList();
+            clientUserDTO.Username = username;
+            clientUserDTO.NumberOfReservations = reservations.Count;
+            clientUserDTO.Email = user.Email;
+            return Ok(clientUserDTO);
+        }
+
     }
 }

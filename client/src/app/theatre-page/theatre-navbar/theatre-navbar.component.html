@@ -1,7 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/theatre">Theatre page</a>
-      <ul class="navbar-nav ms-auto">
+
+
+
+
+  
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid justify-content-space-between">
+      <a class="navbar-brand" href="/home">Gathered<span class="nav-brand-title">Events</span></a>
+     
+      <ul class="navbar-nav mx-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/theatre/play">Plays</a>
         </li>
@@ -9,27 +16,17 @@
           <a class="nav-link" routerLink="/theatre/schedule">Schedule</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/theatre/reservations">Reservation</a>
+          <a class="nav-link" routerLink="/theatre/reservations">Reservations</a>
         </li>
        </ul>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-      
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div>
         <ul class="navbar-nav ms-auto">
-          <li *ngIf="isLoggedIn$ | async">
+          <li class="nav-item" *ngIf="isLoggedIn$ | async">
             <a class="nav-link" (click)="logout()">Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  
+ 

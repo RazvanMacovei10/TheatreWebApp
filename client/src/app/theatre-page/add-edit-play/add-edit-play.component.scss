@@ -17,3 +17,8 @@
     object-fit:fill;
     margin-top: 10px;
 }
+
+.mat-dialog-content {
+    display: block;
+    overflow-x: hidden !important;
+  }

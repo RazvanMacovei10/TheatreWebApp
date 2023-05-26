@@ -107,5 +107,35 @@ namespace TheatreAPI.Controllers
             return Ok(registerForm);
         }
 
+        [HttpPost("change-password/{username}")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO changePasswordDTO,string username)
+        {
+            var user = _userBL.GetByUsername(username);
+
+            if (user.Result == null) return BadRequest("invalid username");
+
+            using var hmac = new HMACSHA512(user.Result.PasswordSalt);
+
+            var computedhash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changePasswordDTO.OldPassword));
+
+            for (int i = 0; i < computedhash.Length; i++)
+            {
+                if (computedhash[i] != user.Result.PasswordHash[i]) return BadRequest("Old password is incorrect.");
+            }
+            if (changePasswordDTO.Password!=changePasswordDTO.ConfirmPassword)
+            {
+                return BadRequest("New password and confirm password must be the same");
+            }
+
+
+            user.Result.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changePasswordDTO.Password));
+                user.Result.PasswordSalt = hmac.Key;
+
+            await _userBL.UpdateUserAsync(user.Result.Id, user.Result);
+
+            
+            return Ok();
+        }
+
     }
 }

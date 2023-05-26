@@ -46,5 +46,10 @@ namespace Core.Services
             return await _userRepository.UserByEmailExists(email);
         }
 
+        public async Task<User> UpdateUserAsync(int userId, User userSent)
+        {
+            return await _userRepository.UpdateEventAsync(userId, userSent);
+        }
+
     }
 }
