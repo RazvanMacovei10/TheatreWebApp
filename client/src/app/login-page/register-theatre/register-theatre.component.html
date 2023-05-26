@@ -13,6 +13,20 @@
             <input
               type="text"
               class="form-control"
+              name="name"
+              [(ngModel)]="model.name"
+              placeholder="Name"
+              required
+              #name="ngModel"
+            />
+            <div *ngIf="name.invalid && name.touched" class="text-danger">
+              Name is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
               name="username"
               maxlength="20"
               [(ngModel)]="model.username"

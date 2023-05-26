@@ -53,6 +53,7 @@ namespace TheatreAPI.Controllers
             await _userBL.Add(user);
             Theatre theatre = new Theatre()
             {
+                Name= registerForm.Name,
                 Address = registerForm.Address,
                 TotalSeats = registerForm.TotalSeats,
                 Image = registerForm.Image,

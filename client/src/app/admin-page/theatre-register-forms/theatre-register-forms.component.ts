@@ -23,6 +23,7 @@ export class TheatreRegisterFormsComponent implements OnInit {
     password: '',
     totalSeats: 'defaultSeats',
     image: '',
+    name:'',
   };
   @Output() reloadList: EventEmitter<any> = new EventEmitter();
   constructor(

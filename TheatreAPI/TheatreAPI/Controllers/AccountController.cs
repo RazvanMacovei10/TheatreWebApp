@@ -96,6 +96,7 @@ namespace TheatreAPI.Controllers
             var registerForm = new RegisterForm()
             {
                 Username = registerFormDTO.Username.ToLower(),
+                Name = registerFormDTO.Name,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerFormDTO.Password)),
                 PasswordSalt = hmac.Key,
                 Email = registerFormDTO.Email.ToLower(),

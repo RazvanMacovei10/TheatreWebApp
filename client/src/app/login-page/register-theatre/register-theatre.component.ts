@@ -12,6 +12,7 @@ import { AccountService } from 'src/app/_services/account.service';
 export class RegisterTheatreComponent implements OnInit {
   model: RegisterForm = {
     id:-1,
+    name:'',
     address: { city: '', street: '', number: '', id: 0 },
     username: '',
     totalSeats: '',

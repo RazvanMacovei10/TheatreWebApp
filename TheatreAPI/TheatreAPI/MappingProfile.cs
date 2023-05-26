@@ -18,10 +18,10 @@ namespace TheatreAPI
             CreateMap<Play, PlayDTO>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => Convert.ToBase64String(src.Image)));
             CreateMap<Event, EventSentDTO>()
-                .ForMember(dest => dest.TheatreName, opt => opt.MapFrom(src => src.Theatre.User.UserName));
+                .ForMember(dest => dest.TheatreName, opt => opt.MapFrom(src => src.Theatre.Name));
             CreateMap<EventSentDTO, Event>();
             CreateMap<Event, EventDTO>()
-                .ForMember(dest => dest.TheatreName, opt => opt.MapFrom(src => src.Theatre.User.UserName));
+                .ForMember(dest => dest.TheatreName, opt => opt.MapFrom(src => src.Theatre.Name));
             CreateMap<EventDTO, Event>();
             CreateMap<ReservationDTO, Reservation>();
             CreateMap<Reservation, ReservationDTO>();

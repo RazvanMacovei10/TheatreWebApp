@@ -5,6 +5,7 @@ import { PlaysComponent } from './plays/plays.component';
 import { AddEventComponent } from './add-event/add-event.component';
 import { AddPlayComponent } from './add-play/add-play.component';
 import { ReservationsComponent } from './reservations/reservations.component';
+import { TheatreAccountPageComponent } from './theatre-account-page/theatre-account-page.component';
 
 const routes: Routes = [
   { path: 'schedule', component: ScheduleComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'schedule/add', component: AddEventComponent },
   { path: 'play/add', component: AddPlayComponent },
   {path:'reservations',component:ReservationsComponent},
+  {path:'account',component:TheatreAccountPageComponent},
   { path: '', redirectTo: '/theatre/play', pathMatch: 'full' },
 ];
 

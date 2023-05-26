@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +8,8 @@ import { EventModel } from 'src/app/_models/event';
 import { Theatre } from 'src/app/_models/theatre';
 import { AccountService } from 'src/app/_services/account.service';
 import { ClientService } from 'src/app/_services/client.service';
+import { ClientEventComponent } from '../client-event/client-event.component';
+import { Play } from 'src/app/_models/play';
 
 @Component({
   selector: 'app-client-theatres',
@@ -25,12 +28,21 @@ export class ClientTheatresComponent implements OnInit {
   tableSizes:any=[3,6,9,12];
   filterParams:any;
   faCalendar=faCalendarDay;
-
+  currentEvent:EventModel={
+    id: 1,
+    datetime: new Date(),
+    availableSeats: 100,
+    price: 10,
+    theatreName: 'ABC Theatre',
+    play: {}as Play
+  };
+  eventClicked=false;
   constructor(
     private accountService: AccountService,
     private router: Router,
     private clientService: ClientService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialog:MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -94,5 +106,13 @@ export class ClientTheatresComponent implements OnInit {
   getTime(dateString: Date): string {
     const date = new Date(dateString);
     return date.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute:'2-digit'});
+  }
+  onCardEventClick(item: EventModel) {
+    this.eventClicked = true;
+    this.currentEvent=item;
+    const dialogConfig: MatDialogConfig = {
+      data: item 
+    };
+    const dialogRef=this.dialog.open(ClientEventComponent,dialogConfig);
   }
 }

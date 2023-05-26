@@ -21,6 +21,8 @@ import {MatTableModule} from '@angular/material/table'
 import {MatIconModule} from '@angular/material/icon'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReservationsComponent } from './reservations/reservations.component';
+import { TheatreAccountPageComponent } from './theatre-account-page/theatre-account-page.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { ReservationsComponent } from './reservations/reservations.component';
     AddEventComponent,
     ScheduleComponent,
     AddEditPlayComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    TheatreAccountPageComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ import { ReservationsComponent } from './reservations/reservations.component';
     MatTableModule,
     MatIconModule,
     MatSnackBarModule,
+    MatMenuModule
   ],
 })
 export class TheatrePageModule { }
