@@ -23,6 +23,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { TheatreAccountPageComponent } from './theatre-account-page/theatre-account-page.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { ChangePictureComponent } from './change-picture/change-picture.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MatMenuModule } from '@angular/material/menu';
     ScheduleComponent,
     AddEditPlayComponent,
     ReservationsComponent,
-    TheatreAccountPageComponent
+    TheatreAccountPageComponent,
+    ChangePictureComponent
   ],
   imports: [
     CommonModule,

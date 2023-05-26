@@ -14,5 +14,6 @@ namespace DataLayer.AbstractRepositories
 
         public Task<Theatre> Add(Theatre theatre);
         public Task<Theatre> GetByUsername(string username);
+        public Task<Theatre> UpdateTheatreAsync(int theatreId, Theatre theatreSent);
     }
 }

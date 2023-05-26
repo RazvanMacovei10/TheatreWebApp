@@ -51,5 +51,23 @@ namespace DataLayer.Repositories
 
             return result;
         }
+
+        public async Task<Theatre> UpdateTheatreAsync(int theatreId, Theatre theatreSent)
+        {
+            Theatre theatreToModify = new Theatre();
+            theatreToModify.Id = theatreId;
+            theatreToModify.TotalSeats = theatreSent.TotalSeats;
+            theatreToModify.Image = theatreSent.Image;
+            theatreToModify.UserId = theatreSent.UserId;
+            theatreToModify.Name = theatreSent.Name;
+            theatreToModify.User = theatreSent.User;
+            theatreToModify.Address = theatreSent.Address;
+            theatreToModify.AddressId = theatreSent.AddressId;
+            theatreToModify.Events = theatreSent.Events;
+
+            await _context.SaveChangesAsync();
+
+            return theatreToModify;
+        }
     }
 }

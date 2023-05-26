@@ -1,0 +1,36 @@
+
+<div class="container full-height main-div">
+    <div class="row justify-content-center align-items-center">
+        <div>            
+            <form #pictureChangeForm="ngForm" (ngSubmit)="changePicture()" autocomplete="off">
+                <h2 class="text-center text-primary">Change image</h2>
+                <hr />
+                
+                <div class="mb-3">
+                    <label for="image">Select image to upload:</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            class="form-control"
+            (change)="onFileSelected($event)"
+          />
+
+
+                </div>
+                <div class="text-center">
+                  <button
+                    class="btn btn-success me-2"
+                    type="submit"
+                    [disabled]="pictureChangeForm.invalid"
+                  >
+                    Change image
+                  </button>
+                  <button class="btn btn-danger" type="button" (click)="cancel()">
+                    Cancel
+                  </button>
+                </div>
+              </form>    
+        </div>
+      </div>
+    </div>

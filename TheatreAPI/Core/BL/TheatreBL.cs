@@ -39,5 +39,9 @@ namespace BusinessLogic.BL
 
             return result;
         }
+        public async Task<Theatre> UpdateTheatreAsync(int theatreId, Theatre theatreSent)
+        {
+            return await _theatreRepository.UpdateTheatreAsync(theatreId, theatreSent);
+        }
     }
 }

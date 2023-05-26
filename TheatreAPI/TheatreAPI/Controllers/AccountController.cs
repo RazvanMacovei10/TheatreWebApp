@@ -17,12 +17,14 @@ namespace TheatreAPI.Controllers
         private readonly ITokenBL _tokenBL;
         private readonly IUserRoleBL _userRoleBL;
         private readonly IRegisterFormBL _registerFormBL;
-        public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, IRegisterFormBL registerFormBL)
+        private readonly ITheatreBL _theatreBL;
+        public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, IRegisterFormBL registerFormBL, ITheatreBL theatreBL)
         {
             _userBL = userBL;
             _tokenBL = tokenBL;
             _userRoleBL = userRoleBL;
             _registerFormBL = registerFormBL;
+            _theatreBL = theatreBL;
         }
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>>Register(RegisterDTO registerDTO)
@@ -135,6 +137,19 @@ namespace TheatreAPI.Controllers
             await _userBL.UpdateUserAsync(user.Result.Id, user.Result);
 
             
+            return Ok();
+        }
+        [HttpPost("change-picture/{username}")]
+        public async Task<IActionResult> ChangePicture(ChangePictureDTO changePictureDTO, string username)
+        {
+            var theatre = await _theatreBL.GetByUsername(username);
+
+            theatre.Image = Convert.FromBase64String(changePictureDTO.Image);
+
+
+            await _theatreBL.UpdateTheatreAsync(theatre.Id,theatre);
+
+
             return Ok();
         }
 

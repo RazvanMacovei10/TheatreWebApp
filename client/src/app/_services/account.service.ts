@@ -61,4 +61,9 @@ export class AccountService {
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-password/'+this.userValue.username,model);
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-password/',model);
   }
+  changePicture(model:any){
+    if (this.userValue != null)
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/change-picture/'+this.userValue.username,model);
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/change-picture/',model);
+  }
 }
