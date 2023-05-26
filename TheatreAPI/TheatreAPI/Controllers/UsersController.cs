@@ -13,11 +13,13 @@ namespace TheatreAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserBL _userBL;
+        private readonly ITheatreBL _theatreBL;
         private readonly IReservationBL _reservationBL;
-        public UsersController(IUserBL userBL,IReservationBL reservationBL)
+        public UsersController(IUserBL userBL,IReservationBL reservationBL, ITheatreBL theatreBL)
         {
             _userBL = userBL;
             _reservationBL = reservationBL;
+            _theatreBL = theatreBL;
         }
 
         [AllowAnonymous]
@@ -48,6 +50,24 @@ namespace TheatreAPI.Controllers
             clientUserDTO.NumberOfReservations = reservations.Count;
             clientUserDTO.Email = user.Email;
             return Ok(clientUserDTO);
+        }
+        [AllowAnonymous]
+        [HttpGet("Theatre/{username}")]
+        public async Task<IActionResult> GetTheatreByUsername(string username)
+        {
+            var user = await _userBL.GetByUsername(username);
+            var theatre = await _theatreBL.GetByUsername(username);
+            TheatreAccountDetailsDTO theatreAccountDetailsDTO = new TheatreAccountDetailsDTO();
+            List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
+
+            reservations = reservations.Where(e => e.User.UserName == username).ToList();
+            theatreAccountDetailsDTO.Username = username;
+            theatreAccountDetailsDTO.Name = theatre.Name;
+            theatreAccountDetailsDTO.NumberOfEvents = 11;
+            theatreAccountDetailsDTO.Image = Convert.ToBase64String(theatre.Image);
+            theatreAccountDetailsDTO.NumberOfEventsScheduled = 12;
+            theatreAccountDetailsDTO.Email = user.Email;
+            return Ok(theatreAccountDetailsDTO);
         }
 
     }

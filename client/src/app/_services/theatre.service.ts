@@ -8,6 +8,7 @@ import { EventSent } from '../_models/event-sent';
 import { PlayType } from '../_models/play-type';
 import { EventModel } from '../_models/event';
 import { Reservation } from '../_models/reservation';
+import { TheatreDetails } from '../_models/theatre-details';
 
 @Injectable({
   providedIn: 'root'
@@ -83,5 +84,8 @@ export class TheatreService {
   }
   getAllReservations():Observable<Reservation[]>{
     return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
+  }
+  getTheatreByUsername(username:string|undefined): Observable<TheatreDetails> {
+    return this.http.get<TheatreDetails>(this.baseUrl + 'Users/Theatre/'+username);
   }
 }

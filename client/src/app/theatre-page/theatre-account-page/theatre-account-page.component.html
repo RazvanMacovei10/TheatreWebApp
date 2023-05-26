@@ -1,62 +1,97 @@
 <div class="fullscreen">
-
-<app-theatre-navbar></app-theatre-navbar>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div>
-    
-    
-          <div class="shadow p-3 mb-5 bg-body rounded main-container account-container">
-            
-            
-              <h2 class="text-center text-primary">Account details</h2>
-              <hr />
-              <div class="form-group row mb-5">      
-                <label for="username" class="col-sm-2 col-form-label">Username:</label>      
-                <div class="col-sm-8">
-                            <input
-                  type="text"
-                  class="form-control"
-                  name="username"
-                  id="username"
-                  
-                  required
-                  readonly
-                />
+  <app-theatre-navbar></app-theatre-navbar>
+  <div
+    class="container d-flex justify-content-center align-items-center vh-100"
+  >
+    <div>
+      <div
+        class="shadow p-3 mb-5 bg-body rounded main-container account-container"
+      >
+        <h2 class="text-center text-primary">Account details</h2>
+        <hr />
+        <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row mb-5">
+            <label for="name" class="col-sm-4 col-form-label">Name:</label>
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                readonly
+              />
             </div>
-              </div>
-              <div class="form-group row mb-5">      
-                <label for="email" class="col-sm-2 col-form-label">Email:</label>      
-                <div class="col-sm-8">
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  id="email"    
-                  readonly     
-                  
-                />
-            </div>
-              </div>
-              <div class="form-group row mb-5">      
-                <label for="reservations" class="col-sm-2 col-form-label">Number of reservations:</label>      
-                <div class="col-sm-8">
-                <input
-                  type="reservations"
-                  class="form-control"
-                  name="reservations"             
-                  readonly
-                  id="reservations"
-                 
-                />
-                </div>
-              </div>
-     
-    
-           
-              <button class="btn btn-outline-primary d-flex just" (click)="openChangePasswordDialog()">Change password</button>
           </div>
-          
-          </div>  
-          
-        </div>  
+          <div class="form-group row mb-5">
+            <label for="username" class="col-sm-4 col-form-label"
+              >Username:</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                id="username"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group row mb-5">
+            <label for="email" class="col-sm-4 col-form-label">Email:</label>
+            <div class="col-sm-8">
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group row mb-5">
+            <label for="name" class="col-sm-4 col-form-label"
+              >Number of events:</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                name="events"
+                readonly
+                id="events"
+              />
+            </div>
+          </div>
+          <div class="form-group row mb-5">
+            <label for="name" class="col-sm-4 col-form-label"
+              >Number of events scheduled:</label
+            >
+            <div class="col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                name="eventsScheduled"
+                readonly
+                id="eventsScheduled"
+              />
+            </div>
+          </div>
+        </div>
+
+            <div class="card-img-wrapper d-flex justify-content-center align-items-center col-sm-6">
+                <img name="image"
+                id="image" class="card-img card-img-top image-scale img-card" alt="...">
+              </div>
+            </div>
+
+        <button
+          class="btn btn-outline-primary d-flex just"
+          (click)="openChangePasswordDialog()"
+        >
+          Change password
+        </button>
+      </div>
     </div>
+  </div>
+</div>
