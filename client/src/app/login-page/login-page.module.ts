@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RegisterTheatreComponent } from './register-theatre/register-theatre.component';
 import { LoginNavbarComponent } from './login-navbar/login-navbar.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -16,7 +17,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     RegisterComponent,
     LoginComponent,
     RegisterTheatreComponent,
-    LoginNavbarComponent
+    LoginNavbarComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

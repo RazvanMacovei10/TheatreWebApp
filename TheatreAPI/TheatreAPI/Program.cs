@@ -1,16 +1,21 @@
 using AutoMapper;
 using BusinessLogic.Abstract;
 using BusinessLogic.BL;
+using BusinessLogic.EmailService;
 using Core.AbstractServices;
 using Core.Services;
 using DataLayer;
 using DataLayer.AbstractRepositories;
+using DataLayer.Entities;
 using DataLayer.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TheatreAPI;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 var mapperConfig = new MapperConfiguration(mc =>
@@ -18,6 +23,14 @@ var mapperConfig = new MapperConfiguration(mc =>
     mc.AddProfile(new MappingProfile());
 });
 // Add services to the container.
+
+
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+
+builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
 {
@@ -32,7 +45,16 @@ builder.Services.AddCors(options =>
     });
 
 });
+//builder.Services.AddIdentity<User, IdentityRole>(opt =>
+//{
+//    opt.Password.RequiredLength = 7;
+//    opt.Password.RequireDigit = false;
 
+//    opt.User.RequireUniqueEmail = true;
+//})
+//    .AddDefaultTokenProviders();
+//builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+//    opt.TokenLifespan = TimeSpan.FromHours(2));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -61,6 +83,7 @@ builder.Services.AddScoped<ITokenBL, TokenBL>();
 builder.Services.AddScoped<IEventBL, EventBL>();
 builder.Services.AddScoped<IUserRoleBL, UserRoleBL>();
 builder.Services.AddScoped<IPlayBL, PlayBL>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IReservationBL, ReservationBL>();
 builder.Services.AddScoped<IPlayTypeBL, PlayTypeBL>();
 builder.Services.AddScoped<ITheatreBL, TheatreBL>();

@@ -5,11 +5,13 @@ import { ClientTheatresComponent } from './client-theatres/client-theatres.compo
 import { ClientEventsComponent } from './client-events/client-events.component';
 import { ClientReservationsComponent } from './client-reservations/client-reservations.component';
 import { ClientAccountDetailsComponent } from './client-account-details/client-account-details.component';
+import { ClientCategoriesComponent } from './client-categories/client-categories.component';
 
 const routes: Routes = [{path:"events",component:ClientEventsComponent},
 {path:"theatres",component:ClientTheatresComponent},
 {path:"",component:ClientEventsComponent},
 {path:"account",component:ClientAccountDetailsComponent},
+{path:"categories",component:ClientCategoriesComponent},
 {path:"reservations",component:ClientReservationsComponent}];
 
 @NgModule({

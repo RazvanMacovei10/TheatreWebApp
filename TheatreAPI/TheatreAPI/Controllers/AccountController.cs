@@ -1,9 +1,12 @@
 ﻿using BusinessLogic.Abstract;
 using BusinessLogic.BL;
+using BusinessLogic.EmailService;
 using Core.AbstractServices;
 using DataLayer.DTOs;
 using DataLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,13 +21,19 @@ namespace TheatreAPI.Controllers
         private readonly IUserRoleBL _userRoleBL;
         private readonly IRegisterFormBL _registerFormBL;
         private readonly ITheatreBL _theatreBL;
-        public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, IRegisterFormBL registerFormBL, ITheatreBL theatreBL)
+        private readonly IEmailSender _emailSender;
+        //private readonly UserManager<User> _userManager;
+        public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, 
+            IRegisterFormBL registerFormBL, ITheatreBL theatreBL, IEmailSender emailSender/*,UserManager<User> userManager*/)
         {
             _userBL = userBL;
             _tokenBL = tokenBL;
             _userRoleBL = userRoleBL;
             _registerFormBL = registerFormBL;
             _theatreBL = theatreBL;
+            _emailSender = emailSender;
+            //_userManager=userManager;
+
         }
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>>Register(RegisterDTO registerDTO)
@@ -152,6 +161,39 @@ namespace TheatreAPI.Controllers
 
             return Ok();
         }
+        [HttpGet]
+        public async Task<IActionResult> SendEmail()
+        {
+            var message = new Message(new string[] { "macoveirazvan69@gmail.com" }, "Test email", "This is the content from our email.");
+            _emailSender.SendEmail(message);
+
+
+            return Ok();
+        }
+    //    [HttpPost("register/ForgotPassword")]
+    //    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+    //    {
+    //        if (!ModelState.IsValid)
+    //            return BadRequest();
+
+    //        var user = await _userBL.GetByUsername("testuser");
+    //        if (user == null)
+    //            return BadRequest("Invalid Request");
+
+    //        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+    //        var param = new Dictionary<string, string?>
+    //{
+    //    {"token", token },
+    //    {"email", "macoveirazvan69@gmail.com" }
+    //};
+    //        var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientURI, param);
+
+    //        var message = new Message(new string[] { user.Email }, "Reset password token", "http://localhost:4200/auth/reset-password");
+    //        _emailSender.SendEmail(message);
+
+    //        return Ok();
+    //    }
+
 
     }
 }
