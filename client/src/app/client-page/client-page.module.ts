@@ -25,7 +25,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { ClientCategoriesComponent } from './client-categories/client-categories.component';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,7 @@ import { ClientCategoriesComponent } from './client-categories/client-categories
     ConfirmationDialogComponent,
     ClientReservationsComponent,
     ClientAccountDetailsComponent,
-    ChangePasswordComponent,
-    ClientCategoriesComponent
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +55,8 @@ import { ClientCategoriesComponent } from './client-categories/client-categories
     MatTableModule,
     MatIconModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    Ng5SliderModule,
 
   ]
 })

@@ -7,6 +7,7 @@ import { AccountService } from './account.service';
 import { Reservation } from '../_models/reservation';
 import { User } from '../_models/user';
 import { UserDetails } from '../_models/user-datails';
+import { PlayType } from '../_models/play-type';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,9 @@ export class ClientService {
   }
   getCities():Observable<string[]>{
     return this.http.get<string[]>(this.baseUrl + 'Address');
+  }
+  getCategories():Observable<PlayType[]>{
+    return this.http.get<PlayType[]>(this.baseUrl + 'Playtype');
   }
   addReservation(model: any) {
     let name="";

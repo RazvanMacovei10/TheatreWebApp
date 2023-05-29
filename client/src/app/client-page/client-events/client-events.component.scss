@@ -6,6 +6,17 @@
 
   }
 
-  .main-container{
-    margin-top: 3em;
-  }
+
+
+  .all-games {
+    background-image: url('/assets/background1.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 36px;
+}
+

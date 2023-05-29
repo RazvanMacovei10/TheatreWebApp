@@ -12,6 +12,8 @@ import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { EventModel } from 'src/app/_models/event';
 import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
 import { ClientEventComponent } from '../client-event/client-event.component';
+import { PlayType } from 'src/app/_models/play-type';
+import { LabelType, Options } from 'ng5-slider';
 
 @Component({
   selector: 'app-client-events',
@@ -46,10 +48,16 @@ export class ClientEventsComponent implements OnInit {
   eventClicked=false;
   filterForm !: FormGroup;
   faCalendar=faCalendarDay;
+  currentDate = new Date();
+
+  minValue:number=0;
+  maxValue:number=9999;
+  minDateTime = this.formatDateTime(this.currentDate);
 
   city:string="";
 
   cities$:Observable<string[]>|null=null;
+  categories$:Observable<PlayType[]>|null=null;
   
 
   ngOnInit(): void {
@@ -58,9 +66,12 @@ export class ClientEventsComponent implements OnInit {
     );
     this.getEvents();
     this.cities$=this.clientService.getCities();
+    this.categories$=this.clientService.getCategories();
     this.filterForm = this.fb.group({
       city: [''],
+      category:[''],
       name:[''],
+      date:[''],
       priceFrom:0,
       priceTo:9999
     });
@@ -71,11 +82,14 @@ export class ClientEventsComponent implements OnInit {
 
   getEvents(){    
     this.clientService.getEvents().subscribe((data)=>{this.events=data});
+
   }
 
   
   getFilteredEvents(){
+
     this.page=1;
+
     
     if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value=="")
     {
@@ -148,5 +162,28 @@ export class ClientEventsComponent implements OnInit {
     };
     const dialogRef=this.dialog.open(ClientEventComponent,dialogConfig);
   }
+  formatDateTime(date: Date): string {
+    return (
+      date.toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    );
+  }
+  options: Options = {
+    floor: 0,
+    ceil: 9999,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return '<b>Min price:</b> ' + value;
+        case LabelType.High:
+          return '<b>Max price:</b> ' + value;
+        default:
+          return 'Rs. ' + value;
+      }
+    }
+  };
 
 }

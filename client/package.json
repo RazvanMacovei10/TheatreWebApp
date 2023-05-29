@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "bootstrap": "^5.2.3",
     "font-awesome": "^4.7.0",
+    "ng5-slider": "^1.2.6",
     "ngx-bootstrap": "^5.6.2",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.5.0",

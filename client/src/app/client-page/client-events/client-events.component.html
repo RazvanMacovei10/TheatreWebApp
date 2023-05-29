@@ -1,54 +1,77 @@
-<div #topOfPage style="background-color:darkgray">
+<div #topOfPage style="background-color:#F4F1F1">
 <app-client-navbar></app-client-navbar>
-<div class="text-center mt-3">
-  <h3>We found {{events?.length}} results based on your search</h3>
+
+
+<div class="all-games">
+  <h1>All events</h1>
 </div>
 
-<div class="row justify-content-center" >
-  <div class="col-md-6">
-  <form class="form-inline" [formGroup]="filterForm" (ngSubmit)="getFilteredEvents()" autocomplete="off">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <select formControlName="city" name="city" (change)="getFilteredEvents()" class="form-control">
-            <option value="" disabled selected hidden >Select a city </option>
-            <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city }}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="mb-3">
-          <input type="text" class="form-control" formControlName="name" placeholder="Name" (input)="getFilteredEvents()"/>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="mb-3">
-          <input type="number" class="form-control" formControlName="priceFrom" (input)="getFilteredEvents()"/>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="mb-3">
-          <input type="number" class="form-control" formControlName="priceTo"  (input)="getFilteredEvents()"/>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="mb-3">
-          <button class="btn btn-secondary me-2" type="submit"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="mb-3">
-          <a class="btn btn-secondary" href="home/events" type="button">Reset</a>
-        </div>
-      </div>
-    </div>
-  </form>
-  </div>
-  </div>
-
   
+<div class="row" style="margin-top:3em">
+  
+<div class="col-md-3 border">
+  <div class="text-center mt-3">
+    <h3>We found {{events?.length}} results based on your search</h3>
+  </div>
+  <div class="row" >
+    
+    <form class="form" [formGroup]="filterForm" (ngSubmit)="getFilteredEvents()" autocomplete="off">
+      <div class="row justify-content-md-center">
+        
+          <div class="mb-3 col-md-10">
+            <h2>Filter by city</h2>
+            <select formControlName="city" name="city" (change)="getFilteredEvents()" class="form-control search-input">
+              <option value="" disabled selected hidden >Select a city </option>
+              <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city }}</option>
+            </select>
+          </div>
+          <div class="mb-3 col-md-10">
+            <h2>Filter by category</h2>
+            <select formControlName="category" name="category" (change)="getFilteredEvents()" class="form-control search-input">
+              <option value="" disabled selected hidden >Select a category </option>
+              <option *ngFor="let category of categories$ | async" [ngValue]="category">{{ category.name }}</option>
+            </select>
+          </div>
+        
+          <div class="mb-3 col-md-10">
+            <h2>Filter by name</h2>
+            <input type="text" class="form-control search-input" formControlName="name" placeholder="Name" (input)="getFilteredEvents()"/>
+          </div>
+        
+          <div class="mb-3 col-md-10">
+            <h2>Filter by Price</h2>
+            <input type="number" class="form-control search-input" formControlName="priceFrom" (input)="getFilteredEvents()"/>
+          </div>
 
-
+        
+        
+          <div class="mb-3 col-md-10">
+            <input type="number" class="form-control search-input" formControlName="priceTo"  (input)="getFilteredEvents()"/>
+          </div>
+          <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+        
+          <div class="mb-3 col-md-10">
+            <h2>Filter by date</h2>
+            <input type="date" [min]="minDateTime" class="form-control search-input" formControlName="date"  (input)="getFilteredEvents()"/>
+            
+          </div>
+        
+          <!-- <div class="mb-3 col-md-10">
+            <button class="btn btn-secondary me-2" type="submit"><i class="fa fa-search"></i></button>
+          </div> -->
+        
+        
+          <div class="mb-3 col-md-6">
+            <a class="btn btn-secondary" href="home/events" type="button">Reset filters</a>
+          </div>
+        
+      </div>
+    </form>
+    
+    </div>
+  
+</div>
+<div class="col-md-9">
 <div class="container main-container">
   <div class="row">
     <div class="col-sm-4 mb-5" *ngFor="let item of events 
@@ -71,7 +94,10 @@
             <strong>{{ item.theatreName }}</strong>
           </p>
           <p class="card-text">
-            Available Seats: <strong>{{ item.availableSeats }}</strong>
+            Available tickets: <strong>{{ item.availableSeats }}</strong>
+          </p>
+          <p class="card-text">
+             <strong>{{ item.play.type.name }}</strong>
           </p>
           
           <p class="card-text">
@@ -89,5 +115,7 @@
     >
     </pagination-controls>
   </div>
+</div>
+</div>
 </div>
 </div>
