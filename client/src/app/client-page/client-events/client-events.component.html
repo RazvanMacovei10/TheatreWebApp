@@ -38,17 +38,14 @@
             <input type="text" class="form-control search-input" formControlName="name" placeholder="Name" (input)="getFilteredEvents()"/>
           </div>
         
-          <div class="mb-3 col-md-10">
-            <h2>Filter by Price</h2>
-            <input type="number" class="form-control search-input" formControlName="priceFrom" (input)="getFilteredEvents()"/>
-          </div>
+         
 
         
         
           <div class="mb-3 col-md-10">
-            <input type="number" class="form-control search-input" formControlName="priceTo"  (input)="getFilteredEvents()"/>
+            <h2>Filter by Price</h2>
+            <ng5-slider [(value)]="minValue" [(highValue)]="maxValue"  [options]="options" (mouseup)="getFilteredEvents()"></ng5-slider>
           </div>
-          <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
         
           <div class="mb-3 col-md-10">
             <h2>Filter by date</h2>

@@ -20,18 +20,28 @@ export class ClientService {
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl + 'Event/available');
   }
-  getFilteredEvents(priceFrom:number,priceTo:number,city:string,name:string): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEvents/'+priceFrom+'/'+priceTo+'/'+city+'/'+name);
+  getFilteredEvents(priceFrom:number,priceTo:number,city:string,name:string,category:string,date:Date): Observable<Event[]> {
+    let url = `${this.baseUrl}Event/FilteredEvents?priceFrom=${priceFrom}&priceTo=${priceTo}`;
+
+  if (city) {
+    url += `&city=${encodeURIComponent(city)}`;
   }
-  getFilteredEventsByName(priceFrom:number,priceTo:number,name:string): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByName/'+priceFrom+'/'+priceTo+'/'+name);
+
+  if (name) {
+    url += `&name=${encodeURIComponent(name)}`;
   }
-  getFilteredEventsByCity(priceFrom:number,priceTo:number,city:string): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByCity/'+priceFrom+'/'+priceTo+'/'+city);
+
+  if (category) {
+    url += `&category=${encodeURIComponent(category)}`;
   }
-  getFilteredEventsByPrice(priceFrom:number,priceTo:number): Observable<Event[]> {
-    return this.http.get<Event[]>(this.baseUrl + 'Event/FilteredEventsByPrice/'+priceFrom+'/'+priceTo);
+
+  if (date) {
+    url += `&date=${date}`;
   }
+
+  return this.http.get<Event[]>(url);
+  }
+  
 
   getTheatres(): Observable<Theatre[]>{
     return this.http.get<Theatre[]>(this.baseUrl + 'Theathre')

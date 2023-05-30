@@ -91,31 +91,17 @@ export class ClientEventsComponent implements OnInit {
     this.page=1;
 
     
-    if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value=="")
-    {
-      this.clientService.getFilteredEventsByPrice(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value)
-    .subscribe((data)=>{this.events=data});
-    }
-    else
-    if(this.filterForm.get('city')?.value=="" && this.filterForm.get('name')?.value!="")
-    {
-    this.clientService.getFilteredEventsByName(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('name')?.value)
-    .subscribe((data)=>{this.events=data});
-    }
-    else
-    if(this.filterForm.get('name')?.value=="" && this.filterForm.get('city')?.value!="")
-    {
-    this.clientService.getFilteredEventsByCity(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value)
-    .subscribe((data)=>{this.events=data});
-    }
-    
-    else
-    {
+      console.log(this.minValue);
       
-        this.clientService.getFilteredEvents(this.filterForm.get('priceFrom')?.value,this.filterForm.get('priceTo')?.value,this.filterForm.get('city')?.value,this.filterForm.get('name')?.value)
+        this.clientService.getFilteredEvents(this.minValue,
+        this.maxValue,
+        this.filterForm.get('city')?.value,
+        this.filterForm.get('name')?.value,
+        this.filterForm.get('category')?.value.name,
+        this.filterForm.get('date')?.value)
       .subscribe((data)=>{this.events=data});
       
-    }
+    
 
   }
   
@@ -173,7 +159,7 @@ export class ClientEventsComponent implements OnInit {
   }
   options: Options = {
     floor: 0,
-    ceil: 9999,
+    ceil: 1500,
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:

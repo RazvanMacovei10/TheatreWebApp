@@ -164,7 +164,7 @@ namespace TheatreAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> SendEmail()
         {
-            var message = new Message(new string[] { "macoveirazvan69@gmail.com" }, "Test email", "This is the content from our email.");
+            var message = new Message(new string[] { "macoveirazvan69@gmail.com" }, "Test email", "We sent a test email.");
             _emailSender.SendEmail(message);
 
 

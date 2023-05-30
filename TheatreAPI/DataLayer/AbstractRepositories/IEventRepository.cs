@@ -11,7 +11,8 @@ namespace DataLayer.AbstractRepositories
     {
         public Task<List<Event>> GetAll();
         public Task<List<Event>> GetAllAvailable();
-        public Task<List<Event>> GetAllFiltered(int priceFrom,int priceTo, string city, string name);
+        public Task<List<Event>> GetAllFiltered(int priceFrom,int priceTo, 
+            string city, string name,string category,DateTime? date);
         public Task<Event> UpdateEventAsync(int eventId, Event eventSent);
         public Task<Event> GetById(int eventId);
         public Task<Event> Add(Event eventAdded);

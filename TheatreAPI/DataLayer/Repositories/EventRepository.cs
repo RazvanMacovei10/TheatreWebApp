@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class EventRepository:IEventRepository
+    public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _context;
         public EventRepository(AppDbContext context)
@@ -19,7 +19,7 @@ namespace DataLayer.Repositories
         public async Task<List<Event>> GetAll()
         {
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
-                Include(x=>x.Play.Type).OrderBy(x=>x.DateTime).
+                Include(x => x.Play.Type).OrderBy(x => x.DateTime).
                 ToListAsync();
 
             return results;
@@ -32,61 +32,170 @@ namespace DataLayer.Repositories
 
             return results;
         }
-        public async Task<List<Event>> GetAllFiltered(int priceFrom,int priceTo, string city, string name)
+        public async Task<List<Event>> GetAllFiltered(int priceFrom, int priceTo,
+            string city, string name, string category, DateTime? date)
         {
-            if(city==null && name==null)
-            {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
-                    Include(x => x.Theatre.User).Include(x => x.Play.Type)
-                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
-                .Where(x => x.DateTime > DateTime.Now)
-                .OrderBy(x => x.DateTime)
-                .ToListAsync();
-                return results;
-            }
-            else
-            if(city==null)
-            {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
-                    Include(x => x.Play).Include(x => x.Theatre.User)
-                .Where(x => x.Play.Name.Contains(name))
-                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
-                .Where(x => x.DateTime > DateTime.Now)
-                .OrderBy(x => x.DateTime)
-                .ToListAsync();
-                return results;
-            }
-            else
-            if(name==null)
-            {
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
-                    Include(x => x.Play).Include(x => x.Theatre.User)
-                .Where(x => x.Theatre.Address.City.Contains(city))
-                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
-                .Where(x => x.DateTime > DateTime.Now)
-                .OrderBy(x => x.DateTime)
-                .ToListAsync();
-                return results;
 
-            }
-            else 
-            {                
-                var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
-                    Include(x => x.Play).Include(x => x.Theatre.User)
-                .Where(x => x.Theatre.Address.City.Contains(city))
-                .Where(x => x.Play.Name.Contains(name))
-                .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
-                .Where(x => x.DateTime > DateTime.Now)
-                .OrderBy(x=>x.DateTime)
-                .ToListAsync();
-                return results;
-            }
+         var results = await _context.Events
+                .Include(x => x.Theatre)
+                 .Include(x => x.Play.Type)
+                .Include(x => x.Play)
+                 .Include(x => x.Theatre.User)
+                    .Where(x =>
+                     (city == null || x.Theatre.Address.City.Contains(city)) &&
+                     (name == null || x.Play.Name.Contains(name)) &&
+                        (date == null ||
+                     x.DateTime.Year == date.Value.Year &&
+                        x.DateTime.Month == date.Value.Month &&
+                        x.DateTime.Day == date.Value.Day) &&
+                        (category==null || x.Play.Type.Name==category) &&
+                        (priceFrom == null || x.Price >= priceFrom) &&                        
+                     (priceTo == null || x.Price <= priceTo) &&
+                    x.DateTime > DateTime.Now)
+                 .OrderBy(x => x.DateTime)
+                    .ToListAsync();
+
+            return results;
+
+            //if(city==null && name==null && date==null && category==null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
+            //        Include(x => x.Theatre.User).Include(x => x.Play.Type)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (city != null && name == null && date == null && category == null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (city != null && name != null && date == null && category == null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (city != null && name != null && date != null && category == null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.DateTime.Month == date.Value.Month)
+            //    .Where(x => x.DateTime.Year == date.Value.Year)
+            //    .Where(x => x.DateTime.Day == date.Value.Day)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (city != null && name != null && date == null && category != null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.Play.Type.Name == category)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (city != null && name != null && date != null && category != null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.Play.Type.Name == category)
+            //    .Where(x => x.DateTime.Month == date.Value.Month)
+            //    .Where(x => x.DateTime.Year == date.Value.Year)
+            //    .Where(x => x.DateTime.Day == date.Value.Day)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if(city==null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (date != null && city == null && name == null && category == null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
+            //        Include(x => x.Theatre.User).Include(x => x.Play.Type)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .Where(x => x.DateTime.Month == date.Value.Month)
+            //    .Where(x => x.DateTime.Year == date.Value.Year)
+            //    .Where(x => x.DateTime.Day == date.Value.Day)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else
+            //if (category != null && city == null && name == null && date == null)
+            //{
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).
+            //        Include(x => x.Theatre.User).Include(x => x.Play.Type)
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .Where(x => x.Play.Type.Name == category)
+            //    .OrderBy(x => x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+            //else 
+            //{                
+            //    var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play.Type).
+            //        Include(x => x.Play).Include(x => x.Theatre.User)
+            //    .Where(x => x.Theatre.Address.City.Contains(city))
+            //    .Where(x => x.Play.Name.Contains(name))
+            //    .Where(x => x.Price >= priceFrom && x.Price <= priceTo)
+            //    .Where(x => x.DateTime > DateTime.Now)
+            //    .OrderBy(x=>x.DateTime)
+            //    .ToListAsync();
+            //    return results;
+            //}
+
         }
         public async Task<Event> GetById(int eventId)
         {
             var result = await _context.Events.Where(e => e.Id == eventId).
                 Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Play.Type).
-                Include(x=>x.Theatre.User).FirstOrDefaultAsync();
+                Include(x => x.Theatre.User).FirstOrDefaultAsync();
 
             return result;
         }
@@ -117,7 +226,7 @@ namespace DataLayer.Repositories
             eventToModify.AvailableSeats = eventSent.AvailableSeats;
             eventToModify.Play = eventSent.Play;
             eventToModify.Theatre = eventSent.Theatre;
-  
+
             await _context.SaveChangesAsync();
             return eventToModify;
         }
