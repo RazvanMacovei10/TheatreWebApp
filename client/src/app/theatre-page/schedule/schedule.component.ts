@@ -20,7 +20,7 @@ import { AddEventComponent } from '../add-event/add-event.component';
 export class ScheduleComponent implements OnInit {
 
 
-  displayedColumns:string[]=['name','availableSeats','datetime','price','action'];
+  displayedColumns:string[]=['name','availableSeats','location','datetime','price','action'];
   dataSource!:MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;

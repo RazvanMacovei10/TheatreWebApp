@@ -47,18 +47,18 @@
             </div>
             
           </div>
-          <div class="mb-3">
-            <label for="numberOfTickets-input" class="form-label">Number of tickets</label>
+          <div class="mb-3" *ngIf="!data">
+            <label for="availableTickets-input" class="form-label">Number of tickets</label>
             <input
               type="number"
               class="form-control"
-              formControlName="numberOfTickets"
+              formControlName="availableTickets"
               placeholder="Number of tickets"
             />
             <div
               *ngIf="
-                datetimeForm.controls['numberOfTickets'].invalid &&
-                datetimeForm.controls['numberOfTickets'].touched
+                datetimeForm.controls['availableTickets'].invalid &&
+                datetimeForm.controls['availableTickets'].touched 
               "
               class="text-danger"
             >
@@ -66,7 +66,7 @@
             </div>            
           </div>
           <div class="mb-3">
-            <label for="location-input" class="form-label">Number of tickets</label>
+            <label for="location-input" class="form-label">Location</label>
             <input
               type="text"
               class="form-control"
