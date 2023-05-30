@@ -27,6 +27,7 @@ export class ClientTheatresComponent implements OnInit {
   tableSize:number=9;
   tableSizes:any=[3,6,9,12];
   filterParams:any;
+  theatreName:string=""
   faCalendar=faCalendarDay;
   currentEvent:EventModel={
     id: 1,
@@ -76,6 +77,7 @@ export class ClientTheatresComponent implements OnInit {
   }
 
   onCardClick(item: Theatre) {
+    this.theatreName=item.name;
     this.theatreClicked = true;
     this.currentEvents = item.events;
   }

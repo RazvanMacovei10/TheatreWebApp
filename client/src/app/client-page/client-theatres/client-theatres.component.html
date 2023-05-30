@@ -1,5 +1,9 @@
-<div style="background-color: darkgray;">
+<div style="background-color:#F4F1F1">
 <app-client-navbar></app-client-navbar>
+<div class="div-cover">
+  <h1 *ngIf="theatreClicked==false">All theatres</h1>
+  <h1 *ngIf="theatreClicked">{{theatreName}}</h1>
+</div>
 <div class="container main-container">
   <div class="row" *ngIf="theatreClicked == false">
     <!-- <div class="text-center">
