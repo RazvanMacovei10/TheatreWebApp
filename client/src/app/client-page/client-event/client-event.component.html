@@ -18,7 +18,7 @@
         <strong>{{ currentEvent.play.type.name }}</strong>
      </p>
       <p class="card-text">
-        Available Seats: <strong>{{ currentEvent.availableSeats }}</strong>
+        Available Seats: <strong>{{ currentEvent.availableTickets }}</strong>
       </p>     
       
       <p class="card-text">
@@ -53,14 +53,14 @@
         
         
         <div class="col-md-4">
-          <button class="btn btn-secondary" *ngIf="(isLoggedIn$ | async) && currentEvent.availableSeats>0"  
+          <button class="btn btn-secondary" *ngIf="(isLoggedIn$ | async) && currentEvent.availableTickets>0"  
             type="submit"
             class="btn btn-success me-2"
           >
             Reserve ticket(s)
           </button>
           <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for making reservation</button>
-          <button class="btn btn-danger" *ngIf="(isLoggedIn$ | async) && currentEvent.availableSeats<=0"  disabled >No tickets available</button>
+          <button class="btn btn-danger" *ngIf="(isLoggedIn$ | async) && currentEvent.availableTickets<=0"  disabled >No tickets available</button>
           
         </div>
       </form>

@@ -5,7 +5,6 @@ export interface RegisterForm{
     username:string,
     address:Address,
     name:string,
-    totalSeats:string,
     password:string,
     email:string,
     image:string

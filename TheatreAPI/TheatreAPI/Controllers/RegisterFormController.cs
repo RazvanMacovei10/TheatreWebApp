@@ -55,7 +55,6 @@ namespace TheatreAPI.Controllers
             {
                 Name= registerForm.Name,
                 Address = registerForm.Address,
-                TotalSeats = registerForm.TotalSeats,
                 Image = registerForm.Image,
                 User = user
             };

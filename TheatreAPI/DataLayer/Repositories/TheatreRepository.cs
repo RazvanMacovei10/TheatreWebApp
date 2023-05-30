@@ -56,7 +56,6 @@ namespace DataLayer.Repositories
         {
             Theatre theatreToModify = new Theatre();
             theatreToModify.Id = theatreId;
-            theatreToModify.TotalSeats = theatreSent.TotalSeats;
             theatreToModify.Image = theatreSent.Image;
             theatreToModify.UserId = theatreSent.UserId;
             theatreToModify.Name = theatreSent.Name;

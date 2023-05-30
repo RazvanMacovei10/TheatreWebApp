@@ -223,7 +223,7 @@ namespace DataLayer.Repositories
             Event eventToModify = await GetById(eventId);
             eventToModify.DateTime = eventSent.DateTime;
             eventToModify.Price = eventSent.Price;
-            eventToModify.AvailableSeats = eventSent.AvailableSeats;
+            eventToModify.AvailableTickets = eventSent.AvailableTickets;
             eventToModify.Play = eventSent.Play;
             eventToModify.Theatre = eventSent.Theatre;
 

@@ -24,7 +24,8 @@ export class ClientEventComponent implements OnInit {
   currentEvent:EventModel={
     id: 1,
     datetime: new Date(),
-    availableSeats: 100,
+    availableTickets: 100,
+    location:'',
     price: 10,
     theatreName: 'ABC Theatre',
     play: {}as Play
@@ -111,7 +112,7 @@ export class ClientEventComponent implements OnInit {
     const quantityControl = this.buyForm.get('quantity');
     if (quantityControl) {
       let currentValue = quantityControl.value;
-      if (currentValue < 10 && currentValue<this.currentEvent.availableSeats) {
+      if (currentValue < 10 && currentValue<this.currentEvent.availableTickets) {
         currentValue++;
         quantityControl.setValue(currentValue);
       }

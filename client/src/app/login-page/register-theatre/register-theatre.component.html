@@ -114,25 +114,8 @@
               Number is required and must be less than 9999
             </div>
           </div>
-          <div class="mb-3">
-            <input
-              type="Number"
-              class="form-control"
-              name="totalSeats"
-              [(ngModel)]="model.totalSeats"
-              placeholder="Total seats"
-              min="1"
-              max="9999"
-              required
-              #totalSeats="ngModel"
-            />
-            <div
-              *ngIf="totalSeats.invalid && totalSeats.touched"
-              class="text-danger"
-            >
-              Total seats is required and must be within 1 and 9999
-            </div>
-          </div>
+
+ 
           <label for="image">Select image to upload:</label>
           <input
             type="file"

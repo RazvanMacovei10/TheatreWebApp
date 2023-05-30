@@ -30,9 +30,9 @@ namespace TheatreAPI.Controllers
         {
             Reservation reservation = new Reservation();
             Event eventModel = await _eventBL.GetById(id);
-            if (reservation.NumberOfTickets <= eventModel.AvailableSeats)
+            if (reservation.NumberOfTickets <= eventModel.AvailableTickets)
             {
-                eventModel.AvailableSeats = eventModel.AvailableSeats - reservationDTO.NumberOfTickets;
+                eventModel.AvailableTickets = eventModel.AvailableTickets - reservationDTO.NumberOfTickets;
                 await _eventBL.UpdateEventAsync(eventModel.Id, eventModel);
             }
             else
@@ -94,7 +94,7 @@ namespace TheatreAPI.Controllers
             Reservation reservation = await _reservationBL.GetById(id);
             Event eventModel = await _eventBL.GetById(reservation.EventId);
 
-            eventModel.AvailableSeats = eventModel.AvailableSeats + reservation.NumberOfTickets;
+            eventModel.AvailableTickets = eventModel.AvailableTickets + reservation.NumberOfTickets;
             await _eventBL.UpdateEventAsync(eventModel.Id, eventModel);
 
             await _reservationBL.DeleteAsync(id);

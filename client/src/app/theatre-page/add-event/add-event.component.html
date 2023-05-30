@@ -29,6 +29,7 @@
             </div>
           </div>
           <div class="mb-3">
+            <label for="price-input" class="form-label">Price</label>
             <input
               type="number"
               class="form-control"
@@ -44,7 +45,45 @@
             >
               Price is required
             </div>
+            
           </div>
+          <div class="mb-3">
+            <label for="numberOfTickets-input" class="form-label">Number of tickets</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="numberOfTickets"
+              placeholder="Number of tickets"
+            />
+            <div
+              *ngIf="
+                datetimeForm.controls['numberOfTickets'].invalid &&
+                datetimeForm.controls['numberOfTickets'].touched
+              "
+              class="text-danger"
+            >
+            Number of tickets is required
+            </div>            
+          </div>
+          <div class="mb-3">
+            <label for="location-input" class="form-label">Number of tickets</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="location"
+              placeholder="Location"
+            />
+            <div
+              *ngIf="
+                datetimeForm.controls['location'].invalid &&
+                datetimeForm.controls['location'].touched
+              "
+              class="text-danger"
+            >
+            Location is required
+            </div>            
+          </div>
+
           <div class="mb-3">
             <label for="dropdown" class="form-label">Play</label>
             <select class="form-select" id="dropdown" formControlName="play">

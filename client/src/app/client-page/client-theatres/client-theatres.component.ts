@@ -32,7 +32,8 @@ export class ClientTheatresComponent implements OnInit {
   currentEvent:EventModel={
     id: 1,
     datetime: new Date(),
-    availableSeats: 100,
+    location:'',
+    availableTickets: 100,
     price: 10,
     theatreName: 'ABC Theatre',
     play: {}as Play

@@ -10,7 +10,6 @@ namespace DataLayer.Entities
     public class Theatre
     {
         public int Id { get; set; }
-        public int TotalSeats { get; set; }
         public byte[] Image { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }

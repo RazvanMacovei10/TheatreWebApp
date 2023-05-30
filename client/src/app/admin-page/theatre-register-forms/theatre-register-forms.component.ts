@@ -21,7 +21,6 @@ export class TheatreRegisterFormsComponent implements OnInit {
     },
     email: '',
     password: '',
-    totalSeats: 'defaultSeats',
     image: '',
     name:'',
   };

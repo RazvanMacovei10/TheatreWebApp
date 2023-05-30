@@ -39,8 +39,9 @@ export class ClientEventsComponent implements OnInit {
   filterParams:any;
   currentEvent:EventModel={
     id: 1,
+    location:'',
     datetime: new Date(),
-    availableSeats: 100,
+    availableTickets: 100,
     price: 10,
     theatreName: 'ABC Theatre',
     play: {}as Play

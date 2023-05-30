@@ -15,7 +15,6 @@ export class RegisterTheatreComponent implements OnInit {
     name:'',
     address: { city: '', street: '', number: '', id: 0 },
     username: '',
-    totalSeats: '',
     password: '',
     email: '',
     image: '',

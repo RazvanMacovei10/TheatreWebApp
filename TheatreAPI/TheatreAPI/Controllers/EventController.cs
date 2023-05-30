@@ -30,7 +30,6 @@ namespace TheatreAPI.Controllers
             Event newEvent = _mapper.Map<Event>(eventDTO);
             newEvent.Theatre = theatre;
             newEvent.TheatreId = theatre.Id;
-            newEvent.AvailableSeats = theatre.TotalSeats;
 
             await _eventBL.Add(newEvent);
             return Ok();
@@ -44,7 +43,6 @@ namespace TheatreAPI.Controllers
             Event newEvent = _mapper.Map<Event>(eventDTO);
             newEvent.Theatre = theatre;
             newEvent.TheatreId = theatre.Id;
-            newEvent.AvailableSeats = theatre.TotalSeats;
             newEvent.Play = play;
             int id = eventDTO.Id;
             await _eventBL.UpdateEventAsync(id,newEvent);
