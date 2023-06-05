@@ -57,6 +57,7 @@ export class AddEditPlayComponent implements OnInit {
 
   addPlay() {
     if(this.data){
+      
       this.model.name=this.registerForm.controls['name'].getRawValue();
       this.model.description=this.registerForm.controls['description'].getRawValue();
       this.model.type=this.registerForm.controls['type'].getRawValue();

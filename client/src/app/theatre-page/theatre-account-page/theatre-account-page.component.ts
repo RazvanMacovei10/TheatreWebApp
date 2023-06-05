@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, map, timer } from 'rxjs';
 import { UserDetails } from 'src/app/_models/user-datails';
 import { ClientService } from 'src/app/_services/client.service';
@@ -9,6 +9,7 @@ import { TheatreDetails } from 'src/app/_models/theatre-details';
 import { TheatreService } from 'src/app/_services/theatre.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ChangePictureComponent } from '../change-picture/change-picture.component';
+import { CoreService } from 'src/app/_services/core.service';
 
 @Component({
   selector: 'app-theatre-account-page',
@@ -20,9 +21,10 @@ export class TheatreAccountPageComponent implements OnInit {
     private accountService: AccountService,
     private dialog: MatDialog,
     private theatreService: TheatreService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private coreService:CoreService
   ) {}
-
+  model:any={};
   isLoggedIn$: Observable<boolean> = new Observable<boolean>();
   username: string | undefined = '';
   userDetails: TheatreDetails = {
@@ -88,12 +90,32 @@ export class TheatreAccountPageComponent implements OnInit {
     });
   }
   openChangePictureDialog() {
-    const dialogRef = this.dialog.open(ChangePictureComponent);
+    let config=new MatDialogConfig;
+    const dialogRef = this.dialog.open(ChangePictureComponent,config)
+    dialogRef.componentInstance.type="account";
     dialogRef.afterClosed().subscribe({
       next: () => {
         this.getUser();
       },
     });
+  }
+
+  changeName(){
+    
+    console.log("dadada"+this.model.name);
+
+    this.accountService.changeName(this.model).subscribe({
+      next:()=>{
+        this.coreService.openSnackBar("Name changed successfully",'done');
+      },
+      error: (error) => {
+        if (error.status === 400) {
+
+        } else {
+        }
+      },
+    })
+
   }
 
   getImageUrl(row: TheatreDetails): SafeUrl {

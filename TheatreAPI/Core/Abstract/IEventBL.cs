@@ -17,5 +17,7 @@ namespace BusinessLogic.Abstract
         public Task<Event> GetById(int id);
         public Task<Event> Add(Event play);
         public Task<bool> DeleteAsync(int id);
+        public Task<List<string>> GetAllCities();
+
     }
 }

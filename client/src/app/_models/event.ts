@@ -5,6 +5,7 @@ export interface EventModel{
     datetime:Date,
     availableTickets:number,
     location:string,
+    city:string,
     price:number,
     theatreName:string,
     play:Play

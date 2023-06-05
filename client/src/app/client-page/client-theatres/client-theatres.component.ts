@@ -33,6 +33,7 @@ export class ClientTheatresComponent implements OnInit {
     id: 1,
     datetime: new Date(),
     location:'',
+    city:'',
     availableTickets: 100,
     price: 10,
     theatreName: 'ABC Theatre',

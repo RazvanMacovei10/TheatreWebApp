@@ -48,6 +48,12 @@ namespace TheatreAPI.Controllers
             await _eventBL.UpdateEventAsync(id,newEvent);
             return Ok();
         }
+        [HttpGet("Cities")]
+        public async Task<IList<string>> GetCities()
+        {
+            var cities = await _eventBL.GetAllCities();
+            return cities;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetEvents()

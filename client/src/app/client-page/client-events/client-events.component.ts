@@ -40,6 +40,7 @@ export class ClientEventsComponent implements OnInit {
   currentEvent:EventModel={
     id: 1,
     location:'',
+    city:'',
     datetime: new Date(),
     availableTickets: 100,
     price: 10,
@@ -66,7 +67,7 @@ export class ClientEventsComponent implements OnInit {
       map((user) => !!user)
     );
     this.getEvents();
-    this.cities$=this.clientService.getCities();
+    this.cities$=this.clientService.getEventCities();
     this.categories$=this.clientService.getCategories();
     this.filterForm = this.fb.group({
       city: [''],

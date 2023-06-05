@@ -32,6 +32,12 @@ namespace DataLayer.Repositories
 
             return results;
         }
+        public async Task<List<string>> GetAllCities()
+        {
+            var results = await _context.Events.Select(a => a.City).Distinct().ToListAsync();
+
+            return results;
+        }
         public async Task<List<Event>> GetAllFiltered(int priceFrom, int priceTo,
             string city, string name, string category, DateTime? date)
         {
@@ -42,7 +48,7 @@ namespace DataLayer.Repositories
                 .Include(x => x.Play)
                  .Include(x => x.Theatre.User)
                     .Where(x =>
-                     (city == null || x.Theatre.Address.City.Contains(city)) &&
+                     (city == null || x.City.Contains(city)) &&
                      (name == null || x.Play.Name.Contains(name)) &&
                         (date == null ||
                      x.DateTime.Year == date.Value.Year &&
@@ -224,6 +230,7 @@ namespace DataLayer.Repositories
             eventToModify.DateTime = eventSent.DateTime;
             eventToModify.Price = eventSent.Price;
             eventToModify.Location = eventSent.Location;
+            eventToModify.City = eventSent.City;
             eventToModify.AvailableTickets = eventSent.AvailableTickets;
             eventToModify.Play = eventSent.Play;
             eventToModify.Theatre = eventSent.Theatre;

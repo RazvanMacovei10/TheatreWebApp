@@ -5,6 +5,7 @@ export interface EventSent{
     theatreName:string,
     playId:number,
     location:string,
+    city:string,
     price:number,
     availableTickets:number,
     datetime:Date

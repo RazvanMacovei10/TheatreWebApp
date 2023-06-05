@@ -83,6 +83,24 @@
             Location is required
             </div>            
           </div>
+          <div class="mb-3">
+            <label for="city-input" class="form-label">City</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="city"
+              placeholder="City"
+            />
+            <div
+              *ngIf="
+                datetimeForm.controls['city'].invalid &&
+                datetimeForm.controls['city'].touched
+              "
+              class="text-danger"
+            >
+            City is required
+            </div>            
+          </div>
 
           <div class="mb-3">
             <label for="dropdown" class="form-label">Play</label>

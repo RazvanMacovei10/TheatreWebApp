@@ -52,5 +52,10 @@ namespace BusinessLogic.BL
         {
             return await _eventRepository.UpdateEventAsync(eventId, eventSent);
         }
+        public async Task<List<string>> GetAllCities()
+        {
+            var results = await _eventRepository.GetAllCities();
+            return results;
+        }
     }
 }

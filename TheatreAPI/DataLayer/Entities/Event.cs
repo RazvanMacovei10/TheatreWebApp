@@ -14,6 +14,7 @@ namespace DataLayer.Entities
         public float Price { get; set; }
         public int AvailableTickets { get; set; }
         public string Location { get; set; }
+        public string City { get; set; }
         public int PlayId { get; set; }
         public Play Play { get; set; }
         public int TheatreId { get; set; }

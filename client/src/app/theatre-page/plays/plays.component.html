@@ -1,9 +1,12 @@
 <div #topOfPage></div>
 <app-theatre-navbar></app-theatre-navbar>
-<div class="d-flex justify-content-center align-items-center add-div">
-  <button mat raised-button class="btn btn-primary" (click)="openAddEditPlayForm()">Add play</button>
-</div>
+
 <div class="container main-container">
+  <div class="d-flex justify-content-end align-items-center add-div" style="margin-bottom:2em">
+    <a mat-icon-button (click)="openAddEditPlayForm()">
+      <mat-icon style="transform:scale(2)" color="primary">add_box</mat-icon>
+    </a>
+  </div>
   <div class="row">
     <div class="col-sm-4 mb-5" *ngFor="let item of plays 
     | paginate :{
@@ -19,8 +22,20 @@
           <h2 class="card-title text-center">{{ item.name }}</h2>
           <p class="card-text">Type: <strong>{{ item.type.name }}</strong></p>
           <div class="d-flex justify-content-center">
-          <button class="btn btn-danger" (click)="deletePlay(item.id)">Delete</button>
-          <button class="btn btn-primary" (click)="openEditForm(item)">Edit</button>
+      
+            <a mat-icon-button (click)="openEditForm(item)">
+              <mat-icon style="transform:scale(1.5)" color="primary">create</mat-icon>
+            </a>
+            <a mat-icon-button (click)="deletePlay(item.id)">
+              <mat-icon style="transform:scale(1.5)" color="warn">delete</mat-icon>
+            </a>
+          <button
+                  class="btn btn-primary"
+                  (click)="openChangePictureDialog(item)"
+                >
+                  Change image
+                </button>
+
         </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Play } from 'src/app/_models/play';
 import { AccountService } from 'src/app/_services/account.service';
 import { TheatreService } from 'src/app/_services/theatre.service';
 import { AddEditPlayComponent } from '../add-edit-play/add-edit-play.component';
+import { ChangePictureComponent } from '../change-picture/change-picture.component';
 
 @Component({
   selector: 'app-plays',
@@ -88,6 +89,18 @@ export class PlaysComponent implements OnInit {
       }
     })
     
+    
+  }
+  openChangePictureDialog(data:any) {
+    let config=new MatDialogConfig;
+    const dialogRef = this.dialog.open(ChangePictureComponent,config)
+    dialogRef.componentInstance.type="event";
+    dialogRef.componentInstance.data=data;
+    dialogRef.afterClosed().subscribe({
+      next: () => {
+        this.getPlays();
+      },
+    });
   }
 
 }

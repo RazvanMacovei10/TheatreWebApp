@@ -161,6 +161,19 @@ namespace TheatreAPI.Controllers
 
             return Ok();
         }
+        [HttpPost("change-name/{username}")]
+        public async Task<IActionResult> ChangePicture(ChangeTheatreNameDTO changeTheatreNameDTO, string username)
+        {
+            var theatre = await _theatreBL.GetByUsername(username);
+
+            theatre.Name = changeTheatreNameDTO.Name;
+
+
+            await _theatreBL.UpdateTheatreAsync(theatre.Id, theatre);
+
+
+            return Ok();
+        }
         [HttpGet]
         public async Task<IActionResult> SendEmail()
         {

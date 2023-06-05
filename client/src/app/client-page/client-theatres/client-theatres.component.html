@@ -1,7 +1,7 @@
 <div style="background-color:#F4F1F1">
 <app-client-navbar></app-client-navbar>
 <div class="div-cover">
-  <h1 *ngIf="theatreClicked==false">All theatres</h1>
+  <h1 *ngIf="theatreClicked==false">All organizers</h1>
   <h1 *ngIf="theatreClicked">{{theatreName}}</h1>
 </div>
 <div class="container main-container">
@@ -33,7 +33,7 @@
             
           </p>
           <p class="card-text">
-            Total seats: <strong>{{ item.totalSeats }}</strong>
+            Number of events available <strong>{{ item.totalSeats }}</strong>
           </p>
         </div>
       </div>

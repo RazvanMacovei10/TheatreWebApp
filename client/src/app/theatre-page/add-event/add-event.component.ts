@@ -22,6 +22,7 @@ export class AddEventComponent implements OnInit {
     theatreName: '',
     playId: 0,
     location:'',
+    city:'',
     availableTickets:0,
     datetime: new Date(),
     price:0
@@ -50,6 +51,7 @@ export class AddEventComponent implements OnInit {
       datetime: ['', Validators.required],
       availableTickets: ['', Validators.required],
       location: ['', Validators.required],
+      city: ['', Validators.required],
       play: ['', Validators.required],
       price:['',Validators.required]
     });
@@ -68,6 +70,7 @@ export class AddEventComponent implements OnInit {
     this.event.price=this.datetimeForm.controls['price'].getRawValue();
     this.event.datetime=this.datetimeForm.controls['datetime'].getRawValue();
     this.event.location=this.datetimeForm.controls['location'].getRawValue();
+    this.event.city=this.datetimeForm.controls['city'].getRawValue();
     this.event.availableTickets=this.datetimeForm.controls['availableTickets'].getRawValue();
     if(parseInt(this.datetimeForm.controls['play'].getRawValue()))
     {
@@ -91,6 +94,7 @@ export class AddEventComponent implements OnInit {
     this.event.price=this.datetimeForm.controls['price'].getRawValue();
     this.event.datetime=this.datetimeForm.controls['datetime'].getRawValue();
     this.event.location=this.datetimeForm.controls['location'].getRawValue();
+    this.event.city=this.datetimeForm.controls['city'].getRawValue();
     this.event.availableTickets=this.datetimeForm.controls['availableTickets'].getRawValue();
     this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
     console.log(this.event);

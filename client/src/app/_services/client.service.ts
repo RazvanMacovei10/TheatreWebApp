@@ -49,6 +49,9 @@ export class ClientService {
   getCities():Observable<string[]>{
     return this.http.get<string[]>(this.baseUrl + 'Address');
   }
+  getEventCities():Observable<string[]>{
+    return this.http.get<string[]>(this.baseUrl+'Event/'+'Cities')
+  }
   getCategories():Observable<PlayType[]>{
     return this.http.get<PlayType[]>(this.baseUrl + 'Playtype');
   }

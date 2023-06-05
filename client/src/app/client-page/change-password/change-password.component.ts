@@ -37,17 +37,7 @@ export class ChangePasswordComponent implements OnInit {
         }
       },
     })
-    // this.accountService.register(this.model).subscribe({
-    //   next:()=>{
-    //     this.cancel();
-    //   },
-    //   error: (error) => {
-    //     if (error.status === 400) {
-    //       this.registerError=error.error;
-    //     } else {
-    //     }
-    //   },
-    // })
+
   }
   cancel(){
     this.dialogRef.close();

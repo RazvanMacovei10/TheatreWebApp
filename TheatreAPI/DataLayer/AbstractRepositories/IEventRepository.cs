@@ -17,5 +17,6 @@ namespace DataLayer.AbstractRepositories
         public Task<Event> GetById(int eventId);
         public Task<Event> Add(Event eventAdded);
         Task<bool> DeleteAsync(int id);
+        public Task<List<string>> GetAllCities();
     }
 }
