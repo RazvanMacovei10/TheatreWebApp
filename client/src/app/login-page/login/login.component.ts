@@ -62,9 +62,9 @@ export class LoginComponent implements OnInit {
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.loginError = 'Invalid username or password.'; // Set login error message
+          this.loginError=error.error;
         } else {
-          this.loginError = 'An error occurred. Please try again later.'; // Set generic error message
+          this.loginError = 'An error occurred. Please try again later.'; 
         }
       },
     });

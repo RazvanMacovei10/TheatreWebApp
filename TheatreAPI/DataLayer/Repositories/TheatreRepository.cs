@@ -19,6 +19,7 @@ namespace DataLayer.Repositories
         public async Task<List<Theatre>> GetAll()
         {
             var results = await _context.Theatres.
+                Where(x=>x.User.Active==true).
                 Include(x => x.User).
                 Include(x => x.User.Role)
                 .Include(x => x.Address).

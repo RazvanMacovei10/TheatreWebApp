@@ -53,7 +53,13 @@ export class AddEditPlayComponent implements OnInit {
     });
     this.playTypes$=this.theatreService.getPlayTypes();
     this.registerForm.patchValue(this.data);
+    console.log(this.data)
+    console.log(this.registerForm.controls['type'].getRawValue());
   }
+  compareById(o1:any, o2:any) {
+    return o1.id === o2.id
+  }
+  
 
   addPlay() {
     if(this.data){

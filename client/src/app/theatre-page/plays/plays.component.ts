@@ -86,7 +86,6 @@ export class PlaysComponent implements OnInit {
 
   }
   openEditForm(data:any){
-    console.log(data);
     const dialogRef=this.dialog.open(AddEditPlayComponent,{
       data,
     })

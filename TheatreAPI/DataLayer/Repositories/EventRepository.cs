@@ -47,6 +47,7 @@ namespace DataLayer.Repositories
                  .Include(x => x.Play.Type)
                 .Include(x => x.Play)
                  .Include(x => x.Theatre.User)
+                 .Where(x => x.Theatre.User.Active == true)
                     .Where(x =>
                      (city == null || x.City.Contains(city)) &&
                      (name == null || x.Play.Name.Contains(name)) &&

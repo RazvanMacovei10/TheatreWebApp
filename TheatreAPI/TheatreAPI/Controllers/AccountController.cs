@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography;
 using System.Text;
+using WebMatrix.WebData;
 
 namespace TheatreAPI.Controllers
 {
@@ -24,7 +25,7 @@ namespace TheatreAPI.Controllers
         private readonly IEmailSender _emailSender;
         //private readonly UserManager<User> _userManager;
         public AccountController(IUserBL userBL,ITokenBL tokenBL, IUserRoleBL userRoleBL, 
-            IRegisterFormBL registerFormBL, ITheatreBL theatreBL, IEmailSender emailSender/*,UserManager<User> userManager*/)
+            IRegisterFormBL registerFormBL, ITheatreBL theatreBL, IEmailSender emailSender/*, UserManager<User> userManager*/)
         {
             _userBL = userBL;
             _tokenBL = tokenBL;
@@ -32,7 +33,7 @@ namespace TheatreAPI.Controllers
             _registerFormBL = registerFormBL;
             _theatreBL = theatreBL;
             _emailSender = emailSender;
-            //_userManager=userManager;
+            //_userManager = userManager;
 
         }
         [HttpPost("register")]

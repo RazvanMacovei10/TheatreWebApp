@@ -1,4 +1,6 @@
-﻿namespace DataLayer.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DataLayer.Entities
 {
     public class User
     {
@@ -8,6 +10,7 @@
         public byte[] PasswordSalt { get; set; }
         public string Email { get; set; }
         public int RoleId { get; set; }
+        public bool Active { get; set; }
         public UserRole Role { get; set; }
     }
 }

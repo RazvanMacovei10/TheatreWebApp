@@ -45,14 +45,9 @@ builder.Services.AddCors(options =>
     });
 
 });
-//builder.Services.AddIdentity<User, IdentityRole>(opt =>
-//{
-//    opt.Password.RequiredLength = 7;
-//    opt.Password.RequireDigit = false;
-
-//    opt.User.RequireUniqueEmail = true;
-//})
-//    .AddDefaultTokenProviders();
+//builder.Services.AddIdentity<User, UserRole>()
+//        .AddEntityFrameworkStores<AppDbContext>()
+//        .AddDefaultTokenProviders();
 //builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
 //    opt.TokenLifespan = TimeSpan.FromHours(2));
 builder.Services.AddControllers();

@@ -49,7 +49,7 @@
         </div>
         <div class="mb-3">
           <label for="type-select" class="form-label">Type</label>
-          <select class="form-select" formControlName="type" name="playType">
+          <select class="form-select" formControlName="type" name="playType" [compareWith]="compareById">
             <option value="" disabled selected hidden >Select a type </option>
               <option *ngFor="let playType of playTypes$ | async" [ngValue]="playType">{{ playType.name }}</option>
             </select>
