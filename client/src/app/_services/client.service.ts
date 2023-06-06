@@ -77,5 +77,12 @@ export class ClientService {
   getUserByUsername(username:string|undefined): Observable<UserDetails> {
     return this.http.get<UserDetails>(this.baseUrl + 'Users/User/'+username);
   }
+  getFilteredTheatres(theatreName:string): Observable<Theatre[]> {
+
+      return this.http.get<Theatre[]>(
+        this.baseUrl + 'Theathre/'+theatreName
+      );
+
+  }
 
 }

@@ -6,6 +6,7 @@ import { AccountService } from 'src/app/_services/account.service';
 import { TheatreService } from 'src/app/_services/theatre.service';
 import { AddEditPlayComponent } from '../add-edit-play/add-edit-play.component';
 import { ChangePictureComponent } from '../change-picture/change-picture.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-plays',
@@ -18,18 +19,24 @@ export class PlaysComponent implements OnInit {
   plays: Play[] = [];
   page:number=1;
   count:number=0;
+  filterForm !: FormGroup;
   tableSize:number=9;
   tableSizes:any=[3,6,9,12];
   constructor(
     private sanitizer: DomSanitizer,
     private theatreService: TheatreService,
     private accountService:AccountService,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private fb:FormBuilder
 
   ) {}
 
   ngOnInit(): void {
     this.getPlays();
+    this.filterForm = this.fb.group({
+      name:['']
+
+    });
   }
 
   getPlays() {
@@ -101,6 +108,25 @@ export class PlaysComponent implements OnInit {
         this.getPlays();
       },
     });
+  }
+  getFilteredPlays(){
+    this.page=1;
+
+    
+    console.log(this.filterForm.get('name')?.value)
+
+    if(this.filterForm.get('name')?.value==""){
+      this.getPlays();
+    }
+    else
+    {
+
+      this.theatreService.getFilteredPlaysByCurrentUser(
+        this.filterForm.get('name')?.value)
+      .subscribe((data)=>{this.plays=data});
+    }
+      
+
   }
 
 }

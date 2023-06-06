@@ -10,6 +10,7 @@ import { AccountService } from 'src/app/_services/account.service';
 import { ClientService } from 'src/app/_services/client.service';
 import { ClientEventComponent } from '../client-event/client-event.component';
 import { Play } from 'src/app/_models/play';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-client-theatres',
@@ -28,6 +29,7 @@ export class ClientTheatresComponent implements OnInit {
   tableSizes:any=[3,6,9,12];
   filterParams:any;
   theatreName:string=""
+  filterForm !: FormGroup;
   faCalendar=faCalendarDay;
   currentEvent:EventModel={
     id: 1,
@@ -45,6 +47,7 @@ export class ClientTheatresComponent implements OnInit {
     private router: Router,
     private clientService: ClientService,
     private sanitizer: DomSanitizer,
+    private fb:FormBuilder,
     private dialog:MatDialog
   ) {}
 
@@ -53,6 +56,11 @@ export class ClientTheatresComponent implements OnInit {
       map((user) => !!user)
     );
     this.getEvents();
+    this.filterForm = this.fb.group({
+
+      name:['']
+
+    });
   }
   logout() {
     this.accountService.logout();
@@ -119,4 +127,22 @@ export class ClientTheatresComponent implements OnInit {
     };
     const dialogRef=this.dialog.open(ClientEventComponent,dialogConfig);
   }
+
+  getFilteredTheatres(){
+
+    this.page=1;
+
+
+      
+        this.clientService.getFilteredTheatres(
+        this.filterForm.get('name')?.value)
+      .subscribe((data)=>{this.theatres=data});
+    
+
+  }
+  getEventsAvailable(item:any){
+
+    return item.events.length;
+  }
+
 }

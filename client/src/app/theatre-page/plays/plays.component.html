@@ -2,7 +2,19 @@
 <app-theatre-navbar></app-theatre-navbar>
 
 <div class="container main-container">
+
   <div class="d-flex justify-content-end align-items-center add-div" style="margin-bottom:2em">
+    <form class="form" [formGroup]="filterForm" (ngSubmit)="getFilteredPlays()" autocomplete="off" style="margin-right:2em">
+      <div class="row">
+        <div class="col-md-9">
+        <input type="text" class="form-control search-input" formControlName="name" placeholder="Search by name" (input)="getFilteredPlays()"/>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>   
+      </div>
+      </div>
+ 
+    </form>
     <a mat-icon-button (click)="openAddEditPlayForm()">
       <mat-icon style="transform:scale(2)" color="primary">add_box</mat-icon>
     </a>

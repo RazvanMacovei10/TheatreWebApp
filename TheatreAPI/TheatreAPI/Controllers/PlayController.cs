@@ -4,6 +4,7 @@ using BusinessLogic.BL;
 using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace TheatreAPI.Controllers
 {
@@ -43,16 +44,29 @@ namespace TheatreAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlay(int id)
         {
-            await  _playBL.DeleteAsync(id);
+            await _playBL.DeleteAsync(id);
             return Ok();
         }
 
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetEventsByTheatreId(string name)
+        public async Task<IActionResult> GePlaysByTheatre(string name)
         {
             List<Play> plays = (List<Play>)await _playBL.GetAll();
             plays = plays.Where(e => e.Theatre.User.UserName == name).ToList();
+            List<PlayDTO> playsDTO = _mapper.Map<List<PlayDTO>>(plays);
+            return Ok(playsDTO);
+        }
+
+        [HttpGet("{name}/filteredPlays/{playName}")]
+        public async Task<IActionResult> GetFilteredPlays(string name, string? playName)
+        {
+            List<Play> plays = (List<Play>)await _playBL.GetAll();
+            plays = plays.Where(e => e.Theatre.User.UserName == name).ToList();
+            if (playName != null)
+            {
+            plays = plays.Where(p => p.Name.ToLower().Contains(playName.ToLower())).ToList();
+            }
             List<PlayDTO> playsDTO = _mapper.Map<List<PlayDTO>>(plays);
             return Ok(playsDTO);
         }
@@ -64,7 +78,7 @@ namespace TheatreAPI.Controllers
             return plays;
         }
         [HttpPost("edit/{name}")]
-        public async Task<IActionResult> Edit(string name,[FromBody] PlayDTO playDTO)
+        public async Task<IActionResult> Edit(string name, [FromBody] PlayDTO playDTO)
         {
             PlayType playType = await _playTypeBL.GetById(playDTO.Type.Id);
             Play play = _mapper.Map<Play>(playDTO);

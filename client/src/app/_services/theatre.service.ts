@@ -74,6 +74,13 @@ export class TheatreService {
       );
     return this.http.get<Play[]>(this.baseUrl + 'Play');
   }
+  getFilteredPlaysByCurrentUser(playName:string): Observable<Play[]> {
+    if (this.accountService.userValue != null)
+      return this.http.get<Play[]>(
+        this.baseUrl + 'Play/' + this.accountService.userValue.username + '/filteredPlays/'+playName
+      );
+    return this.http.get<Play[]>(this.baseUrl + 'Play');
+  }
 
   getPlayTypes():Observable<PlayType[]>{
     return this.http.get<PlayType[]>(this.baseUrl + 'Playtype');

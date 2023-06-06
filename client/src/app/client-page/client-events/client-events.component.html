@@ -1,121 +1,174 @@
-<div #topOfPage style="background-color:#F4F1F1">
-<app-client-navbar></app-client-navbar>
+<div #topOfPage style="background-color: #f4f1f1">
+  <app-client-navbar></app-client-navbar>
 
-
-<div class="div-cover">
-  <h1>All events</h1>
-</div>
-
-  
-<div class="row" style="margin-top:3em">
-  
-<div class="col-md-3 border">
-  <div class="text-center mt-3">
-    <h3>We found {{events?.length}} results based on your search</h3>
+  <div class="div-cover">
+    <h1 class="h-cover">All events</h1>
   </div>
-  <div class="row" >
-    
-    <form class="form" [formGroup]="filterForm" (ngSubmit)="getFilteredEvents()" autocomplete="off">
-      <div class="row justify-content-md-center">
-        
-          <div class="mb-3 col-md-10">
-            <h2>Filter by city</h2>
-            <select formControlName="city" name="city" (change)="getFilteredEvents()" class="form-control search-input">
-              <option value="" disabled selected hidden >Select a city </option>
-              <option *ngFor="let city of cities$ | async" [ngValue]="city">{{ city }}</option>
-            </select>
-          </div>
-          <div class="mb-3 col-md-10">
-            <h2>Filter by category</h2>
-            <select formControlName="category" name="category" (change)="getFilteredEvents()" class="form-control search-input">
-              <option value="" disabled selected hidden >Select a category </option>
-              <option *ngFor="let category of categories$ | async" [ngValue]="category">{{ category.name }}</option>
-            </select>
-          </div>
-        
-          <div class="mb-3 col-md-10">
-            <h2>Filter by name</h2>
-            <input type="text" class="form-control search-input" formControlName="name" placeholder="Name" (input)="getFilteredEvents()"/>
-          </div>
-        
-         
 
-        
-        
-          <div class="mb-3 col-md-10">
-            <h2>Filter by Price</h2>
-            <ng5-slider [(value)]="minValue" [(highValue)]="maxValue"  [options]="options" (mouseup)="getFilteredEvents()"></ng5-slider>
-          </div>
-        
-          <div class="mb-3 col-md-10">
-            <h2>Filter by date</h2>
-            <input type="date" [min]="minDateTime" class="form-control search-input" formControlName="date"  (input)="getFilteredEvents()"/>
-            
-          </div>
-        
-          <!-- <div class="mb-3 col-md-10">
+  <div class="row" style="margin-top: 3em">
+    <div class="col-md-3 border">
+      <div class="text-center mt-3">
+        <h3>We found {{ events?.length }} results based on your search</h3>
+      </div>
+      <div class="row">
+        <form
+          class="form"
+          [formGroup]="filterForm"
+          (ngSubmit)="getFilteredEvents()"
+          autocomplete="off"
+        >
+          <div class="row justify-content-md-center">
+            <div class="mb-3 col-md-10">
+              <h2>Filter by city</h2>
+              <select
+                formControlName="city"
+                name="city"
+                (change)="getFilteredEvents()"
+                class="form-control search-input"
+              >
+                <option value="" disabled selected hidden>Select a city</option>
+                <option *ngFor="let city of cities$ | async" [ngValue]="city">
+                  {{ city }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-10">
+              <h2>Filter by category</h2>
+              <select
+                formControlName="category"
+                name="category"
+                (change)="getFilteredEvents()"
+                class="form-control search-input"
+              >
+                <option value="" disabled selected hidden>
+                  Select a category
+                </option>
+                <option
+                  *ngFor="let category of categories$ | async"
+                  [ngValue]="category"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-3 col-md-10">
+              <h2>Filter by name</h2>
+              <input
+                type="text"
+                class="form-control search-input"
+                formControlName="name"
+                placeholder="Name"
+                (input)="getFilteredEvents()"
+              />
+            </div>
+
+            <div class="mb-3 col-md-10">
+              <h2>Filter by Price</h2>
+              <ng5-slider
+                [(value)]="minValue"
+                [(highValue)]="maxValue"
+                [options]="options"
+                (mouseup)="getFilteredEvents()"
+              ></ng5-slider>
+            </div>
+
+            <div class="mb-3 col-md-10">
+              <h2>Filter by date</h2>
+              <input
+                type="date"
+                [min]="minDateTime"
+                class="form-control search-input"
+                formControlName="date"
+                (input)="getFilteredEvents()"
+              />
+            </div>
+
+            <!-- <div class="mb-3 col-md-10">
             <button class="btn btn-secondary me-2" type="submit"><i class="fa fa-search"></i></button>
           </div> -->
-        
-        
-          <div class="mb-3 col-md-6">
-            <a class="btn btn-secondary" href="home/events" type="button">Reset filters</a>
+
+            <div class="mb-3 col-md-6">
+              <a class="btn btn-secondary" href="home/events" type="button"
+                >Reset filters</a
+              >
+            </div>
           </div>
-        
+        </form>
       </div>
-    </form>
-    
     </div>
-  
-</div>
-<div class="col-md-9">
-<div class="container main-container">
-  <div class="row">
-    <div class="col-sm-4 mb-5" *ngFor="let item of events 
-    | paginate :{
-      itemsPerPage:tableSize,
-      currentPage:page,
-      totalItems:count
-    }; let i = index">
-      <div class="card h-100" style="background-color: bisque;cursor:pointer" (click)="onCardClick(item)">
-        <div class="card-img-wrapper d-flex justify-content-center align-items-center">
-          <img [src]="getImageUrl(item.play)" class="card-img card-img-top image-scale img-card" alt="...">
+    <div class="col-md-9">
+      <div class="container main-container">
+        <div class="row">
+          <div
+            class="col-sm-4 mb-5"
+            *ngFor="
+              let item of events
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };
+              let i = index
+            "
+          >
+            <div
+              class="card h-100"
+              style="background-color: bisque; cursor: pointer"
+              (click)="onCardClick(item)"
+            >
+              <div
+                class="card-img-wrapper d-flex justify-content-center align-items-center"
+              >
+                <img
+                  [src]="getImageUrl(item.play)"
+                  class="card-img card-img-top image-scale img-card"
+                  alt="..."
+                />
+              </div>
+              <div class="card-body">
+                <h1 class="card-title text-center">{{ item.play.name }}</h1>
+                <p class="card-text">
+                  <fa-icon
+                    [icon]="faCalendar"
+                    style="margin-right: 0.5em"
+                  ></fa-icon
+                  ><strong
+                    >{{ getDate(item.datetime) }}
+                    <strong>{{ getTime(item.datetime) }}</strong></strong
+                  >
+                </p>
+                <p class="card-text">
+                  <strong>{{ item.theatreName }}</strong>
+                </p>
+                <p class="card-text">
+                  Available tickets:
+                  <strong>{{ item.availableTickets }}</strong>
+                </p>
+                <p class="card-text">
+                  Location: <strong>{{ item.location }}</strong>
+                </p>
+                <p class="card-text">
+                  <strong>{{ item.play.type.name }}</strong>
+                </p>
+
+                <p class="card-text">
+                  Price: <strong>{{ item.price }}</strong> $
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <h1 class="card-title text-center">{{ item.play.name }}</h1>
-          <p class="card-text">
-            <fa-icon [icon]="faCalendar" style="margin-right:0.5em;"></fa-icon><strong>{{ getDate(item.datetime) }} 
-              <strong>{{ getTime(item.datetime) }}</strong></strong>
-          </p>
-          <p class="card-text">
-            <strong>{{ item.theatreName }}</strong>
-          </p>
-          <p class="card-text">
-            Available tickets: <strong>{{ item.availableTickets }}</strong>
-          </p>
-          <p class="card-text">
-            Location: <strong>{{ item.location }}</strong>
-          </p>
-          <p class="card-text">
-             <strong>{{ item.play.type.name }}</strong>
-          </p>
-          
-          <p class="card-text">
-            Price: <strong>{{ item.price }}</strong> $
-          </p>          
+        <div class="d-flex justify-content-center">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onTableDataChange($event)"
+          >
+          </pagination-controls>
         </div>
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)"
-    >
-    </pagination-controls>
-  </div>
-</div>
-</div>
-</div>
 </div>

@@ -1,98 +1,168 @@
-<div style="background-color:#F4F1F1">
-<app-client-navbar></app-client-navbar>
-<div class="div-cover">
-  <h1 *ngIf="theatreClicked==false">All organizers</h1>
-  <h1 *ngIf="theatreClicked">{{theatreName}}</h1>
-</div>
-<div class="container main-container">
-  <div class="row" *ngIf="theatreClicked == false">
-    <!-- <div class="text-center">
-      <h3>We have {{theatres.length}} theatres available</h3>
-    </div> -->
-    <div class="col-sm-4 mb-5" *ngFor="let item of theatres| paginate :{
-      itemsPerPage:tableSize,
-      currentPage:page,
-      totalItems:count
-    }; let i = index">
-      <div class="card h-100" style="background-color: bisque;" (click)="onCardClick(item)">
-        <div class="row no-glutters">
-          <div class="col-md-6">
-        <div class="card-img-wrapper d-flex justify-content-center align-items-center">
-          <img [src]="getImageUrl(item.image)" class="card-img card-img-top image-scale img-card" alt="...">
-        </div>
-      </div>
-        <div class="card-body col-md-6">
-          <strong>
-          <h1 class="card-title d-flex justify-content-center">{{ item.name }}</h1>
-        </strong>
-          <p class="card-text">
-            
-
-              {{ item.address.city }}, {{ item.address.street }}
-              {{ item.address.number }}
-            
-          </p>
-          <p class="card-text">
-            Number of events available <strong>{{ item.totalSeats }}</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-    <div class="d-flex justify-content-center">
-      <pagination-controls
-        previousLabel="Prev"
-        nextLabel="Next"
-        (pageChange)="onTableDataChange($event)"
-      >
-      </pagination-controls>
-    </div>
+<div style="background-color: #f4f1f1">
+  <app-client-navbar></app-client-navbar>
+  <div class="div-cover">
+    <h1 *ngIf="theatreClicked == false">All organizers</h1>
+    <h1 *ngIf="theatreClicked">{{ theatreName }}</h1>
   </div>
 
-  <div class="container main-container" *ngIf="theatreClicked == true">
-    <div class="row">
-      <div class="col-sm-4 mb-5" *ngFor="let item of currentEvents 
-      | paginate :{
-        itemsPerPage:tableSize,
-        currentPage:page,
-        totalItems:count
-      }; let i = index">
-        <div class="card h-100" style="background-color: bisque;cursor:pointer" (click)="onCardEventClick(item)">
-          <div class="card-img-wrapper d-flex justify-content-center align-items-center">
-            <img [src]="getImageUrl(item.play.image)" class="card-img card-img-top image-scale img-card" alt="...">
+  <div class="row" style="margin-top: 3em">
+    <div class="col-md-3 border" *ngIf="theatreClicked == false">
+      <div class="text-center mt-3">
+        <h3>We found {{ theatres.length }} results based on your search</h3>
+      </div>
+      <div class="row">
+        <form class="form" autocomplete="off"
+        [formGroup]="filterForm"
+        (ngSubmit)="getFilteredTheatres()">
+          <div class="row justify-content-md-center">
+            <div class="mb-3 col-md-10">
+              <h2>Filter by name</h2>
+              <input
+                type="text"
+                class="form-control search-input"
+                formControlName="name"
+                placeholder="Name"
+                (input)="getFilteredTheatres()"
+              />
+            </div>
+
+            <div class="mb-3 col-md-6">
+              <a class="btn btn-secondary" href="home/theatres" type="button"
+                >Reset filters</a
+              >
+            </div>
           </div>
-          <div class="card-body">
-            <h1 class="card-title text-center">{{ item.play.name }}</h1>
-            <p class="card-text">
-              <fa-icon [icon]="faCalendar" style="margin-right:0.5em;"></fa-icon><strong>{{ getDate(item.datetime) }} 
-                <strong>{{ getTime(item.datetime) }}</strong></strong>
-            </p>
-            <p class="card-text">
-              <strong>{{ item.theatreName }}</strong>
-            </p>
-            <p class="card-text">
-              Available Seats: <strong>{{ item.availableTickets }}</strong>
-            </p>
-            
-            <p class="card-text">
-              Price: <strong>{{ item.price }}</strong> $
-            </p>          
+        </form>
+      </div>
+    </div>
+    <div class="col-md-9" *ngIf="theatreClicked == false">
+      <div class="container main-container">
+        <div class="row">
+          <div
+            class="col-sm-4 mb-5"
+            *ngFor="
+              let item of theatres
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };
+              let i = index
+            "
+          >
+            <div
+              class="card h-100"
+              style="background-color: bisque"
+              (click)="onCardClick(item)"
+            >
+              <div class="row no-glutters">
+                <div class="col-md-6">
+                  <div
+                    class="card-img-wrapper d-flex justify-content-center align-items-center"
+                  >
+                    <img
+                      [src]="getImageUrl(item.image)"
+                      class="card-img card-img-top image-scale img-card"
+                      alt="..."
+                    />
+                  </div>
+                </div>
+                <div class="card-body col-md-6">
+                  <strong>
+                    <h1 class="card-title d-flex justify-content-center">
+                      {{ item.name }}
+                    </h1>
+                  </strong>
+                  <p class="card-text">
+                    {{ item.address.city }}
+                  </p>
+                  <p class="card-text">
+                    
+                    <strong>{{ getEventsAvailable(item) }}</strong>
+                    events available
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
           </div>
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-center">
-      <pagination-controls
-        previousLabel="Prev"
-        nextLabel="Next"
-        (pageChange)="onTableDataChange($event)"
-      >
-      </pagination-controls>
+
+    <div class="container main-container">
+      <div class="container main-container" *ngIf="theatreClicked == true">
+        <div class="row">
+          <div
+            class="col-sm-4 mb-5"
+            *ngFor="
+              let item of currentEvents
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };
+              let i = index
+            "
+          >
+            <div
+              class="card h-100"
+              style="background-color: bisque; cursor: pointer"
+              (click)="onCardEventClick(item)"
+            >
+              <div
+                class="card-img-wrapper d-flex justify-content-center align-items-center"
+              >
+                <img
+                  [src]="getImageUrl(item.play.image)"
+                  class="card-img card-img-top image-scale img-card"
+                  alt="..."
+                />
+              </div>
+              <div class="card-body">
+                <h1 class="card-title text-center">{{ item.play.name }}</h1>
+                <p class="card-text">
+                  <fa-icon
+                    [icon]="faCalendar"
+                    style="margin-right: 0.5em"
+                  ></fa-icon
+                  ><strong
+                    >{{ getDate(item.datetime) }}
+                    <strong>{{ getTime(item.datetime) }}</strong></strong
+                  >
+                </p>
+                <p class="card-text">
+                  <strong>{{ item.theatreName }}</strong>
+                </p>
+                <p class="card-text">
+                  Available Seats: <strong>{{ item.availableTickets }}</strong>
+                </p>
+
+                <p class="card-text">
+                  Price: <strong>{{ item.price }}</strong> $
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onTableDataChange($event)"
+          >
+          </pagination-controls>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-
-  
-
-  
 </div>
