@@ -1,12 +1,15 @@
-<div class="main-div">
+<div class="main-div" style="background-image: url('/assets/background1.jpg');
+background-size: cover;
+background-position: center;">
 <app-login-navbar></app-login-navbar>
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
   
   <div>
+    
     <div *ngIf="loginError" class="shadow p-2 mb-3 rounded bg-danger bg-gradient">{{ loginError }}</div>
     <div class="shadow p-3 mb-5 bg-body rounded">
-      
+      <h1 class="d-flex justify-content-center">Sign in</h1>
       <form *ngIf="!(isLoggedIn$|async)" #loginForm="ngForm" class="d-flex flex-column" (ngSubmit)="login()" autocomplete="off"> 
         
         <div class="form-floating mb-3">
