@@ -11,6 +11,7 @@ import { ClientService } from 'src/app/_services/client.service';
 import { ClientEventComponent } from '../client-event/client-event.component';
 import { Play } from 'src/app/_models/play';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TheatreService } from 'src/app/_services/theatre.service';
 
 @Component({
   selector: 'app-client-theatres',
@@ -48,7 +49,8 @@ export class ClientTheatresComponent implements OnInit {
     private clientService: ClientService,
     private sanitizer: DomSanitizer,
     private fb:FormBuilder,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private theatreService:TheatreService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +92,11 @@ export class ClientTheatresComponent implements OnInit {
     this.theatreName=item.name;
     this.theatreClicked = true;
     this.currentEvents = item.events;
+    const currentDate = new Date();
+  this.currentEvents = this.currentEvents.filter(event => {
+    const eventDate = new Date(event.datetime);
+    return eventDate >= currentDate;
+  });
   }
 
   onButtonClick() {
@@ -121,6 +128,7 @@ export class ClientTheatresComponent implements OnInit {
   }
   onCardEventClick(item: EventModel) {
     this.eventClicked = true;
+    console.log(item);
     this.currentEvent=item;
     const dialogConfig: MatDialogConfig = {
       data: item 
@@ -141,8 +149,8 @@ export class ClientTheatresComponent implements OnInit {
 
   }
   getEventsAvailable(item:any){
-
-    return item.events.length;
+    
+    return this.theatreService.getNumberOfAvailableEventsFromAllEvents(item.events);
   }
 
 }

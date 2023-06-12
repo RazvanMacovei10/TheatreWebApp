@@ -139,9 +139,7 @@
                     <strong>{{ getTime(item.datetime) }}</strong></strong
                   >
                 </p>
-                <p class="card-text">
-                  <strong>{{ item.theatreName }}</strong>
-                </p>
+
                 <p class="card-text">
                   Available tickets:
                   <strong>{{ item.availableTickets }}</strong>
@@ -150,11 +148,14 @@
                   Location: <strong>{{ item.location }}</strong>
                 </p>
                 <p class="card-text">
-                  <strong>{{ item.play.type.name }}</strong>
+                  Category:<strong>{{ item.play.type.name }}</strong>
                 </p>
 
                 <p class="card-text">
                   Price: <strong>{{ item.price }}</strong> $
+                </p>
+                <p class="card-text">
+                  Organizer: <strong>{{ item.theatreName }}</strong>
                 </p>
               </div>
             </div>

@@ -27,7 +27,7 @@ namespace DataLayer.Repositories
         public async Task<List<Event>> GetAllAvailable()
         {
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
-                Include(x => x.Play.Type).Where(x => x.DateTime > DateTime.Now).OrderBy(x => x.DateTime).
+                Include(x => x.Play.Type).Where(x => x.DateTime > DateTime.Now).Where(x=>x.Theatre.User.Active==true).OrderBy(x => x.DateTime).
                 ToListAsync();
 
             return results;

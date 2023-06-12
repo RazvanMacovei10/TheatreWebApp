@@ -204,8 +204,6 @@ namespace TheatreAPI.Controllers
         {
             var message = new Message(new string[] { "macoveirazvan69@gmail.com" }, "Test email", "We sent a test email.");
             _emailSender.SendEmail(message);
-
-
             return Ok();
         }
     //    [HttpPost("register/ForgotPassword")]

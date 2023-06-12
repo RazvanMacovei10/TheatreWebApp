@@ -11,21 +11,20 @@
         <fa-icon [icon]="faCalendar" style="margin-right:0.5em;"></fa-icon><strong>{{ getDate(currentEvent.datetime) }} 
           <strong>{{ getTime(currentEvent.datetime) }}</strong></strong>
       </p>
+
+
       <p class="card-text">
-        <strong>{{ currentEvent.theatreName }}</strong>
-      </p>
-      <p class="card-text">
-        <strong>{{ currentEvent.play.type.name }}</strong>
-     </p>
-      <p class="card-text">
-        Available Seats: <strong>{{ currentEvent.availableTickets }}</strong>
+        Available tickets: <strong>{{ currentEvent.availableTickets }}</strong>
       </p>     
       
       <p class="card-text">
         Price: <strong>{{ currentEvent.price }}</strong> $
       </p>
       <p class="card-text">
-        <strong> Description:</strong> {{ currentEvent.play.description }}
+        Organizer:<strong>{{ currentEvent.theatreName }}</strong>
+      </p>
+      <p class="card-text">
+         Description: <strong>{{ currentEvent.play.description }}</strong>
       </p>
     
 

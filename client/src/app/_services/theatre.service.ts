@@ -95,6 +95,20 @@ export class TheatreService {
   getTheatreByUsername(username:string|undefined): Observable<TheatreDetails> {
     return this.http.get<TheatreDetails>(this.baseUrl + 'Users/Theatre/'+username);
   }
+  getNumberOfAvailableEventsFromAllEvents(events:any[]):number{
+    const currentDate = new Date();
+    let count = 0;
+  
+    for (const event of events) {
+      const eventDatetime = new Date(event.datetime);
+  
+      if (eventDatetime > currentDate) {
+        count++;
+      }
+    }
+  
+    return count;
+  }
 
 
 }

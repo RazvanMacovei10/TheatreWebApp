@@ -1,11 +1,11 @@
 <div class="fullscreen">
   <app-theatre-navbar></app-theatre-navbar>
   <div
-    class="container d-flex justify-content-center align-items-center vh-100"
+    class="container d-flex justify-content-center align-items-center vh-100" 
   >
-    <div>
+    <div >
       <div
-        class="shadow p-3 mb-5 bg-body rounded main-container account-container"
+        class="shadow p-3 mb-5 bg-body rounded main-container account-container" 
       >
         <h2 class="text-center text-primary">Account details</h2>
         <hr />
@@ -55,7 +55,7 @@
                 />
               </div>
             </div>
-            <div class="form-group row mb-5">
+            <div class="form-group row ">
               <label for="name" class="col-sm-4 col-form-label"
                 >Number of events scheduled:</label
               >
@@ -68,32 +68,26 @@
                   id="eventsScheduled"
                 />
               </div>
-              
-              <form #changeNameForm="ngForm" (ngSubmit)="changeName()" autocomplete="off">
-                <label for="name" class="col-sm-4 col-form-label">Name:</label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    [(ngModel)]="model.name"
-                    id="name"
-                    maxlength="15"
-                    minlength="5"
-                    required
-                    #name="ngModel"
-                  />
+            
+              <form class="mb-5 border" #changeNameForm="ngForm" (ngSubmit)="changeName()" autocomplete="off" style="margin-top: 2em;">
+                <div class="d-flex align-items-center mt-3" >
+                  <label class="col-sm-1" for="name">Name:</label>
+                  <div class="flex-fill">
+                    <input class="col-sm-4 " type="text" class="form-control" name="name" [(ngModel)]="model.name" id="name" maxlength="15" minlength="5" required #name="ngModel">
+                  </div>
+  
+                  <div>
+                    
+                  </div>
                 </div>
                 <div *ngIf="name.invalid && name.touched" class="text-danger">
                   New name is required and must be at least 5 characters.
-                 </div>
-                 <button
-                 class="btn btn-success me-2"
-                 type="submit"
-                 [disabled]="changeNameForm.invalid"
-               >Change name</button>
+                </div>
+                <div class="col-sm-7 mt-3 d-flex align-items-center">
+                  <button class="btn btn-success" type="submit" [disabled]="changeNameForm.invalid">Change name</button>
+                </div>
               </form>
-  
+
               <div class="row justify-content-md-center">
                 <button
                   class="btn btn-outline-primary col-sm-5"
