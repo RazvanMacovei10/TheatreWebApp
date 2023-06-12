@@ -96,4 +96,5 @@ export class TheatreService {
     return this.http.get<TheatreDetails>(this.baseUrl + 'Users/Theatre/'+username);
   }
 
+
 }

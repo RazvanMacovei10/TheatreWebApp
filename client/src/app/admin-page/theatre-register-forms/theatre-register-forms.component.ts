@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { RegisterForm } from '../../_models/register-form';
 import { RegisterFormsService } from 'src/app/_services/register-forms.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-theatre-register-forms',
@@ -27,12 +28,15 @@ export class TheatreRegisterFormsComponent implements OnInit {
   @Output() reloadList: EventEmitter<any> = new EventEmitter();
   constructor(
     private sanitizer: DomSanitizer,
-    private registerFormService: RegisterFormsService
+    private registerFormService: RegisterFormsService,
+    private accountService:AccountService
   ) {
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   approveTheatre() {
     this.registerFormService

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { RegisterForm } from '../_models/register-form';
+import { UserDetails } from '../_models/user-datails';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class AccountService {
       })
     )
   }
+
 
   register(model:any){
     return this.http.post<User>(this.baseUrl+'account/register',model).pipe(
@@ -62,6 +64,7 @@ export class AccountService {
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-password/',model);
   }
   changePicture(model:any){
+    console.log(model);
     if (this.userValue != null)
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-picture/'+this.userValue.username,model);
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-picture/',model);
@@ -70,5 +73,13 @@ export class AccountService {
     if (this.userValue != null)
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-name/'+this.userValue.username,model);
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-name/',model);
+  }
+
+  getUsers(): Observable<UserDetails[]> {
+    return this.http.get<UserDetails[]>(this.baseUrl + 'Users');
+  }
+  changeStatus(model:any){
+    console.log(model);
+    return this.http.post<RegisterForm>(this.baseUrl+'Account/change-status/'+model.userName,null);
   }
 }

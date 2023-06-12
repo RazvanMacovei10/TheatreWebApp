@@ -84,6 +84,7 @@ namespace TheatreAPI.Controllers
             {
                 if (computedhash[i] != user.Result.PasswordHash[i]) return Unauthorized("invalid password");
             }
+            if (user.Result.Active == false) return Unauthorized("your account is inactive");
             return new UserDTO
             {
                 Username = user.Result.UserName,
@@ -158,6 +159,29 @@ namespace TheatreAPI.Controllers
 
 
             await _theatreBL.UpdateTheatreAsync(theatre.Id,theatre);
+
+
+            return Ok();
+        }
+        [HttpPost("change-status/{username}")]
+        public async Task<IActionResult> ChangeStatus(string username)
+        {
+            var user = _userBL.GetByUsername(username);
+
+            if (user.Result == null) return BadRequest("invalid username");
+
+
+            if (user.Result.Active == false)
+            {
+                user.Result.Active = true;
+            }
+            else
+            {
+                user.Result.Active = false;
+            }
+            
+
+            await _userBL.UpdateUserAsync(user.Result.Id, user.Result);
 
 
             return Ok();

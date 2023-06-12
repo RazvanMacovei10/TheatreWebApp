@@ -35,6 +35,12 @@ namespace TheatreAPI.Controllers
             var users = await _userBL.GetAll();
             return users;
         }
+        [HttpPost("{username}")]
+        public async Task<ActionResult<User>> SetAs(int id)
+        {
+            var user = await _userBL.GetById(id);
+            return user;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>>GetUser(int id)
