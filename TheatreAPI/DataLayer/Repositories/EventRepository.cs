@@ -18,16 +18,18 @@ namespace DataLayer.Repositories
         }
         public async Task<List<Event>> GetAll()
         {
+            var currentDate = DateTime.Now;
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
-                Include(x => x.Play.Type).OrderBy(x => x.DateTime).
-                ToListAsync();
+                Include(x => x.Play.Type).OrderByDescending(x => x.DateTime > currentDate).ThenByDescending(x => x.DateTime).
+            ToListAsync();
 
             return results;
         }
         public async Task<List<Event>> GetAllAvailable()
         {
             var results = await _context.Events.Include(x => x.Theatre).Include(x => x.Play).Include(x => x.Theatre.User).
-                Include(x => x.Play.Type).Where(x => x.DateTime > DateTime.Now).Where(x=>x.Theatre.User.Active==true).OrderBy(x => x.DateTime).
+                Include(x => x.Play.Type).Where(x => x.DateTime > DateTime.Now).Where(x=>x.Theatre.User.Active==true).Where(x => x.Active == true).
+                OrderBy(x => x.DateTime).
                 ToListAsync();
 
             return results;
@@ -47,6 +49,7 @@ namespace DataLayer.Repositories
                  .Include(x => x.Play.Type)
                 .Include(x => x.Play)
                  .Include(x => x.Theatre.User)
+                 .Where(x => x.Active == true)
                  .Where(x => x.Theatre.User.Active == true)
                     .Where(x =>
                      (city == null || x.City.Contains(city)) &&
@@ -209,6 +212,7 @@ namespace DataLayer.Repositories
 
         public async Task<Event> Add(Event eventAdded)
         {
+            eventAdded.Active = true;
             await _context.Events.AddAsync(eventAdded);
             await _context.SaveChangesAsync();
             return eventAdded;
@@ -234,6 +238,7 @@ namespace DataLayer.Repositories
             eventToModify.City = eventSent.City;
             eventToModify.AvailableTickets = eventSent.AvailableTickets;
             eventToModify.Play = eventSent.Play;
+            eventToModify.Active = eventSent.Active;
             eventToModify.Theatre = eventSent.Theatre;
 
             await _context.SaveChangesAsync();

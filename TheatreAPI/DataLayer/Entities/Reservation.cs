@@ -12,6 +12,8 @@ namespace DataLayer.Entities
         public int NumberOfTickets { get; set; }
         public DateTime DateTime { get; set; }
         public int UserId { get; set; }
+        public bool Active { get; set; }
+
         public User User { get; set; }
         public int EventId { get; set; }
         public Event Event { get; set; }

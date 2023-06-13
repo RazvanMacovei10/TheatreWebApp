@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from './account.service';
 import { Play } from '../_models/play';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { EventSent } from '../_models/event-sent';
 import { PlayType } from '../_models/play-type';
 import { EventModel } from '../_models/event';
@@ -109,6 +109,7 @@ export class TheatreService {
   
     return count;
   }
+
 
 
 }

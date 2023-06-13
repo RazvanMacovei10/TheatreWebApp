@@ -7,6 +7,10 @@ import { TheatreService } from 'src/app/_services/theatre.service';
 import { AddEditPlayComponent } from '../add-edit-play/add-edit-play.component';
 import { ChangePictureComponent } from '../change-picture/change-picture.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { take } from 'rxjs';
+import { EventModel } from 'src/app/_models/event';
+import { ConfirmationDialogComponent } from 'src/app/client-page/confirmation-dialog/confirmation-dialog.component';
+import { CoreService } from 'src/app/_services/core.service';
 
 @Component({
   selector: 'app-plays',
@@ -17,6 +21,7 @@ export class PlaysComponent implements OnInit {
 
   @ViewChild('topOfPage') topOfPage!:ElementRef;
   plays: Play[] = [];
+  eventsByPlay:EventModel[]=[]
   page:number=1;
   count:number=0;
   filterForm !: FormGroup;
@@ -27,7 +32,8 @@ export class PlaysComponent implements OnInit {
     private theatreService: TheatreService,
     private accountService:AccountService,
     private dialog:MatDialog,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private coreService:CoreService
 
   ) {}
 
@@ -60,11 +66,7 @@ export class PlaysComponent implements OnInit {
     );
   }
 
-  deletePlay(id: number) {
-    this.theatreService.deletePlay(id).subscribe(() => {
-      this.getPlays();
-    });
-  }
+
 
   onTableDataChange(event: any) {
     this.page = event;
@@ -125,6 +127,35 @@ export class PlaysComponent implements OnInit {
       .subscribe((data)=>{this.plays=data});
     }
       
+
+  }
+
+  deletePlay(id: number) {
+    this.theatreService.deletePlay(id).subscribe(() => {
+      this.getPlays();
+    });
+  }
+
+
+  openConfirmation(id:any){
+
+    const dialogRef=this.dialog.open(ConfirmationDialogComponent,{
+      disableClose:false
+    });
+    dialogRef.componentInstance.confirmMessage = "Are you sure you want to delete this event? ";
+    dialogRef.afterClosed().subscribe(result=>{
+      if(result){
+        this.theatreService.deletePlay(id).subscribe(() => {
+          this.getPlays();
+    this.coreService.openSnackBar("Event deleted",'done');
+        },
+        (error)=>{
+          if(error.status===400){
+            this.coreService.openSnackBar(error.error, 'error');
+          }
+        });
+      }
+    })
 
   }
 

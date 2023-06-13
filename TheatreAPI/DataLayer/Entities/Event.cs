@@ -15,6 +15,7 @@ namespace DataLayer.Entities
         public int AvailableTickets { get; set; }
         public string Location { get; set; }
         public string City { get; set; }
+        public bool Active { get; set; }
         public int PlayId { get; set; }
         public Play Play { get; set; }
         public int TheatreId { get; set; }

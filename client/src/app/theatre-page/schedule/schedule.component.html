@@ -45,13 +45,23 @@
       </ng-container>
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-        <td mat-cell *matCellDef="let row"> 
-          <button mat-icon-button color="primary" (click)="openEditEventForm(row)">
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" *ngIf="isDateActive(row)==false" disabled (click)="openEditEventForm(row)">
+            <mat-icon>
+              edit
+            </mat-icon>
+          </button> 
+          <button mat-icon-button color="primary" *ngIf="isDateActive(row)==true" (click)="openEditEventForm(row)">
             <mat-icon>
               edit
             </mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteEvent(row.id)">
+          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==true" (click)="deleteEvent(row.id)">
+            <mat-icon>
+              delete
+            </mat-icon>
+          </button>
+          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==false" disabled (click)="deleteEvent(row.id)">
             <mat-icon>
               delete
             </mat-icon>

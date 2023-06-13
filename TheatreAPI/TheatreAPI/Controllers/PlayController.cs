@@ -15,13 +15,15 @@ namespace TheatreAPI.Controllers
         private readonly IPlayBL _playBL;
         private readonly IPlayTypeBL _playTypeBL;
         private readonly IMapper _mapper;
+        private readonly IEventBL _eventBL;
         private readonly ITheatreBL _theatreBL;
-        public PlayController(IPlayBL playBL, IMapper mapper, ITheatreBL theatreBL, IPlayTypeBL playTypeBL)
+        public PlayController(IPlayBL playBL, IMapper mapper, ITheatreBL theatreBL, IPlayTypeBL playTypeBL, IEventBL eventBL)
         {
             _playBL = playBL;
             _mapper = mapper;
             _theatreBL = theatreBL;
             _playTypeBL = playTypeBL;
+            _eventBL = eventBL;
         }
         [HttpPost("{name}")]
         public async Task<IActionResult> Create([FromBody] PlayDTO playDTO, string name)
@@ -44,9 +46,23 @@ namespace TheatreAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlay(int id)
         {
-            await _playBL.DeleteAsync(id);
-            return Ok();
+            //await _playBL.DeleteAsync(id);
+
+            var currentDate = DateTime.Now;
+            Play play = await _playBL.GetById(id);
+            List<Event> events = (List<Event>)await _eventBL.GetAll();
+            events = events.Where(e => e.PlayId == id).ToList();
+            events = events.Where(e => e.DateTime > currentDate).ToList();
+            if (events.Count==0)
+            {
+                play.Active = false;
+                await _playBL.UpdatePlayAsync(id, play);
+                return Ok();
+            }
+            return BadRequest("Cannot delete play because it has events scheduled in future");
+
         }
+        
 
 
         [HttpGet("{name}")]
@@ -54,6 +70,7 @@ namespace TheatreAPI.Controllers
         {
             List<Play> plays = (List<Play>)await _playBL.GetAll();
             plays = plays.Where(e => e.Theatre.User.UserName == name).ToList();
+            plays = plays.Where(e => e.Active == true).ToList();
             List<PlayDTO> playsDTO = _mapper.Map<List<PlayDTO>>(plays);
             return Ok(playsDTO);
         }

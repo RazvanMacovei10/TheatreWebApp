@@ -37,6 +37,7 @@ export class ClientTheatresComponent implements OnInit {
     datetime: new Date(),
     location:'',
     city:'',
+    active:true,
     availableTickets: 100,
     price: 10,
     theatreName: 'ABC Theatre',

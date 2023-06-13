@@ -41,6 +41,7 @@ export class ClientEventsComponent implements OnInit {
     id: 1,
     location:'',
     city:'',
+    active:true,
     datetime: new Date(),
     availableTickets: 100,
     price: 10,

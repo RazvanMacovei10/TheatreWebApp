@@ -19,6 +19,7 @@ namespace DataLayer.Repositories
 
         public async Task<List<Reservation>> GetAll()
         {
+            var currentDate = DateTime.Now;
             var results = await _context.Reservations.
                 Include(x => x.Event).
                 Include(x => x.Event.Play).

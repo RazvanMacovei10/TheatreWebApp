@@ -7,6 +7,7 @@ export interface EventModel{
     location:string,
     city:string,
     price:number,
+    active:boolean,
     theatreName:string,
     play:Play
 }

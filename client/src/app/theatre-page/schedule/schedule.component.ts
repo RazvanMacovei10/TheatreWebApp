@@ -70,7 +70,6 @@ export class ScheduleComponent implements OnInit {
   }
 
   deleteEvent(id: number) {
-    console.log(id);
     this.theatreService.deleteEvent(id.toString()).subscribe(()=>this.loadEvents())
     this.coreService.openSnackBar("Event deleted",'done');
   }
@@ -106,7 +105,6 @@ export class ScheduleComponent implements OnInit {
 
   }
   openEditEventForm(data:any){
-    console.log(data);
     const dialogRef=this.dialog.open(AddEventComponent,{
       data,
     })
@@ -117,4 +115,15 @@ export class ScheduleComponent implements OnInit {
     })
     
   }
+  isDateActive(row: any): boolean {
+    const currentDate = new Date();
+    const rowDate = new Date(row.datetime);
+    console.log(rowDate);
+  
+    return rowDate > currentDate;
+  }
+
+
+  
+
 }

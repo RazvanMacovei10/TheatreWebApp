@@ -26,6 +26,7 @@ export class ClientEventComponent implements OnInit {
     datetime: new Date(),
     availableTickets: 100,
     location:'',
+    active:true,
     city:'',
     price: 10,
     theatreName: 'ABC Theatre',

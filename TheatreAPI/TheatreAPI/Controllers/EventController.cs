@@ -62,6 +62,16 @@ namespace TheatreAPI.Controllers
             List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
             return Ok(eventsDTO);
         }
+        [HttpGet("getEventsByPlay/{id}")]
+        public async Task<IActionResult> GetEventsByPlay(int id)
+        {
+            var currentDate = DateTime.Now;
+            List<Event> events = (List<Event>)await _eventBL.GetAll();
+            events = events.Where(e => e.PlayId == id).ToList();
+            events = events.Where(e => e.DateTime > currentDate).ToList();
+            List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
+            return Ok(eventsDTO);
+        }
         [HttpGet("available")]
         public async Task<IActionResult> GetAvailableEvents()
         {
@@ -83,6 +93,7 @@ namespace TheatreAPI.Controllers
         {
             List<Event> events = (List<Event>)await _eventBL.GetAll();
             events = events.Where(e => e.Theatre.User.UserName == name).ToList();
+            events = events.Where(e => e.Active == true).ToList();
             List<EventDTO> eventsDTO = _mapper.Map<List<EventDTO>>(events);
             return Ok(eventsDTO);
         }
@@ -90,7 +101,10 @@ namespace TheatreAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _eventBL.DeleteAsync(id);
+            Event eventDeleted= await _eventBL.GetById(id);
+            //await _eventBL.DeleteAsync(id);
+            eventDeleted.Active = false;
+            await _eventBL.UpdateEventAsync(id,eventDeleted);
             return Ok();
         }
     }
