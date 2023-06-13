@@ -10,6 +10,7 @@ import { EventModel } from '../_models/event';
 import { Reservation } from '../_models/reservation';
 import { TheatreDetails } from '../_models/theatre-details';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -92,22 +93,58 @@ export class TheatreService {
   getAllReservations():Observable<Reservation[]>{
     return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
   }
+  getAllReservationsByCurrentUser(): Observable<Reservation[]>{
+    if (this.accountService.userValue != null)
+      return this.http.get<Reservation[]>(
+        this.baseUrl + 'Reservation/organizerReservations/' + this.accountService.userValue.username
+      );
+    return this.http.get<Reservation[]>(this.baseUrl + 'Reservation');
+  }
   getTheatreByUsername(username:string|undefined): Observable<TheatreDetails> {
     return this.http.get<TheatreDetails>(this.baseUrl + 'Users/Theatre/'+username);
   }
   getNumberOfAvailableEventsFromAllEvents(events:any[]):number{
     const currentDate = new Date();
     let count = 0;
-  
     for (const event of events) {
       const eventDatetime = new Date(event.datetime);
   
-      if (eventDatetime > currentDate) {
+      if (eventDatetime > currentDate && event.active==true) {
         count++;
       }
     }
   
     return count;
+  }
+  sendEmailForAnnouncingUserThatReservationIsDeleted(row:any) {
+    const title = 'Reservation might be canceled';
+    const content = 'You are receiving this email because your reservation to "'
+    +row.eventName+'" at date'
+    +this.formatDateTime(row.eventDateTime)+
+    ' might be canceled. For more info contact suport.'
+    const email=row.user.email;
+  
+    const payload = { email, title, content };
+    console.log(payload);
+  
+    this.http.post(this.baseUrl + 'Account/sendEmail/', payload).subscribe(
+      () => {
+        console.log('Email sent successfully');
+      },
+      (error) => {
+        console.error('Failed to send email', error);
+      }
+    );
+  }
+  formatDateTime(dateTimeString: string): string {
+    const dateTime = new Date(dateTimeString);
+    const month = (dateTime.getMonth() + 1).toString().padStart(2, '0');
+    const day = dateTime.getDate().toString().padStart(2, '0');
+    const year = dateTime.getFullYear().toString();
+    const hours = dateTime.getHours().toString().padStart(2, '0');
+    const minutes = dateTime.getMinutes().toString().padStart(2, '0');
+
+    return `${month}-${day}-${year} ${hours}:${minutes}`;
   }
 
 

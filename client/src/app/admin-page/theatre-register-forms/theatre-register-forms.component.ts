@@ -42,6 +42,7 @@ export class TheatreRegisterFormsComponent implements OnInit {
     this.registerFormService
       .createUser(this.registerForm.id.toString())
       .subscribe(() => this.reloadList.emit(null));
+      this.accountService.sendEmailForAnnouncingUserAccountHasBeenActivated(this.registerForm.email);
   }
   deleteTheatre() {
     this.registerFormService

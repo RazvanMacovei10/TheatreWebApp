@@ -56,12 +56,12 @@
               edit
             </mat-icon>
           </button>
-          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==true" (click)="deleteEvent(row.id)">
+          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==true" (click)="openConfirmation(row.id)">
             <mat-icon>
               delete
             </mat-icon>
           </button>
-          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==false" disabled (click)="deleteEvent(row.id)">
+          <button mat-icon-button color="warn" *ngIf="isDateActive(row)==false" disabled (click)="openConfirmation(row.id)">
             <mat-icon>
               delete
             </mat-icon>

@@ -4,6 +4,7 @@ using BusinessLogic.BL;
 using DataLayer.DTOs;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TheatreAPI.Controllers
 {
@@ -12,15 +13,17 @@ namespace TheatreAPI.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventBL _eventBL;
+        private readonly IReservationBL _reservationBL;
         private readonly ITheatreBL _theathreBL;
         private readonly IMapper _mapper;
         private readonly IPlayBL _playBL;
-        public EventController(IEventBL eventBL, IMapper mapper, ITheatreBL theathreBL, IPlayBL playBL)
+        public EventController(IEventBL eventBL, IMapper mapper, ITheatreBL theathreBL, IPlayBL playBL, IReservationBL reservationBL)
         {
             _eventBL = eventBL;
             _mapper = mapper;
             _theathreBL = theathreBL;
             _playBL = playBL;
+            _reservationBL = reservationBL;
         }
 
         [HttpPost]
@@ -29,6 +32,7 @@ namespace TheatreAPI.Controllers
             Theatre theatre = await _theathreBL.GetByUsername(eventDTO.TheatreName);
             Event newEvent = _mapper.Map<Event>(eventDTO);
             newEvent.Theatre = theatre;
+            newEvent.Active = true;
             newEvent.TheatreId = theatre.Id;
 
             await _eventBL.Add(newEvent);
@@ -102,10 +106,20 @@ namespace TheatreAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Event eventDeleted= await _eventBL.GetById(id);
+            var currentDate = DateTime.Now;
+            List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
+            reservations = reservations.Where(r => r.EventId == id).ToList();
+            reservations = reservations.Where(r => r.Event.DateTime > currentDate).ToList();
+            reservations = reservations.Where(r => r.Event.DateTime == eventDeleted.DateTime).ToList();
+            reservations = reservations.Where(r => r.Active == true).ToList();
             //await _eventBL.DeleteAsync(id);
-            eventDeleted.Active = false;
-            await _eventBL.UpdateEventAsync(id,eventDeleted);
-            return Ok();
+            if (reservations.Count == 0)
+            {
+                eventDeleted.Active = false;
+                await _eventBL.UpdateEventAsync(id, eventDeleted);
+                return Ok();
+            }
+            return BadRequest("Cannot delete scheduled event because people reserved it already");
         }
     }
 }

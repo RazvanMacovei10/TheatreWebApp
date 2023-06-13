@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.model).subscribe({
       next:()=>{
         this.cancel();
+        this.accountService.sendEmailForAnnouncingUserAccountHasBeenActivated(this.model.email);
       },
       error: (error) => {
         if (error.status === 400) {

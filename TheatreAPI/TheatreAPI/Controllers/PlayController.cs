@@ -31,6 +31,7 @@ namespace TheatreAPI.Controllers
             PlayType playType = await _playTypeBL.GetById(playDTO.Type.Id);
             Play play = _mapper.Map<Play>(playDTO);
             play.Theatre = await _theatreBL.GetByUsername(name);
+            play.Active = true;
             play.Type = playType;
             await _playBL.Add(play);
             return Ok();
@@ -53,13 +54,14 @@ namespace TheatreAPI.Controllers
             List<Event> events = (List<Event>)await _eventBL.GetAll();
             events = events.Where(e => e.PlayId == id).ToList();
             events = events.Where(e => e.DateTime > currentDate).ToList();
+            events = events.Where(e => e.Active==true).ToList();
             if (events.Count==0)
             {
                 play.Active = false;
                 await _playBL.UpdatePlayAsync(id, play);
                 return Ok();
             }
-            return BadRequest("Cannot delete play because it has events scheduled in future");
+            return BadRequest("Cannot delete event because it is scheduled in the future");
 
         }
         

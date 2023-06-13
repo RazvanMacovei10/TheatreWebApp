@@ -93,11 +93,14 @@ export class ClientTheatresComponent implements OnInit {
     this.theatreName=item.name;
     this.theatreClicked = true;
     this.currentEvents = item.events;
+    this.page = 1;
     const currentDate = new Date();
   this.currentEvents = this.currentEvents.filter(event => {
     const eventDate = new Date(event.datetime);
-    return eventDate >= currentDate;
+    event.active=event.active===true;
+    return eventDate >= currentDate && event.active;
   });
+
   }
 
   onButtonClick() {

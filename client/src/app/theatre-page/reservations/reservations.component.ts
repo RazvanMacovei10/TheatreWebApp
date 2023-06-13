@@ -39,7 +39,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   loadReservations(){
-    this.theatreService.getAllReservations().subscribe((data) => {
+    this.theatreService.getAllReservationsByCurrentUser().subscribe((data) => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort=this.sort;
@@ -67,7 +67,7 @@ export class ReservationsComponent implements OnInit {
     return compareDateTime > currentDateTime;
   }
 
-  openConfirmation(id:any){
+  openConfirmation(row:any){
 
     const dialogRef=this.dialog.open(ConfirmationDialogComponent,{
       disableClose:false
@@ -75,7 +75,8 @@ export class ReservationsComponent implements OnInit {
     dialogRef.componentInstance.confirmMessage = "Are you sure you want to delete this reservation? ";
     dialogRef.afterClosed().subscribe(result=>{
       if(result){
-        this.clientService.deleteReservation(id.toString()).subscribe(()=>this.loadReservations())
+        this.clientService.deleteReservation(row.id.toString()).subscribe(()=>this.loadReservations())
+        this.theatreService.sendEmailForAnnouncingUserThatReservationIsDeleted(row);
     this.coreService.openSnackBar("Event deleted",'done');
       }
     })

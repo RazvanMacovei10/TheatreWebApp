@@ -19,6 +19,8 @@ export class RegisterFormsService {
     return this.http.post<User>(this.baseUrl + 'RegisterForm/' + id, null);
   }
 
+  
+
   deleteForm(id: string) {
     return this.http.delete(this.baseUrl + 'RegisterForm/' + id);
   }

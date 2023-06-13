@@ -82,4 +82,21 @@ export class AccountService {
     console.log(model);
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-status/'+model.userName,null);
   }
+  sendEmailForAnnouncingUserAccountHasBeenActivated(email:any) {
+    const title = 'Your account was successfully acitvated';
+    const content = 'You are receiving this email because your account has been successfully created. You can login now. '
+
+  
+    const payload = { email, title, content };
+    console.log(payload);
+  
+    this.http.post(this.baseUrl + 'Account/sendEmail/', payload).subscribe(
+      () => {
+        console.log('Email sent successfully');
+      },
+      (error) => {
+        console.error('Failed to send email', error);
+      }
+    );
+  }
 }

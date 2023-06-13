@@ -41,16 +41,10 @@ namespace TheatreAPI.Controllers
             {
                 return BadRequest("Form not found");
             }
-            User user = new User()
-            {
-                UserName = registerForm.Username,
-                Email = registerForm.Email,
-                PasswordHash = registerForm.PasswordHash,
-                PasswordSalt = registerForm.PasswordSalt,
-                RoleId = 3
-            };
+            User user = await _userBL.GetByUsername(registerForm.Username);
+            user.Active = true;
 
-            await _userBL.Add(user);
+            await _userBL.UpdateUserAsync(user.Id,user);
             Theatre theatre = new Theatre()
             {
                 Name= registerForm.Name,

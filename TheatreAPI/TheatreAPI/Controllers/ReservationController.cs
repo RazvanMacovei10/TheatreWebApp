@@ -41,6 +41,7 @@ namespace TheatreAPI.Controllers
             }
             reservation.User = await _userBL.GetByUsername(name);
             reservation.NumberOfTickets = reservationDTO.NumberOfTickets;
+            reservation.Active = true;
             reservation.Event = eventModel;
             reservation.DateTime = DateTime.Now;
 
@@ -54,6 +55,7 @@ namespace TheatreAPI.Controllers
             List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
 
             reservations = reservations.Where(e => e.User.UserName == name).ToList();
+            reservations = reservations.Where(r=>r.Active==true).ToList();
             List<NewReservation> reservations1 = new List<NewReservation>();
             foreach (var reservation in reservations)
             {
@@ -72,8 +74,28 @@ namespace TheatreAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
-
-            reservations = reservations.ToList();
+            //reservations=reservations.Where(r=>r.Event.Theatre.UserName==userName).ToList();
+            reservations = reservations.Where(r => r.Active == true).ToList();
+            List<NewReservation> reservations1 = new List<NewReservation>();
+            foreach (var reservation in reservations)
+            {
+                NewReservation newReservation = new NewReservation();
+                newReservation.Id = reservation.Id;
+                newReservation.NumberOfTickets = reservation.NumberOfTickets;
+                newReservation.User = reservation.User;
+                newReservation.DateTime = reservation.DateTime;
+                newReservation.EventName = reservation.Event.Play.Name;
+                newReservation.EventDateTime = reservation.Event.DateTime;
+                reservations1.Add(newReservation);
+            }
+            return Ok(reservations1);
+        }
+        [HttpGet("organizerReservations/{userName}")]
+        public async Task<IActionResult> GetAllByOrganizers(string userName)
+        {
+            List<Reservation> reservations = (List<Reservation>)await _reservationBL.GetAll();
+            reservations=reservations.Where(r=>r.Event.Theatre.User.UserName==userName).ToList();
+            reservations = reservations.Where(r => r.Active == true).ToList();
             List<NewReservation> reservations1 = new List<NewReservation>();
             foreach (var reservation in reservations)
             {
@@ -98,6 +120,8 @@ namespace TheatreAPI.Controllers
             await _eventBL.UpdateEventAsync(eventModel.Id, eventModel);
 
             await _reservationBL.DeleteAsync(id);
+
+
             return Ok();
         }
     }

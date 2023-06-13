@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { CoreService } from 'src/app/_services/core.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEventComponent } from '../add-event/add-event.component';
+import { ConfirmationDialogComponent } from 'src/app/client-page/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -69,10 +70,7 @@ export class ScheduleComponent implements OnInit {
     this.accountService.logout();
   }
 
-  deleteEvent(id: number) {
-    this.theatreService.deleteEvent(id.toString()).subscribe(()=>this.loadEvents())
-    this.coreService.openSnackBar("Event deleted",'done');
-  }
+
 
   onTableDataChange(event: any) {
     this.page = event;
@@ -121,6 +119,33 @@ export class ScheduleComponent implements OnInit {
     console.log(rowDate);
   
     return rowDate > currentDate;
+  }
+
+  openConfirmation(id:any){
+
+    const dialogRef=this.dialog.open(ConfirmationDialogComponent,{
+      disableClose:false
+    });
+    dialogRef.componentInstance.confirmMessage = "Are you sure you want to delete this scheduled event? ";
+    dialogRef.afterClosed().subscribe(result=>{
+      if(result){
+        this.theatreService.deleteEvent(id).subscribe(() => {
+          this.loadEvents();
+    this.coreService.openSnackBar("Event scheduled deleted",'done');
+        },
+        (error)=>{
+          if(error.status===400){
+            this.coreService.openSnackBar(error.error, 'error');
+          }
+        });
+      }
+    })
+
+  }
+
+  deleteEvent(id: number) {
+    this.theatreService.deleteEvent(id.toString()).subscribe(()=>this.loadEvents())
+    this.coreService.openSnackBar("Event deleted",'done');
   }
 
 

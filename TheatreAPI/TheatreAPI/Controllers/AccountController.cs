@@ -56,7 +56,8 @@ namespace TheatreAPI.Controllers
                 UserName = registerDTO.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
                 PasswordSalt = hmac.Key,
-                Email=registerDTO.Email.ToLower(),
+                Email = registerDTO.Email.ToLower(),
+                Active = true,
                 RoleId=1,
                 Role=await _userRoleBL.GetById(1)
             };
@@ -105,6 +106,18 @@ namespace TheatreAPI.Controllers
                 return BadRequest("Email is taken");
             }
             using var hmac = new HMACSHA512();
+
+            var user = new User()
+            {
+                UserName = registerFormDTO.Username.ToLower(),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerFormDTO.Password)),
+                PasswordSalt = hmac.Key,
+                Email = registerFormDTO.Email.ToLower(),
+                Active = false,
+                RoleId = 1,
+                Role = await _userRoleBL.GetById(3)
+            };
+            _userBL.Add(user);
 
             var registerForm = new RegisterForm()
             {
@@ -199,10 +212,13 @@ namespace TheatreAPI.Controllers
 
             return Ok();
         }
-        [HttpGet]
-        public async Task<IActionResult> SendEmail()
+        [HttpPost("sendEmail")]
+        public async Task<IActionResult> SendEmail([FromBody] EmailDTO model)
         {
-            var message = new Message(new string[] { "macoveirazvan69@gmail.com" }, "Test email", "We sent a test email.");
+            var email = model.Email;
+            var title = model.Title;
+            var content = model.Content;
+            var message = new Message(new string[] { email }, title, content);
             _emailSender.SendEmail(message);
             return Ok();
         }
