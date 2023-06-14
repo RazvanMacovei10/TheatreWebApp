@@ -42,11 +42,11 @@ namespace TheatreAPI.Controllers
 
             if(await _userBL.UserExists(registerDTO.Username))
             {
-                return BadRequest("Username is taken");
+                return BadRequest("Username is already used, try again with other username");
             }
             if (await _userBL.UserExistsByEmail(registerDTO.Email))
             {
-                return BadRequest("Email is taken");
+                return BadRequest("Email is already used, try again with other email");
             }
 
             using var hmac = new HMACSHA512();
@@ -75,7 +75,7 @@ namespace TheatreAPI.Controllers
         {
             var user = _userBL.GetByUsername(loginDTO.Username);
 
-            if (user.Result == null) return Unauthorized("invalid username");
+            if (user.Result == null) return Unauthorized("invalid username or password");
 
             using var hmac = new HMACSHA512(user.Result.PasswordSalt);
 
@@ -83,7 +83,7 @@ namespace TheatreAPI.Controllers
 
             for(int i=0;i<computedhash.Length;i++)
             {
-                if (computedhash[i] != user.Result.PasswordHash[i]) return Unauthorized("invalid password");
+                if (computedhash[i] != user.Result.PasswordHash[i]) return Unauthorized("invalid username or password");
             }
             if (user.Result.Active == false) return Unauthorized("your account is inactive");
             return new UserDTO

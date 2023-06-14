@@ -22,6 +22,7 @@ background-position: center;">
               placeholder="Username"
               required
               #username="ngModel"
+              
             />
             <div *ngIf="username.invalid && username.touched" class="text-danger">
               Username is required
@@ -35,6 +36,7 @@ background-position: center;">
               [(ngModel)]="model.email"
               placeholder="Email"
               required
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               #email="ngModel"
             />
             <div *ngIf="email.invalid && email.touched" class="text-danger">
@@ -80,7 +82,7 @@ background-position: center;">
         class="btn btn-primary me-2"
         routerLink="/auth/register-theatre"
       >
-        Register as theatre
+        Register as organizer
       </button>
       <button class="btn btn-primary me-2" routerLink="/auth/login">
         Login

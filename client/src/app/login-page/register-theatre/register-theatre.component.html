@@ -7,7 +7,7 @@ background-position: center;">
     <div>
       <div *ngIf="registerError" class="shadow p-2 mb-3 rounded bg-danger bg-gradient">{{ registerError }}</div>
 
-      <div class="shadow p-3 mb-5 bg-body rounded main-container">
+      <div class="shadow p-3 mb-1 bg-body rounded main-container">
         
         <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
           <h2 class="text-center text-primary">Sign up</h2>
@@ -119,13 +119,15 @@ background-position: center;">
           </div>
 
  
-          <label for="image">Select image to upload:</label>
+          <label for="image">Select profile picture:</label>
           <input
             type="file"
             name="image"
             id="image"
+            class="form-control"
             (change)="onFileSelected($event)"
           />
+          
           <div class="text-center mt-2">
             <button
               class="btn btn-success me-2"
