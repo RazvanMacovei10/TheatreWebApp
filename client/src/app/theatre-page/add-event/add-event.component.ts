@@ -65,7 +65,6 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("dadada");
     if(this.data){
 
     this.event.price=this.datetimeForm.controls['price'].getRawValue();
@@ -73,9 +72,9 @@ export class AddEventComponent implements OnInit {
     this.event.location=this.datetimeForm.controls['location'].getRawValue();
     this.event.city=this.datetimeForm.controls['city'].getRawValue();
     this.event.availableTickets=this.datetimeForm.controls['availableTickets'].getRawValue();
-    if(parseInt(this.datetimeForm.controls['play'].getRawValue()))
+    if(parseInt(this.datetimeForm.controls['play'].value.id))
     {
-      this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
+      this.event.playId=parseInt(this.datetimeForm.controls['play'].value.id);
     }
     else{
       this.event.playId=this.data.play.id;
@@ -97,8 +96,7 @@ export class AddEventComponent implements OnInit {
     this.event.location=this.datetimeForm.controls['location'].getRawValue();
     this.event.city=this.datetimeForm.controls['city'].getRawValue();
     this.event.availableTickets=this.datetimeForm.controls['availableTickets'].getRawValue();
-    this.event.playId=parseInt(this.datetimeForm.controls['play'].getRawValue());
-    console.log(this.event);
+    this.event.playId=parseInt(this.datetimeForm.controls['play'].value.id);
     this.theatreService.addEvent(this.event).subscribe({
       next: () => {
         this.cancel();

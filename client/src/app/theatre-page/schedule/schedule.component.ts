@@ -85,7 +85,6 @@ export class ScheduleComponent implements OnInit {
 
   applyFilter(event:Event){
     const filterValue=(event.target as HTMLInputElement).value;
-    console.log(filterValue);
     this.dataSource.filter=filterValue.trim().toLowerCase();
 
     if(this.dataSource.paginator){
@@ -116,7 +115,6 @@ export class ScheduleComponent implements OnInit {
   isDateActive(row: any): boolean {
     const currentDate = new Date();
     const rowDate = new Date(row.datetime);
-    console.log(rowDate);
   
     return rowDate > currentDate;
   }

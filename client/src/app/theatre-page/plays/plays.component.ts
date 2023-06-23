@@ -113,8 +113,6 @@ export class PlaysComponent implements OnInit {
   getFilteredPlays(){
     this.page=1;
 
-    
-    console.log(this.filterForm.get('name')?.value)
 
     if(this.filterForm.get('name')?.value==""){
       this.getPlays();

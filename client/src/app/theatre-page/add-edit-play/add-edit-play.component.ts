@@ -53,8 +53,6 @@ export class AddEditPlayComponent implements OnInit {
     });
     this.playTypes$=this.theatreService.getPlayTypes();
     this.registerForm.patchValue(this.data);
-    console.log(this.data)
-    console.log(this.registerForm.controls['type'].getRawValue());
   }
   compareById(o1:any, o2:any) {
     return o1.id === o2.id
@@ -105,7 +103,6 @@ export class AddEditPlayComponent implements OnInit {
     this.fileToByteArray(file).subscribe((byteArray) => {
       this.model.image =window.btoa(String.fromCharCode(...byteArray));
     });
-    console.log(this.model);
     this.registerForm.controls["image"].setValidators([Validators.required]);
             this.registerForm.get('image')?.updateValueAndValidity();
             const reader = new FileReader();

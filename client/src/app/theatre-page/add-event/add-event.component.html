@@ -12,7 +12,6 @@
               id="datetime-input"
               formControlName="datetime"
               [min]="minDateTime"
-              (change)="onTimeChange($event)"
              
             />
             <div
@@ -104,9 +103,9 @@
 
           <div class="mb-3">
             <label for="dropdown" class="form-label">Event</label>
-            <select class="form-select" id="dropdown" formControlName="play">
+            <select class="form-select" id="dropdown" formControlName="play" [compareWith]="compareById">
               <option value="" disabled selected hidden >Select an event </option>
-              <option *ngFor="let option of plays" [ngValue]="option.id">{{ option.name }}</option>
+              <option *ngFor="let option of plays" [ngValue]="option">{{ option.name }}</option>
             </select>
           </div>
           

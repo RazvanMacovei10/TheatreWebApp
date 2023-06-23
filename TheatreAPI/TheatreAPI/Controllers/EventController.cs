@@ -48,6 +48,7 @@ namespace TheatreAPI.Controllers
             newEvent.Theatre = theatre;
             newEvent.TheatreId = theatre.Id;
             newEvent.Play = play;
+            newEvent.Active = true;
             int id = eventDTO.Id;
             await _eventBL.UpdateEventAsync(id,newEvent);
             return Ok();

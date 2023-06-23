@@ -49,6 +49,7 @@ background-position: center;">
               maxlength="40"
               [(ngModel)]="model.email"
               placeholder="Email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               required
               #email="ngModel"
             />
@@ -125,6 +126,7 @@ background-position: center;">
             name="image"
             id="image"
             class="form-control"
+            required
             (change)="onFileSelected($event)"
           />
           

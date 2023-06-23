@@ -77,7 +77,7 @@ export class ReservationsComponent implements OnInit {
       if(result){
         this.clientService.deleteReservation(row.id.toString()).subscribe(()=>this.loadReservations())
         this.theatreService.sendEmailForAnnouncingUserThatReservationIsDeleted(row);
-    this.coreService.openSnackBar("Event deleted",'done');
+    this.coreService.openSnackBar("Reservation deleted",'done');
       }
     })
 

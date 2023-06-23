@@ -82,6 +82,7 @@ namespace TheatreAPI.Controllers
         {
             List<Play> plays = (List<Play>)await _playBL.GetAll();
             plays = plays.Where(e => e.Theatre.User.UserName == name).ToList();
+            plays = plays.Where(p => p.Active == true).ToList();
             if (playName != null)
             {
             plays = plays.Where(p => p.Name.ToLower().Contains(playName.ToLower())).ToList();

@@ -33,7 +33,6 @@ export class ChangePictureComponent implements OnInit {
 
   }
   changePicture(){
-    console.log(this.dialogRef.componentInstance.type);
     if(this.dialogRef.componentInstance.type=="account"){
       this.accountService.changePicture(this.model).subscribe({
         next:()=>{
