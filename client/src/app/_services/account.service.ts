@@ -78,6 +78,9 @@ export class AccountService {
   getUsers(): Observable<UserDetails[]> {
     return this.http.get<UserDetails[]>(this.baseUrl + 'Users');
   }
+  getUsersForAdminPage(): Observable<UserDetails[]> {
+    return this.http.get<UserDetails[]>(this.baseUrl + 'Users/UserWithoutAdminAndRegisterForms');
+  }
   changeStatus(model:any){
     console.log(model);
     return this.http.post<RegisterForm>(this.baseUrl+'Account/change-status/'+model.userName,null);

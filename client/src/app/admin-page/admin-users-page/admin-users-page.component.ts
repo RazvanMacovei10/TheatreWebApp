@@ -33,7 +33,7 @@ export class AdminUsersPageComponent implements OnInit {
       map((user) => !!user)
     );
     console.log(this.accountService.getUsers());
-    this.accountService.getUsers().subscribe((data) => 
+    this.accountService.getUsersForAdminPage().subscribe((data) => 
       console.log(data));
       this.loadUsers();
   }
@@ -52,7 +52,7 @@ export class AdminUsersPageComponent implements OnInit {
   }
   
   loadUsers(){
-    this.accountService.getUsers().subscribe((data) => {
+    this.accountService.getUsersForAdminPage().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;

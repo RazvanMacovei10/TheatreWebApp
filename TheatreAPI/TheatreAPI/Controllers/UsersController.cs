@@ -18,13 +18,16 @@ namespace TheatreAPI.Controllers
         private readonly IReservationBL _reservationBL;
         private readonly IEventBL _eventBL;
         private readonly IPlayBL _playBL;
-        public UsersController(IUserBL userBL,IReservationBL reservationBL, ITheatreBL theatreBL, IEventBL eventBL, IPlayBL playBL)
+        private readonly IRegisterFormBL _registerFormBL;
+
+        public UsersController(IUserBL userBL,IReservationBL reservationBL, ITheatreBL theatreBL, IEventBL eventBL, IPlayBL playBL,IRegisterFormBL registerFormBL)
         {
             _userBL = userBL;
             _reservationBL = reservationBL;
             _theatreBL = theatreBL;
             _eventBL = eventBL;
             _playBL = playBL;
+            _registerFormBL = registerFormBL;
         }
 
         [AllowAnonymous]
@@ -33,6 +36,17 @@ namespace TheatreAPI.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _userBL.GetAll();
+            return users;
+        }
+        [AllowAnonymous]
+        [HttpGet("UserWithoutAdminAndRegisterForms")]
+
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersWithoutAdminAndRegisterForms()
+        {
+            List<RegisterForm> forms = (List<RegisterForm>)await _registerFormBL.GetAll();
+            var users = await _userBL.GetAll();
+            users = users.Where(x => x.RoleId != 2).ToList();
+            users = users.Where(user => !forms.Any(form => form.Username == user.UserName)).ToList();
             return users;
         }
         [HttpPost("{username}")]
