@@ -58,7 +58,7 @@
           >
             Reserve ticket(s)
           </button>
-          <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login for making reservation</button>
+          <button class="btn btn-danger" *ngIf="!(isLoggedIn$ | async)" disabled >Login to make a reservation</button>
           <button class="btn btn-danger" *ngIf="(isLoggedIn$ | async) && currentEvent.availableTickets<=0"  disabled >No tickets available</button>
           
         </div>

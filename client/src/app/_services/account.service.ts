@@ -99,4 +99,21 @@ export class AccountService {
       }
     );
   }
+  sendEmailForAnnouncingOrganizerAccountHasBeenCreated(email:any){
+    const title = 'Your account was successfully created';
+    const content = 'You are receiving this email because your account has been successfully created. You have to wait until your form is analized and then if everything is allright, it will be activated. '
+
+  
+    const payload = { email, title, content };
+    console.log(payload);
+  
+    this.http.post(this.baseUrl + 'Account/sendEmail/', payload).subscribe(
+      () => {
+        console.log('Email sent successfully');
+      },
+      (error) => {
+        console.error('Failed to send email', error);
+      }
+    );
+  }
 }

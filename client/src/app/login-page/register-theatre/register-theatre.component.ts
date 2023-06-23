@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RegisterForm } from 'src/app/_models/register-form';
 import { AccountService } from 'src/app/_services/account.service';
+import { CoreService } from 'src/app/_services/core.service';
 
 @Component({
   selector: 'app-register-theatre',
@@ -21,7 +22,7 @@ export class RegisterTheatreComponent implements OnInit {
   };
   registerError:string="";
 
-  constructor(private accountService: AccountService, private router:Router) {}
+  constructor(private accountService: AccountService, private router:Router,private coreService:CoreService) {}
 
   ngOnInit(): void {}
 
@@ -30,6 +31,8 @@ export class RegisterTheatreComponent implements OnInit {
     this.accountService.registerTheatre(this.model).subscribe({
       next: () => {
         this.cancel();
+        this.accountService.sendEmailForAnnouncingOrganizerAccountHasBeenCreated(this.model.email);
+        this.coreService.openSnackBar("Account succesfully created",'done');
       },
       error: (error) => {
         if (error.status === 400) {

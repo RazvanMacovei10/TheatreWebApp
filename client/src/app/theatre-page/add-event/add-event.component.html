@@ -103,7 +103,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="dropdown" class="form-label">Play</label>
+            <label for="dropdown" class="form-label">Event</label>
             <select class="form-select" id="dropdown" formControlName="play">
               <option value="" disabled selected hidden >Select an event </option>
               <option *ngFor="let option of plays" [ngValue]="option.id">{{ option.name }}</option>

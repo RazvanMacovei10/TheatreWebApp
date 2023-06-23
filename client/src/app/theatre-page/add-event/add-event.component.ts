@@ -65,6 +65,7 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("dadada");
     if(this.data){
 
     this.event.price=this.datetimeForm.controls['price'].getRawValue();
@@ -134,7 +135,12 @@ export class AddEventComponent implements OnInit {
     this.datetimeForm.controls['datetime'].setValue(updatedDatetime);
   }
 
+
+
   cancel() {
     this.dialogRef.close();
+  }
+  compareById(o1:any, o2:any) {
+    return o1.id === o2.id
   }
 }

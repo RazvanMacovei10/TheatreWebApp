@@ -61,7 +61,7 @@ namespace TheatreAPI.Controllers
                 RoleId=1,
                 Role=await _userRoleBL.GetById(1)
             };
-            _userBL.Add(user);
+            await _userBL.Add(user);
             return new UserDTO
             {
                 Username = user.UserName,
@@ -117,7 +117,7 @@ namespace TheatreAPI.Controllers
                 RoleId = 1,
                 Role = await _userRoleBL.GetById(3)
             };
-            _userBL.Add(user);
+            await _userBL.Add(user);
 
             var registerForm = new RegisterForm()
             {
